@@ -1,0 +1,81 @@
+---
+lang: en
+title: "What Is a QR Code and How It Works"
+description: "Learn what a QR code is, its versions, error correction, use cases, and generate your own for free online."
+category: generadores
+date: 2026-09-12
+---
+
+**QR codes** are on restaurant menus, event tickets, invoices, advertising and even vaccination records. They are squares of dots that your phone reads instantly. But what is behind that pattern?
+
+## What QR means
+
+**QR = Quick Response**. It was invented in **1994 by Denso Wave**, a Toyota subsidiary, to track car parts on the assembly line. Its key feature: it reads **much faster** than a linear barcode and stores far more information.
+
+## What a QR stores
+
+A QR is a **2D data container**. The most common types:
+
+| Type | Example content |
+|------|-----------------|
+| Text | `Hello world` |
+| URL | `https://example.com` |
+| Contact (vCard) | Name, phone, email, address |
+| Wi-Fi | `WIFI:T:WPA;S:MyNetwork;P:password;;` |
+| SMS | `SMSTO:+34600123456:Hello` |
+| Email | `MATMSG:TO:mail@example.com;SUB:Subject;BODY:Body;;` |
+| Geolocation | `geo:40.4168,-3.7038` |
+
+When you scan a QR, your phone detects the type and opens the corresponding app (browser, contacts, Wi-Fi settings, etc.).
+
+## Visual structure of a QR
+
+The pattern has fixed parts the reader looks for to orient itself:
+
+1. **Three eyes** (finder patterns) in the top-left, top-right and bottom-left corners: they define orientation.
+2. **Timing patterns** (alternating lines): calibrate module size.
+3. **Format information**: error correction level and mask.
+4. **Data + error correction**: the actual information encoded with redundancy.
+
+## Error correction: why they work even when scratched
+
+QR codes use **Reed–Solomon** to add redundancy. Four levels:
+
+| Level | Recovery | Typical use |
+|-------|----------|-------------|
+| L (Low) | ~7% | Little damage risk |
+| M (Medium) | ~15% | **Standard**, good balance |
+| Q (Quartile) | ~25% | Advertising, stickers |
+| H (High) | ~30% | Industrial, dirty environments |
+
+The more correction, the less data capacity for the same size. Our generator uses **M** by default.
+
+## Static vs. dynamic QRs
+
+| Static | Dynamic |
+|--------|---------|
+| Data embedded directly | Short URL that redirects |
+| Never expires, cannot be changed | Destination changes without reprinting |
+| Free, no server | Requires a redirection service |
+| Private (only you hold the data) | Provider sees the statistics |
+
+## Versions (size)
+
+QR codes go from **version 1** (21×21 modules) to **version 40** (177×177). The more data, the higher the version. A short URL fits in v1–v3; a full vCard needs v10+.
+
+## Common uses today
+
+- **Menus and cards** in hospitality (post-COVID).
+- **Tickets and boarding passes** (planes, trains, events).
+- **Payments** (Bizum, PayPal, banking codes).
+- **2FA authentication** (scan a QR to add TOTP in apps).
+- **Marketing** (flyers, packaging, business cards).
+- **Logistics and traceability** (its original use).
+
+## Generate your QR codes for free
+
+Our [QR code generator](/herramienta/qr/) creates **static QRs** downloadable as **SVG** (vector, infinite print quality). Enter your text or URL, choose the error correction level and download. Everything happens in your browser: **your data is never sent to any server**.
+
+## Conclusion
+
+A QR code is a compact, robust and universally readable data container. Understanding its parts (version, correction, type) lets you use them with confidence: for your Wi-Fi, your website, your contacts or your event. Generate yours, test them and use them without limits.

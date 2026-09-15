@@ -1,0 +1,132 @@
+---
+title: "Códigos de color HEX, RGB y HSL: cómo funcionan"
+titleEn: "HEX, RGB and HSL Color Codes: How They Work"
+description: "Entiende los códigos de color HEX, RGB y HSL que usan los diseñadores y programadores, aprende a leerlos y conviértelos entre sí."
+descriptionEn: "Understand the HEX, RGB and HSL color codes used by designers and programmers, learn to read them and convert between them."
+category: conversores
+categoryName: Conversores
+tags: [color, hex, rgb, hsl, diseño web, css]
+date: 2026-09-12
+author: "Equipo Solvya"
+tool: color
+faqs:
+  - q:
+      es: "¿Qué significa el código #3366CC?"
+      en: "What does the code #3366CC mean?"
+    a:
+      es: "Es un color en formato HEX: las dos primeras cifras (33) son el rojo, las dos siguientes (66) el verde y las dos últimas (CC) el azul, en hexadecimal."
+      en: "It is a color in HEX format: the first two digits (33) are red, the next two (66) are green and the last two (CC) are blue, in hexadecimal."
+  - q:
+      es: "¿Cuál es la diferencia entre RGB y HSL?"
+      en: "What is the difference between RGB and HSL?"
+    a:
+      es: "RGB mezcla rojo, verde y azul. HSL describe el color de forma más intuitiva: matiz (h), saturación (s) y luminosidad (l)."
+      en: "RGB mixes red, green and blue. HSL describes color more intuitively: hue (h), saturation (s) and lightness (l)."
+steps:
+  - title:
+      es: "Aprende a leer HEX"
+      en: "Learn to read HEX"
+    text:
+      es: "El formato #RRGGBB usa pares hexadecimales (0-9, A-F) para rojo, verde y azul. FF es el máximo y 00 el mínimo. #FF0000 es rojo puro y #000000 negro."
+      en: "The #RRGGBB format uses hexadecimal pairs (0-9, A-F) for red, green and blue. FF is the maximum and 00 the minimum. #FF0000 is pure red and #000000 is black."
+  - title:
+      es: "Interpreta RGB"
+      en: "Interpret RGB"
+    text:
+      es: "rgb(r, g, b) usa valores de 0 a 255 por canal. El blanco es rgb(255,255,255) y el negro rgb(0,0,0). Divide el valor rgb entre 255 para trabajar con porcentajes."
+      en: "rgb(r, g, b) uses values from 0 to 255 per channel. White is rgb(255,255,255) and black rgb(0,0,0). Divide the rgb value by 255 to work with percentages."
+  - title:
+      es: "Comprende HSL"
+      en: "Understand HSL"
+    text:
+      es: "hsl(h, s%, l%) usa un ángulo de matiz de 0 a 360 grados (0 rojo, 120 verde, 240 azul), y saturación y luminosidad en porcentaje. Es el más intuitivo para crear paletas."
+      en: "hsl(h, s%, l%) uses a hue angle from 0 to 360 degrees (0 red, 120 green, 240 blue), and saturation and lightness as percentages. It is the most intuitive for creating palettes."
+---
+
+Los **códigos de color** son el idioma que usan navegadores, editores gráficos y programadores para decirle a una máquina qué color mostrar. Los tres formatos más usados —**HEX, RGB y HSL**— representan exactamente el mismo color de tres formas distintas. Aprender a leerlos te abrirá la puerta del diseño y del CSS.
+
+## El modelo de color: luz mezclada
+
+Todos estos formatos se basan en el modelo **RGB (rojo, verde, azul)**: una pantalla crea cada color mezclando esas tres luces. Combinando los tres a máxima intensidad obtienes blanco; apagándolos por completo, negro.
+
+## Formato HEX: el favorito de los desarrolladores
+
+El código HEX se escribe con una almohadilla y seis dígitos:
+
+> **#RRGGBB**
+
+- **RR** = componente rojo
+- **GG** = componente verde
+- **BB** = componente azul
+
+Cada par usa **hexadecimal** (0-9 y A-F), donde FF = 255 y 00 = 0:
+
+| Color | HEX | Significado |
+|-------|-----|-------------|
+| Rojo puro | #FF0000 | Máximo rojo, sin verde ni azul |
+| Verde puro | #00FF00 | Máximo verde |
+| Azul puro | #0000FF | Máximo azul |
+| Blanco | #FFFFFF | Los tres al máximo |
+| Negro | #000000 | Los tres a cero |
+| Gris medio | #808080 | Los tres a 128 |
+
+**Truco:** los códigos con pares repetidos (#AABBCC → #ABC) se pueden abreviar a tres dígitos en CSS.
+
+## Formato RGB: valores de 0 a 255
+
+El formato RGB usa la misma mezcla, pero en decimal:
+
+> **rgb(rojo, verde, azul)** con cada canal entre 0 y 255
+
+**Ejemplos:**
+- `rgb(255, 0, 0)` → rojo
+- `rgb(52, 152, 219)` → un azul medio
+- `rgb(255, 255, 255)` → blanco
+
+Existe también `rgba()`, que añade un canal de transparencia (opacidad) de 0 a 1.
+
+**Cómo pasar de HEX a RGB:** convierte cada par hexadecimal a decimal. `#3366CC` → 33=51, 66=102, CC=204 → `rgb(51, 102, 204)`.
+
+## Formato HSL: el más intuitivo para crear paletas
+
+HSL describe el color de forma mucho más natural, muy usada en CSS moderno:
+
+> **hsl(matiz, saturación%, luminosidad%)**
+
+- **Matiz (h)**: un ángulo de 0 a 360° sobre el círculo cromático. 0° rojo, 60° amarillo, 120° verde, 240° azul.
+- **Saturación (s)**: intensidad del color, de 0 % (gris) a 100 % (color puro).
+- **Luminosidad (l)**: claridad, de 0 % (negro) a 100 % (blanco), con 50 % como valor "normal".
+
+| Color | HSL |
+|-------|-----|
+| Rojo | hsl(0, 100%, 50%) |
+| Verde | hsl(120, 100%, 50%) |
+| Azul | hsl(240, 100%, 50%) |
+| Gris | hsl(0, 0%, 50%) |
+
+La ventaja clave: **cambiar solo la luminosidad** (hsl(210, 100%, 40%) vs hsl(210, 100%, 80%)) te da automáticamente las variantes más claras y oscuras de un mismo color. Perfecto para botones con hover.
+
+## Tabla rápida de conversión
+
+| HEX | RGB | HSL |
+|-----|-----|-----|
+| #FF0000 | rgb(255, 0, 0) | hsl(0, 100%, 50%) |
+| #00FF00 | rgb(0, 255, 0) | hsl(120, 100%, 50%) |
+| #0000FF | rgb(0, 0, 255) | hsl(240, 100%, 50%) |
+| #FFFFFF | rgb(255, 255, 255) | hsl(0, 0%, 100%) |
+| #000000 | rgb(0, 0, 0) | hsl(0, 0%, 0%) |
+| #3498DB | rgb(52, 152, 219) | hsl(204, 70%, 53%) |
+
+## Cuándo usar cada formato
+
+- **HEX**: stándar en diseño web y herramientas de diseño; el más compacto para copiar y pegar.
+- **RGB/RGBA**: útil cuando necesitas transparencia o valores en código.
+- **HSL**: la mejor opción para **generar paletas y variaciones** de un color de forma lógica.
+
+## Convierte colores al instante
+
+Nuestro [conversor de colores online](/herramienta/color/) convierte **HEX ↔ RGB ↔ HSL** al momento: pega un color, usa el selector o escribe el formato, y verás las tres representaciones junto con la muestra del color real. Ideal para trabajar con CSS sin hacer cuentas mentales.
+
+## Conclusión
+
+Ya sea que diseñes una web, configures una hoja de estilo o simplemente quieras duplicar un color exacto de una imagen, entender HEX, RGB y HSL te da el control total sobre el color. Los tres describen lo mismo; conocer sus diferencias te permite elegir la herramienta adecuada en cada caso.

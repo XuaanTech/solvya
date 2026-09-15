@@ -1,0 +1,164 @@
+---
+title: "Calculadora de Macros: Carbohidratos, Proteína y Grasa"
+titleEn: "Macros Calculator: Carbs, Protein and Fat"
+description: "Calcula tus macros y calorías diarias según objetivo y actividad. Presets: equilibrado, high protein, low carb, keto. Gratis."
+descriptionEn: "Calculate your daily macros and calories based on goal and activity. Presets: balanced, high protein, low carb, keto. Free."
+category: "salud"
+categoryName: "Salud"
+tags: ["calculadora macros", "macronutrientes", "carbohidratos proteina grasa", "calorias objetivo", "keto macros", "dieta flexibile", "macros calculator", "iifym"]
+date: "2026-09-14"
+author: "Equipo Solvya"
+tool: "macros-calculator"
+faqs:
+  - q:
+      es: "¿Qué es el reparto 40/30/30?"
+      en: "What is the 40/30/30 split?"
+    a:
+      es: "Significa 40% de calorías de carbohidratos, 30% de proteína y 30% de grasa. Es un reparto equilibrado usado en dieta zona y nutrición deportiva general."
+      en: "It means 40% of calories from carbs, 30% from protein and 30% from fat. A balanced split used in zone diet and general sports nutrition."
+  - q:
+      es: "¿Por qué los porcentajes deben sumar 100%?"
+      en: "Why must percentages sum to 100%?"
+    a:
+      es: "Porque representan la distribución del 100% de tus calorías objetivo entre los tres macronutrientes. Si suman más o menos, el cálculo de gramos sería incorrecto."
+      en: "Because they represent the distribution of 100% of your target calories among the three macronutrients. If they sum to more or less, the gram calculation would be wrong."
+  - q:
+      es: "¿Es adecuado para keto?"
+      en: "Is it suitable for keto?"
+    a:
+      es: "Sí, usa el preset 'Keto (5/25/70)' o ajusta manualmente a ~5% carbohidratos, 20-25% proteína y 70-75% grasa."
+      en: "Yes, use the 'Keto (5/25/70)' preset or manually adjust to ~5% carbs, 20-25% protein and 70-75% fat."
+steps:
+  - title:
+      es: "Introduce tus datos físicos"
+      en: "Enter your physical data"
+    text:
+      es: "Rellena sexo, edad, altura, peso y nivel de actividad. El sistema calcula tu BMR (Mifflin-St Jeor) y TDEE automáticamente."
+      en: "Fill in sex, age, height, weight and activity level. The system calculates your BMR (Mifflin-St Jeor) and TDEE automatically."
+  - title:
+      es: "Elige tu objetivo"
+      en: "Choose your goal"
+    text:
+      es: "Mantener (TDEE), Perder (-20% / -500 kcal), Ganar (+15% / +300 kcal) o Personalizado (déficit/superávit exacto)."
+      en: "Maintain (TDEE), Lose (-20% / -500 kcal), Gain (+15% / +300 kcal) or Custom (exact deficit/surplus)."
+  - title:
+      es: "Selecciona el reparto de macros"
+      en: "Select macro split"
+    text:
+      es: "Usa un preset (Equilibrado 40/30/30, High Protein 40/40/20, Low Carb 20/40/40, Keto 5/25/70, Zona 40/30/30) o ajusta los porcentajes manualmente (deben sumar 100%)."
+      en: "Use a preset (Balanced 40/30/30, High Protein 40/40/20, Low Carb 20/40/40, Keto 5/25/70, Zone 40/30/30) or adjust percentages manually (must sum to 100%)."
+---
+
+<article>
+
+## ¿Qué son los macronutrientes (macros)?
+
+Los **macronutrientes** son los tres nutrientes que aportan energía (calorías) a tu cuerpo:
+
+| Macro | Calorías/g | Función principal | Fuentes típicas |
+|-------|------------|-------------------|-----------------|
+| **Carbohidratos** | 4 kcal/g | Energía rápida, combustible cerebral | Arroz, pasta, pan, fruta, verduras, legumbres |
+| **Proteína** | 4 kcal/g | Construcción/reparación tejidos, enzimas, hormonas | Carne, pescado, huevos, lácteos, tofu, legumbres |
+| **Grasa** | 9 kcal/g | Energía densa, hormonas, absorción vitaminas | Aceite oliva, frutos secos, aguacate, pescado azul |
+
+> **Alcohol** aporta 7 kcal/g pero no es un macronutriente esencial y no se incluye en el reparto.
+
+---
+
+## Cómo calcula esta herramienta tus macros
+
+### 1. Gasto Basal (BMR) — Mifflin-St Jeor
+
+La ecuación **Mifflin-St Jeor (1990)** es la más validada para población general:
+
+| Sexo | Fórmula |
+|------|---------|
+| **Hombre** | `BMR = 10 × peso(kg) + 6.25 × altura(cm) - 5 × edad(años) + 5` |
+| **Mujer** | `BMR = 10 × peso(kg) + 6.25 × altura(cm) - 5 × edad(años) - 161` |
+
+> **Alternativa**: Katch-McArdle usa % grasa corporal (más precisa si lo conoces), pero Mifflin-St Jeor es estándar sin ese dato.
+
+### 2. Gasto Total Diario (TDEE)
+
+```
+TDEE = BMR × Factor de Actividad
+```
+
+| Nivel | Factor | Descripción |
+|-------|--------|-------------|
+| Sedentario | 1.2 | Poco o ningún ejercicio, trabajo de escritorio |
+| Ligero | 1.375 | Ejercicio ligero 1-3 días/semana |
+| Moderado | 1.55 | Ejercicio moderado 3-5 días/semana |
+| Activo | 1.725 | Ejercicio intenso 6-7 días/semana |
+| Muy activo | 1.9 | Entrenamiento 2×/día, trabajo físico pesado |
+
+### 3. Objetivo → Calorías objetivo
+
+| Objetivo | Ajuste sobre TDEE |
+|----------|-------------------|
+| **Mantener** | TDEE (sin cambio) |
+| **Perder peso** | TDEE - 20% (mín. -500 kcal) |
+| **Ganar peso** | TDEE + 15% (máx. +300 kcal) |
+| **Personalizado** | TDEE + kcal que indiques (+/-) |
+
+> **Nota**: Un déficit de 500 kcal/día ≈ 0.5 kg/semana teórico. La realidad varía por adaptación metabólica, NEAT, adherencia, etc.
+
+### 4. Reparto → Gramos por macro
+
+```
+g_carbs  = (calorías_objetivo × %carbs  / 100) / 4
+g_protein = (calorías_objetivo × %protein / 100) / 4
+g_fat    = (calorías_objetivo × %fat    / 100) / 9
+```
+
+---
+
+## Presets de reparto incluidos
+
+| Preset | Carbs | Proteína | Grasa | Para quién |
+|--------|-------|----------|-------|------------|
+| **Equilibrado** | 40% | 30% | 30% | General, mantenimiento, recomposición |
+| **High Protein** | 40% | 40% | 20% | Pérdida de grasa preservando músculo, fuerza |
+| **Low Carb** | 20% | 40% | 40% | Control glucémico, sensibilidad insulina |
+| **Keto** | 5% | 25% | 70% | Dieta cetogénica estricta (< 50g carbs/día) |
+| **Zona** | 40% | 30% | 30% | Dieta Zona (Sears), control inflamación |
+
+> Puedes **personalizar** cualquier reparto. Los porcentajes **deben sumar 100%**.
+
+---
+
+## Rangos de referencia (ISSN, ACSM, EFSA)
+
+| Población | Proteína (g/kg/día) | Carbs (g/kg/día) | Grasa (% kcal) |
+|-----------|---------------------|------------------|----------------|
+| Sedentario | 0.8 - 1.0 | 3 - 5 | 20 - 35% |
+| Recreativo | 1.0 - 1.4 | 5 - 7 | 20 - 35% |
+| Fuerza/potencia | 1.6 - 2.4 | 4 - 7 | 20 - 35% |
+| Resistencia | 1.2 - 2.0 | 6 - 10 | 20 - 35% |
+| Keto adaptado | 1.5 - 2.0 | < 1 (absoluto) | 70 - 80% |
+
+> Estos son **rangos orientativos**. La calculadora te da un punto de partida; ajusta según respuesta real (pesos, medidas, energía, analíticas).
+
+---
+
+## Ejemplo completo
+
+**Hombre, 30 años, 180 cm, 85 kg, actividad moderada, objetivo perder, preset High Protein (40/40/20)**
+
+1. **BMR** = 10×85 + 6.25×180 - 5×30 + 5 = 850 + 1125 - 150 + 5 = **1.830 kcal**
+2. **TDEE** = 1.830 × 1.55 = **2.837 kcal**
+3. **Objetivo perder** = 2.837 × 0.8 = **2.269 kcal** (déficit ~568 kcal)
+4. **Macros**:
+   - Carbs: 2.269 × 0.40 / 4 = **227 g**
+   - Proteína: 2.269 × 0.40 / 4 = **227 g** (2.67 g/kg — alto, bueno para retención muscular)
+   - Grasa: 2.269 × 0.20 / 9 = **50 g**
+
+---
+
+## Prueba la calculadora ahora
+
+Calcula tus macros exactos en segundos. Ajusta objetivo, actividad y reparto. Gratis, sin registro, 100% en tu navegador.
+
+[Calcula tus macros y calorías](/herramienta/macros-calculator/) según tu objetivo y actividad.
+
+</article>

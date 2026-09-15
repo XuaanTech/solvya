@@ -1,0 +1,118 @@
+---
+title: "Qué es un código QR y cómo funciona"
+titleEn: "What Is a QR Code and How It Works"
+description: "Aprende qué es un código QR, sus versiones, corrección de errores, casos de uso y genera los tuyos gratis online."
+descriptionEn: "Learn what a QR code is, its versions, error correction, use cases, and generate your own for free online."
+category: generadores
+categoryName: Generadores
+tags: [qr, codigo qr, codigo de barras, generador qr, tecnologia]
+date: 2026-09-12
+author: "Equipo Solvya"
+tool: qr
+faqs:
+  - q:
+      es: "¿Qué significa QR?"
+      en: "What does QR stand for?"
+    a:
+      es: "Quick Response (respuesta rápida). Fue inventado en 1994 por Denso Wave (Toyota) para rastrear piezas en fábrica."
+      en: "Quick Response. It was invented in 1994 by Denso Wave (Toyota) to track parts on the factory floor."
+  - q:
+      es: "¿Caducan los códigos QR?"
+      en: "Do QR codes expire?"
+    a:
+      es: "Los QR estáticos (los que generamos aquí) no caducan: contienen los datos directamente. Los QR dinámicos usan un enlace intermedio y pueden cambiar su destino."
+      en: "Static QR codes (the ones we generate here) never expire: they contain the data directly. Dynamic QR codes use an intermediate link and can change their destination."
+steps:
+  - title:
+      es: "Define qué quieres codificar"
+      en: "Decide what you want to encode"
+    text:
+      es: "Un QR estático puede contener texto plano, una URL, un contacto (vCard), Wi-Fi, SMS, email o geolocalización. Elige el tipo según tu uso."
+      en: "A static QR can contain plain text, a URL, a contact (vCard), Wi-Fi, SMS, email or geolocation. Choose the type according to your use case."
+  - title:
+      es: "Elige el nivel de corrección de errores"
+      en: "Choose the error correction level"
+    text:
+      es: "Los QR tienen 4 niveles (L, M, Q, H) que permiten recuperar datos aunque el código esté dañado. Para uso normal, M (15 %) o Q (25 %) son ideales."
+      en: "QR codes have 4 levels (L, M, Q, H) that allow data recovery even when the code is damaged. For normal use, M (15%) or Q (25%) are ideal."
+  - title:
+      es: "Genera y prueba el QR"
+      en: "Generate and test the QR"
+    text:
+      es: "Crea el código, descárgalo en SVG (escalable) y escanéalo con tu móvil antes de imprimir o compartir. Asegúrate de que el contenido es correcto."
+      en: "Create the code, download it as SVG (scalable) and scan it with your phone before printing or sharing. Make sure the content is correct."
+---
+
+Los **códigos QR** están en menús de restaurantes, entradas de eventos, facturas, publicidad y hasta en la vacunación. Son cuadrados de puntos que tu móvil lee al instante. Pero, ¿qué hay detrás de ese patrón?
+
+## Qué significa QR
+
+**QR = Quick Response** (respuesta rápida). Fue inventado en **1994 por Denso Wave**, una filial de Toyota, para rastrear piezas de automóvil en la cadena de montaje. Su clave: se lee **mucho más rápido** que un código de barras lineal y almacena mucha más información.
+
+## Qué guarda un QR
+
+Un QR es un **contenedor de datos en 2D**. Los tipos más habituales:
+
+| Tipo | Ejemplo de contenido |
+|------|----------------------|
+| Texto | `Hola mundo` |
+| URL | `https://ejemplo.com` |
+| Contacto (vCard) | Nombre, teléfono, email, dirección |
+| Wi-Fi | `WIFI:T:WPA;S:MiRed;P:clave;;` |
+| SMS | `SMSTO:+34600123456:Hola` |
+| Email | `MATMSG:TO:correo@ejemplo.com;SUB:Asunto;BODY:Cuerpo;;` |
+| Geolocalización | `geo:40.4168,-3.7038` |
+
+Cuando escaneas un QR, tu móvil detecta el tipo y abre la app correspondiente (navegador, contactos, ajustes de Wi-Fi, etc.).
+
+## Estructura visual de un QR
+
+El patrón tiene partes fijas que el lector busca para orientarse:
+
+1. **Tres ojos** (finder patterns) en las esquinas superior-izquierda, superior-derecha e inferior-izquierda: definen la orientación.
+2. **Patrones de sincronización** (líneas alternadas): calibran el tamaño de los módulos.
+3. **Información de formato**: nivel de corrección y máscara.
+4. **Datos + corrección de errores**: la información real codificada con redundancia.
+
+## Corrección de errores: por qué funcionan aunque estén rayados
+
+Los QR usan **Reed-Solomon** para añadir redundancia. Cuatro niveles:
+
+| Nivel | Recuperación | Uso típico |
+|-------|--------------|------------|
+| L (Low) | ~7 % | Poco riesgo de daño |
+| M (Medium) | ~15 % | **Estándar**, buen equilibrio |
+| Q (Quartile) | ~25 % | Publicidad, pegatinas |
+| H (High) | ~30 % | Entornos industriales, sucios |
+
+Cuanta más corrección, menos capacidad de datos para el mismo tamaño. Nuestro generador usa **M** por defecto.
+
+## QR estáticos vs. dinámicos
+
+| Estático | Dinámico |
+|----------|----------|
+| Datos incrustados directamente | URL corta que redirige |
+| No caduca, no se puede cambiar | Cambia el destino sin reimprimir |
+| Gratis, sin servidor | Requiere servicio de redirección |
+| Privado (solo tú tienes los datos) | El proveedor ve las estadísticas |
+
+## Versiones (tamaño)
+
+Los QR van de **versión 1** (21×21 módulos) a **versión 40** (177×177). Cuantos más datos, mayor versión. Una URL corta entra en v1–v3; un vCard completo necesita v10+.
+
+## Usos habituales hoy
+
+- **Menús y cartas** en hostelería (tras el COVID).
+- **Entradas y billetes** (avión, tren, eventos).
+- **Pagos** (Bizum, PayPal, códigos bancarios).
+- **Autenticación 2FA** (escanea QR para añadir TOTP en apps).
+- **Marketing** (flyers, packaging, tarjetas de visita).
+- **Logística y trazabilidad** (su uso original).
+
+## Genera tus códigos QR gratis
+
+Nuestro [generador de códigos QR](/herramienta/qr/) crea **QR estáticos** descargables en **SVG** (vectorial, calidad infinita para imprimir). Introduce tu texto o URL, elige el nivel de corrección y descarga. Todo ocurre en tu navegador: **tus datos no se envían a ningún servidor**.
+
+## Conclusión
+
+Un código QR es un contenedor de datos compacto, robusto y universalmente legible. Entender sus partes (versión, corrección, tipo) te permite usarlos con confianza: para tu Wi-Fi, tu web, tus contactos o tu evento. Genera los tuyos, pruébalos y úsalos sin límite.

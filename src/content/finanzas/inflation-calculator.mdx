@@ -1,0 +1,179 @@
+---
+title: "Calculadora de Inflación: Valor del Dinero en el Tiempo"
+titleEn: "Inflation Calculator: Money Value Over Time"
+description: "Calcula cómo la inflación reduce el poder adquisitivo. Modos: futuro, pasado, acumulado. Tasas INE, BCE, BLS, ONS. Gratis."
+descriptionEn: "Calculate how inflation reduces purchasing power. Modes: future, past, cumulative. INE, ECB, BLS, ONS rates. Free."
+category: "finanzas"
+categoryName: "Finanzas"
+tags: ["calculadora inflacion", "poder adquisitivo", "valor del dinero", "ine inflacion", "bce inflacion", "inflation calculator", "purchasing power", "cpi"]
+date: "2026-09-14"
+author: "Equipo Solvya"
+tool: "inflation-calculator"
+faqs:
+  - q:
+      es: "¿Qué es el modo 'hacia adelante'?"
+      en: "What is 'forward' mode?"
+    a:
+      es: "Calcula cuánto costará en el futuro algo que hoy vale X, aplicando la inflación año a año. Ej: 1.000€ hoy con 3% anual en 5 años = 1.159,27€."
+      en: "Calculates how much something worth X today will cost in the future, applying inflation year by year. E.g.: €1,000 today with 3% annually in 5 years = €1,159.27."
+  - q:
+      es: "¿Qué es el modo 'hacia atrás'?"
+      en: "What is 'backward' mode?"
+    a:
+      es: "Calcula cuánto valía en el pasado una cantidad de hoy. Ej: 1.000€ hoy equivalían a 862,61€ hace 5 años con 3% anual."
+      en: "Calculates how much a current amount was worth in the past. E.g.: €1,000 today equaled €862.61 five years ago with 3% annually."
+  - q:
+      es: "¿De dónde salen las tasas predefinidas?"
+      en: "Where do the preset rates come from?"
+    a:
+      es: "Son tasas medias anuales recientes aproximadas: España (INE), Eurozona (BCE), EE.UU. (BLS), Reino Unido (ONS). Para cálculos oficiales usa las series históricas de cada instituto."
+      en: "They are approximate recent annual average rates: Spain (INE), Eurozone (ECB), USA (BLS), UK (ONS). For official calculations use each institute's historical series."
+steps:
+  - title:
+      es: "Introduce la cantidad y el periodo"
+      en: "Enter amount and period"
+    text:
+      es: "Escribe el importe base, el año inicial y el año final. La herramienta calcula el número de años automáticamente."
+      en: "Write the base amount, start year and end year. The tool calculates the number of years automatically."
+  - title:
+      es: "Elige el modo de cálculo"
+      en: "Choose calculation mode"
+    text:
+      es: "Hacia adelante (valor futuro), Hacia atrás (valor pasado) o Acumulado (solo % cambio). Cada modo responde a una pregunta distinta."
+      en: "Forward (future value), Backward (past value) or Cumulative (only % change). Each mode answers a different question."
+  - title:
+      es: "Selecciona una tasa o usa la personalizada"
+      en: "Select a rate or use custom"
+    text:
+      es: "Elige un preset (España INE, Eurozona BCE, EE.UU. BLS, Reino Unido ONS) o escribe tu propia tasa anual media. Verás el desglose año a año y la comparación Big Mac."
+      en: "Choose a preset (Spain INE, Eurozone ECB, USA BLS, UK ONS) or enter your own average annual rate. You'll see year-by-year breakdown and Big Mac comparison."
+---
+
+<article>
+
+## ¿Qué es la inflación y por qué importa?
+
+La **inflación** es el aumento sostenido y generalizado de los precios de bienes y servicios en una economía durante un periodo de tiempo. Su efecto directo: **el dinero pierde poder adquisitivo**.
+
+> **Ejemplo simple**: Si la inflación es del 3% anual, algo que cuesta 100 € hoy costará ~103 € dentro de un año. Tus 100 € "valen" menos.
+
+Esta calculadora te ayuda a **cuantificar esa pérdida** (o ganancia, si miras al pasado) en tres escenarios distintos.
+
+---
+
+## Tres modos de cálculo: ¿qué pregunta respondes?
+
+| Modo | Pregunta que responde | Fórmula | Caso de uso típico |
+|------|----------------------|---------|-------------------|
+| **Hacia adelante** (Forward) | "¿Cuánto costará X dentro de N años?" | `VF = VP × (1 + i)^n` | Planificación jubilación, presupuestos futuros, precios futuros |
+| **Hacia atrás** (Backward) | "¿Cuánto valía X hace N años en dinero de hoy?" | `VP = VF / (1 + i)^n` | Comparar salarios históricos, herencias, precios antiguos |
+| **Acumulado** (Cumulative) | "¿Cuál es el % total de subida en N años?" | `% = [(1 + i)^n - 1] × 100` | Análisis macro, comparar periodos, índice general |
+
+Donde:
+- `VF` = Valor Futuro / Final
+- `VP` = Valor Presente / Inicial
+- `i` = Tasa de inflación anual (decimal: 3% → 0.03)
+- `n` = Número de años
+
+---
+
+## La magia del interés compuesto (aplicado a precios)
+
+La inflación **compuesta** significa que cada año la subida se calcula sobre el precio **ya inflado** del año anterior, no sobre el original.
+
+```
+Año 0:  1.000,00 €
+Año 1:  1.000 × 1.03 = 1.030,00 €  (+30,00)
+Año 2:  1.030 × 1.03 = 1.060,90 €  (+30,90)  ← subida sobre 1.030, no sobre 1.000
+Año 3:  1.060,90 × 1.03 = 1.092,73 € (+31,83)
+Año 4:  1.092,73 × 1.03 = 1.125,51 € (+32,78)
+Año 5:  1.125,51 × 1.03 = 1.159,27 € (+33,76)
+                    ↑
+            Total 5 años: +15,93% (no 15% lineal)
+```
+
+> **Regla del 72** (aproximación): `Años para duplicar precios ≈ 72 / % inflación anual`. Con 3% → ~24 años. Con 6% → ~12 años.
+
+---
+
+## Tasas predefinidas: fuentes oficiales aprox.
+
+| Preset | Instituto | Tasa aprox. | Qué mide |
+|--------|-----------|-------------|----------|
+| **España (INE)** | Instituto Nacional de Estadística | ~3,2% | IPC general (tasa media anual reciente) |
+| **Eurozona (BCE)** | Banco Central Europeo | ~2,8% | IPCA (Índice de Precios de Consumo Armonizado) |
+| **EE.UU. (BLS)** | Bureau of Labor Statistics | ~3,1% | CPI-U (Consumer Price Index for All Urban Consumers) |
+| **Reino Unido (ONS)** | Office for National Statistics | ~4,0% | CPIH (incluye costes de vivienda) |
+
+> **Importante**: Son **tasas medias anuales recientes aproximadas** para cálculos rápidos. Para decisiones financieras reales, usa las **series históricas mensuales** de cada instituto (disponibles en sus webs) y aplica mes a mes.
+
+---
+
+## Desglose año a año: qué ves en la tabla
+
+| Columna | Qué significa |
+|---------|---------------|
+| **Año** | Ejercicio fiscal / año natural |
+| **Valor** | Importe ajustado al final de ese año |
+| **Variación año** | Cuánto subió/bajó en euros ese año concreto |
+| **Acumulado %** | Subida/bajada total desde el año inicial hasta ese año |
+
+En modo **hacia atrás**, la tabla va del año final al inicial (descendente) y la "variación año" es negativa (lo que "ahorras" al ir al pasado).
+
+---
+
+## Comparación Big Mac: poder adquisitivo real
+
+El **índice Big Mac** (The Economist, 1986) compara el precio de una Big Mac entre países para estimar **paridad de poder adquisitivo (PPA)**.
+
+Esta calculadora usa una **Big Mac de referencia ~5,50 €** para darte una intuición tangible:
+
+> "Con 1.000 € en 2010 comprabas ~182 Big Macs. En 2024 equivalen a ~130 Big Macs."
+
+**No es un índice oficial**, pero ayuda a visualizar: *¿cuántas hamburguesas (o pan, leche, alquiler) pierdes con la inflación?*
+
+---
+
+## Ejemplos prácticos
+
+### 1. Jubilación: ¿cuánto necesitaré dentro de 20 años?
+- Gasto actual estimado: 2.500 €/mes
+- Inflación media: 2,5% (objetivo BCE)
+- **Resultado**: 2.500 × (1,025)^20 = **4.101 €/mes**
+- Necesitas ~64% más nominal para mantener nivel de vida.
+
+### 2. Salario histórico: ¿qué valía mi sueldo de 2005 hoy?
+- Sueldo 2005: 1.800 €/mes
+- Inflación media España 2005-2024: ~2,8%
+- **Modo atrás**: 1.800 / (1,028)^19 = **1.088 € de 2005 = 1.800 € de 2024**
+- Tu poder adquisitivo real solo subió si tu sueldo actual > 1.800 € ajustados.
+
+### 3. Ahorro bajo el colchón: pérdida silenciosa
+- 10.000 € guardados 10 años sin intereses
+- Inflación 3% media
+- **Valor real hoy**: 10.000 / (1,03)^10 = **7.441 €**
+- Has **perdido 2.559 € de poder adquisitivo** sin mover el dinero.
+
+---
+
+## Limitaciones y matices
+
+| Limitación | Qué implica |
+|------------|-------------|
+| **Tasa constante** | La herramienta usa una media; la inflación real varía cada mes |
+| **IPC general** | Tu inflación personal depende de tu cesta de consumo (alquiler, guardería, gasolina...) |
+| **Sustitución** | Cuando sube un bien, la gente compra alternativas → IPC puede sobreestimar |
+| **Calidad** | Los productos mejoran (móviles, coches) → parte del alza no es "inflación pura" |
+| **Oficial vs real** | Estadísticas oficiales tienen metodología; percepción ciudadana suele ser mayor |
+
+> Para planificación financiera seria: **usa series mensuales reales**, considera tu cesta personal y consulta a asesor financiero.
+
+---
+
+## Prueba la calculadora ahora
+
+Calcula el impacto de la inflación en tu dinero. 3 modos, 4 presets oficiales, desglose anual y comparación Big Mac. Gratis, sin registro.
+
+[Calcula el impacto de la inflación](/herramienta/inflation-calculator/) en tu poder adquisitivo.
+
+</article>

@@ -1,0 +1,132 @@
+---
+lang: en
+title: "HEX, RGB, HSL and CMYK: Complete Conversion for Design and Print"
+description: "Convert between HEX, RGB, HSL and CMYK. Understand gamut, color profiles, why CMYK doesn't cover all RGB and how to prepare files for print."
+category: conversores
+date: 2026-09-13
+---
+
+**HEX, RGB, HSL** are for **screen (light)**; **CMYK** is for **print (ink)**. Converting between them isn't 1:1: the **RGB gamut is wider** and saturated colors get clipped in CMYK. Here you have the **complete conversion**, **color profiles**, **why it fails** and **how to prepare files for print** without surprises.
+
+## The four color spaces
+
+| Space | Type | Channels | Use | Gamut |
+|-------|------|----------|-----|-------|
+| **HEX** | Encoded RGB | #RRGGBB | Web, CSS, digital design | = sRGB |
+| **RGB** | Additive (light) | R, G, B (0–255) | Screens, web, digital photo | sRGB / Display P3 / Adobe RGB |
+| **HSL** | Cylindrical (perceptual) | H (0–360°), S (0–100 %), L (0–100 %) | UI design, palettes, modern CSS | = underlying RGB |
+| **CMYK** | Subtractive (ink) | C, M, Y, K (0–100 %) | **Offset, digital, packaging print** | **Narrower** |
+
+> **HEX = RGB in hexadecimal**. `#FF8800` = `rgb(255, 136, 0)` = `hsl(32, 100%, 50%)`.  
+> **CMYK ≠ inverse of RGB** mathematically simple: depends on **color profile** (paper, ink, press).
+
+## Exact conversions (screen ↔ screen)
+
+### HEX ↔ RGB
+```js
+// HEX → RGB
+const r = parseInt(hex.slice(1, 3), 16);
+const g = parseInt(hex.slice(3, 5), 16);
+const b = parseInt(hex.slice(5, 7), 16);
+
+// RGB → HEX
+const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+```
+
+### RGB ↔ HSL
+```js
+// RGB (0–1) → HSL
+const max = Math.max(r, g, b), min = Math.min(r, g, b);
+const l = (max + min) / 2;
+let h, s;
+if (max === min) { h = s = 0; }
+else {
+  const d = max - min;
+  s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  switch (max) {
+    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+    case g: h = (b - r) / d + 2; break;
+    case b: h = (r - g) / d + 4; break;
+  }
+  h *= 60;
+}
+```
+
+> Our [color converter](/herramienta/color/) does **HEX ↔ RGB ↔ HSL** instantly and exactly.
+
+## RGB → CMYK: the real conversion (requires profile)
+
+**There is no single formula**. Conversion uses **ICC profiles** that model:
+- **Inks** (specific C, M, Y, K of the press)
+- **Paper** (gloss, porosity, optical brightening)
+- **Print conditions** (dot gain, trapping, sequence)
+
+### Standard CMYK profiles (ISO 12647-2)
+
+| Profile | Region / Use | Dot gain (TVI) | Paper white |
+|---------|--------------|----------------|-------------|
+| **FOGRA39** (ISO Coated v2 300 %) | Europe, coated glossy | 16 % (40 % tone) | D50, glossy |
+| **ISO Coated v2 300 % (ECI)** | Europe, current standard | 16 % | D50 |
+| **US Web Coated SWOP v2** | USA, magazine/web offset | 20 % | D50 |
+| **Japan Color 2001 Coated** | Japan, coated | 17 % | D50 |
+| **FOGRA47** (ISO Uncoated) | Europe, uncoated offset | 22 % | D50 |
+
+> **Ask your printer**: "What CMYK profile do you use? (FOGRA39, SWOP, etc.)". Use **that** profile when converting.
+
+## Why colors "dull out" in CMYK
+
+**RGB gamut (sRGB) vs CMYK gamut (FOGRA39)**
+
+```
+       RGB gamut (light)
+      ╱╲
+     ╱  ╲  ← Colors outside CMYK:
+    ╱    ╲     • Electric blues (#0000FF, #00FFFF)
+   ╱      ╲    • Neon greens (#00FF00, #39FF14)
+  ╱  CMYK   ╲   • Highly saturated oranges/reds (#FF3300)
+ ╱  gamut   ╲
+╱____________╲
+```
+
+**Typical problem colors:**
+| RGB / HEX | In CMYK (FOGRA39) | Fix |
+|-----------|-------------------|-----|
+| `#0000FF` (pure blue) | Dull, purplish blue | Use Pantone 286 C / 2935 C |
+| `#00FF00` (lime green) | Muddy olive green | Pantone 375 C / 802 C |
+| `#FF00FF` (RGB magenta) | Process magenta OK | — |
+| `#FFFF00` (RGB yellow) | Process yellow OK | — |
+| `#FF8800` (vivid orange) | Brownish orange | Pantone 165 C / 1585 C |
+
+## Professional workflow (screen → print)
+
+1. **Design in RGB** (sRGB for web, Display P3 / Adobe RGB for photo/print).
+2. **Final layout** → convert to CMYK **assigning the printer's profile** (not "generic CMYK").
+3. **Enable "Gamut Warning"** (Photoshop: View → Gamut Warning / Shift+Ctrl+Y). Grays = out of gamut.
+4. **Manually adjust** out-of-gamut colors: reduce saturation, find in-gamut alternative, or use **Pantone spot** for that critical color.
+5. **Deliver PDF/X-1a** (CMYK + embedded profile, no transparency, fonts embedded) or **PDF/X-4** (live transparency, embedded profile).
+6. **Request color proof (hard proof)** certified ISO 12647-7 before run.
+
+## Quick table: approximate equivalences (sRGB → FOGRA39 CMYK)
+
+| HEX / RGB | HSL | CMYK approx (FOGRA39) | Note |
+|-----------|-----|------------------------|------|
+| `#FF0000` / rgb(255,0,0) | hsl(0,100%,50%) | 0, 100, 100, 0 | Process red OK |
+| `#00FF00` / rgb(0,255,0) | hsl(120,100%,50%) | 100, 0, 100, 0 | Green → out of gamut |
+| `#0000FF` / rgb(0,0,255) | hsl(240,100%,50%) | 100, 70, 0, 0 | Blue → out of gamut |
+| `#FFFF00` / rgb(255,255,0) | hsl(60,100%,50%) | 0, 0, 100, 0 | Process yellow OK |
+| `#FF00FF` / rgb(255,0,255) | hsl(300,100%,50%) | 0, 100, 0, 0 | Process magenta OK |
+| `#00FFFF` / rgb(0,255,255) | hsl(180,100%,50%) | 100, 0, 0, 0 | Process cyan OK |
+| `#FFFFFF` | hsl(0,0%,100%) | 0, 0, 0, 0 | White = paper |
+| `#000000` | hsl(0,0%,0%) | 0, 0, 0, 100 | Rich black: 40, 30, 30, 100 |
+
+> **Rich black**: C 40 % M 30 % Y 30 % K 100 % → deep black without ink overload.  
+> **K-only black**: K 100 % → can look grayish in large areas.
+
+## Conclusion
+
+- **Screen**: HEX = RGB = HSL (exact conversion). Use [color converter](/herramienta/color/).
+- **Print**: RGB → CMYK **requires ICC profile** (ask your printer).
+- **Gamut**: RGB > CMYK. Neon/electric colors clip → use **Pantone spot** or adjust.
+- **Deliver**: PDF/X-1a or PDF/X-4 with embedded profile + color proof.
+
+[Convert HEX ↔ RGB ↔ HSL for screen](/herramienta/color/) and prep your CMYK with the right profile.

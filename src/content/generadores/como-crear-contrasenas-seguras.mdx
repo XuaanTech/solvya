@@ -1,0 +1,118 @@
+---
+title: "Cómo crear contraseñas seguras y recordarlas"
+titleEn: "How to Create Strong Passwords and Remember Them"
+description: "Aprende a crear contraseñas fuertes, usar gestores de contraseñas, activar 2FA y evitar los errores más comunes de seguridad."
+descriptionEn: "Learn to create strong passwords, use password managers, enable 2FA and avoid the most common security mistakes."
+category: generadores
+categoryName: Generadores
+tags: [contrasenas, seguridad, 2fa, gestor de contraseñas, autenticacion]
+date: 2026-09-12
+author: "Equipo Solvya"
+tool: contrasenas
+faqs:
+  - q:
+      es: "¿Cuánto debe medir una contraseña segura?"
+      en: "How long should a strong password be?"
+    a:
+      es: "Mínimo 12-14 caracteres, idealmente 16 o más. La longitud es el factor más importante, por encima de la complejidad."
+      en: "At least 12-14 characters, ideally 16 or more. Length is the most important factor, above complexity."
+  - q:
+      es: "¿Es mejor una frase de varias palabras o una cadena al azar?"
+      en: "Is a multi-word passphrase better than a random string?"
+    a:
+      es: "Ambas pueden ser seguras. Una frase de 4-5 palabras aleatorias (diceware) con 20+ caracteres es muy fuerte y más fácil de recordar que una cadena corta de símbolos."
+      en: "Both can be secure. A passphrase of 4-5 random words (diceware) with 20+ characters is very strong and easier to remember than a short string of symbols."
+steps:
+  - title:
+      es: "Usa longitud suficiente (16+ caracteres)"
+      en: "Use enough length (16+ characters)"
+    text:
+      es: "Genera una contraseña de al menos 16 caracteres. La entropía crece exponencialmente con la longitud: 16 caracteres al azar con 94 símbolos posibles supera los 100 bits de entropía."
+      en: "Generate a password of at least 16 characters. Entropy grows exponentially with length: 16 random characters from 94 possible symbols exceeds 100 bits of entropy."
+  - title:
+      es: "Mezcla mayúsculas, minúsculas, números y símbolos"
+      en: "Mix uppercase, lowercase, numbers and symbols"
+    text:
+      es: "Activa todas las categorías en el generador. Aunque la longitud pesa más, la mezcla evita ataques de diccionario y patrones predecibles."
+      en: "Enable all categories in the generator. Although length weighs more, mixing avoids dictionary attacks and predictable patterns."
+  - title:
+      es: "No la reutilices y guárdala en un gestor"
+      en: "Don't reuse it and store it in a manager"
+    text:
+      es: "Cada cuenta debe tener su contraseña única. Usa un gestor de contraseñas (Bitwarden, 1Password, KeePass...) y activa la autenticación de dos factores (2FA) siempre que puedas."
+      en: "Each account must have its own unique password. Use a password manager (Bitwarden, 1Password, KeePass...) and enable two-factor authentication (2FA) whenever you can."
+---
+
+Una **contraseña segura** es la primera barrera entre tu vida digital y los atacantes. Sin embargo, la mayoría de las contraseñas reales son cortas, predecibles o reutilizadas. Aquí tienes la guía práctica para crear y gestionar contraseñas realmente seguras.
+
+## La regla de oro: longitud > complejidad
+
+Durante años se recomendó "mezclar mayúsculas, números y símbolos". La investigación actual demuestra que **la longitud es el factor decisivo**:
+
+- 8 caracteres (solo minúsculas): ~38 bits de entropía → **rompible en horas**
+- 12 caracteres (mixto): ~72 bits → **días/semanas**
+- 16+ caracteres (mixto): >100 bits → **inviable por fuerza bruta**
+
+> **Mínimo recomendado: 16 caracteres**. Si puedes usar 20-24, mejor.
+
+## Método 1: Frase de palabras aleatorias (Diceware)
+
+Une 4-5 palabras **totalmente aleatorias** del diccionario, separadas por guiones o espacios:
+
+> `correcto-caballo-bateria-grapa-paloma`
+
+Con 5 palabras de una lista de 7.776 (6 dados de 6 caras): **64 bits** de entropía. Más largo = más seguridad.
+
+**Ventaja:** Fácil de recordar y teclear.
+**Inconveniente:** Solo sirve si el sitio acepta frases largas sin límite de longitud.
+
+## Método 2: Cadena al azar completa
+
+Usa un generador criptográficamente seguro (como el nuestro) que incluya:
+
+- Mayúsculas (A-Z)
+- Minúsculas (a-z)
+- Números (0-9)
+- Símbolos (!@#$%^&*)
+
+Una cadena de 16 caracteres con todo el conjunto (94 símbolos) → **~105 bits de entropía**.
+
+## Lo que NO debes hacer
+
+| ❌ Evita | Por qué |
+|----------|---------|
+| `123456`, `password`, `qwerty` | En las listas de filtrados más usadas |
+| Tu nombre, fecha, mascota | Ingeniería social y OSINT |
+| `P@ssw0rd123` | Patrones predecibles (leet speak) |
+| La misma contraseña en varios sitios | Una fuga expone todo |
+
+## El problema real: la reutilización
+
+Aunque tu contraseña sea perfecta, **si la reutilizas y un sitio sufre una brecha, todas tus cuentas están en peligro**.
+
+**La solución:** un **gestor de contraseñas** (Bitwarden, 1Password, KeePass, etc.). Genera, guarda y autocompleta contraseñas únicas para cada servicio. Solo recuerdas **una contraseña maestra** (fuerte y larga).
+
+## Autenticación de dos factores (2FA)
+
+Incluso la mejor contraseña puede filtrarse (phishing, keylogger, brecha). El **2FA** añade una segunda prueba:
+
+1. **Apps TOTP** (Google Authenticator, Authy, Bitwarden): código de 6 dígitos que cambia cada 30 s. **Recomendado.**
+2. **Llaves de hardware** (YubiKey): físicas, inmunes a phishing.
+3. **SMS/email**: mejor que nada, pero vulnerable a SIM-swapping.
+
+Actívalo en email, banca, redes sociales y gestor de contraseñas.
+
+## Nuestra recomendación práctica
+
+1. Usa un **gestor de contraseñas** hoy mismo.
+2. Genera contraseñas de **16-24 caracteres aleatorias** para cada cuenta.
+3. Activa **2FA (TOTP)** en todo lo importante.
+4. Guarda la contraseña maestra y los códigos de recuperación del 2FA en un lugar seguro (papel, caja fuerte).
+
+## Generador de contraseñas seguro
+
+Nuestro [generador de contraseñas](/herramienta/contrasenas/) genera claves **localmente en tu navegador** usando la Web Crypto API: nada sale de tu dispositivo, no hay servidor que pueda verlas. Eliges longitud y tipos de caracteres, y obtienes una contraseña fuerte al instante.
+
+## Conclusión
+
+La seguridad de tus cuentas depende de tres hábitos: **longitud, unicidad y 2FA**. El gestor de contraseñas hace el trabajo pesado; tú solo eliges una buena maestra y activas el segundo factor. Empieza hoy: una brecha tarda segundos, la prevención minutos.

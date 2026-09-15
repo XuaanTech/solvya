@@ -1,0 +1,117 @@
+---
+lang: en
+title: "Online Regular Expression Tester (Regex)"
+description: "Test and debug regex with flags, groups, highlighting and token-by-token explanation. Presets: email, URL, IPv4, DNI, IBAN. Free."
+category: "generadores"
+date: "2026-09-14"
+author: "Equipo Solvya"
+---
+
+<article>
+
+## What is a regex tester?
+
+A **regex tester** (regular expressions) is an interactive tool for **writing, testing and debugging** text search patterns. It lets you:
+
+- See **matches in real time** as you type
+- Inspect **capture groups** and their values
+- Understand **what each token** in the pattern does
+- Test against **multiple test cases** at once
+- Detect **syntax errors** before using the regex in production
+
+---
+
+## Anatomy of a Regular Expression
+
+```
+         /  ^  [a-z]  +  \.  (com|org)  $  /  g i m
+         |  |   |    |  |     |      |  |  | | |
+         |  |   |    |  |     |      |  |  | | └─ flags
+         |  |   |    |  |     |      |  |  | └──── sticky (y)
+         |  |   |    |  |     |      |  |  └────── unicode (u)
+         |  |   |    |  |     |      |  └───────── dotAll (s)
+         |  |   |    |  |     |      └──────────── multiline (m)
+         |  |   |    |  |     |      └───────────── case-insensitive (i)
+         |  |   |    |  |     └──────────────────── global (g)
+         |  |   |    |  |     └───────────────────── capture group: "com" or "org"
+         |  |   |    |  └──────────────────────────── literal character "."
+         |  |   |    └──────────────────────────────── quantifier: 1 or more
+         |  |   └───────────────────────────────────── character class: lowercase letters
+         |  └────────────────────────────────────────── anchor: start of string
+         └───────────────────────────────────────────── delimiters (not part of pattern)
+```
+
+---
+
+## Flags Available in JavaScript
+
+| Flag | Name | Effect |
+|------|------|--------|
+| `g` | Global | Finds **all** matches, not just the first |
+| `i` | Case-insensitive | Ignores upper/lowercase |
+| `m` | Multiline | `^` and `$` match start/end of **line**, not just string |
+| `s` | dotAll | `.` also matches **newline** (`\n`, `\r`) |
+| `u` | Unicode | Treats pattern as Unicode code (needed for `\p{...}`, emojis, etc.) |
+| `y` | Sticky | Searches only from `lastIndex` position (parsing performance) |
+
+> **Common combination**: `gim` (global, case-insensitive, multiline) for general searches.
+
+---
+
+## Included Presets
+
+| Preset | Pattern | What it validates |
+|--------|---------|-------------------|
+| **Email** | `^[^\s@]+@[^\s@]+\.[^\s@]+$` | Basic email format (simplified RFC 5322) |
+| **URL** | `^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$` | HTTP/HTTPS URLs |
+| **IPv4** | `^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$` | IPv4 addresses |
+| **DNI/NIE (ES)** | `^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$` / `^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$` | Spanish documents |
+| **IBAN (ES)** | `^ES[0-9]{22}$` | Spanish IBAN (format only, no check digit validation) |
+| **Hex Color** | `^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$` | #RGB, #RRGGBB, #RRGGBBAA |
+| **ISO Date** | `^\d{4}-\d{2}-\d{2}$` | YYYY-MM-DD (format only, doesn't validate real days) |
+| **Phone (ES)** | `^(\+34|0034)?[679]\d{8}$` | Spanish mobile and landline |
+
+---
+
+## Token-by-Token Explainer
+
+The explainer breaks down your pattern and describes each element:
+
+| Type | Example | Generated Explanation |
+|------|---------|----------------------|
+| **Anchor** | `^` | "Start of string (or line with m flag)" |
+| **Anchor** | `$` | "End of string (or line with m flag)" |
+| **Class** | `[a-z]` | "Character class: any lowercase letter a-z" |
+| **Negated class** | `[^0-9]` | "Negated class: any character EXCEPT digits" |
+| **Escape** | `\d` | "Shortcut: digit (equivalent to [0-9])" |
+| **Escape** | `\.` | "Literal character: dot" |
+| **Quantifier** | `+` | "Quantifier: 1 or more times (greedy)" |
+| **Quantifier** | `*?` | "Quantifier: 0 or more times (non-greedy / lazy)" |
+| **Capture group** | `(abc)` | "Capture group #1: matches 'abc' literal" |
+| **Non-capture group** | `(?:abc)` | "Non-capture group: groups without saving to \$1" |
+| **Alternation** | `a\|b` | "Alternation: matches 'a' OR 'b'" |
+| **Lookahead** | `(?=abc)` | "Positive lookahead: asserts 'abc' follows without consuming" |
+| **Lookbehind** | `(?<=abc)` | "Positive lookbehind: asserts 'abc' precedes without consuming" |
+| **Unicode property** | `\p{L}` | "Unicode property: any letter in any language" |
+
+---
+
+## Keyboard Shortcuts
+
+| Action | Windows/Linux | Mac |
+|--------|---------------|-----|
+| Run test | `Ctrl + Enter` | `Cmd + Enter` |
+| Clear | `Ctrl + Shift + X` | `Cmd + Shift + X` |
+| Copy regex | `Ctrl + Shift + C` | `Cmd + Shift + C` |
+| Next preset | `Ctrl + →` | `Cmd + →` |
+| Previous preset | `Ctrl + ←` | `Cmd + ←` |
+
+---
+
+## Try the tester now
+
+Write your regex, choose flags, paste the text and see matches instantly with detailed explanation.
+
+[Test your regex online](/herramienta/regex-tester/) with highlighting and token-by-token explanation.
+
+</article>

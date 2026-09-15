@@ -1,0 +1,107 @@
+---
+lang: en
+title: "Convert Liters to Gallons: US, UK, Table and Consumption References"
+description: "Difference between US gallon (3.785 L) and UK (4.546 L), exact formulas, table 1–200 L, mental trick and references: car tank, fuel economy, drinks, irrigation."
+category: conversores
+date: 2026-09-13
+---
+
+Converting **liters to gallons** has a trap: **there isn't a single gallon**. The **US gallon (3.785 L)** and the **imperial UK gallon (4.546 L)** differ by **~20 %**. Here you have the **exact formulas**, **tables**, **mental tricks** and references for **tank, fuel economy, drinks and irrigation**.
+
+## The critical difference: US vs UK (Imperial)
+
+| Gallon | Exact definition | Liters | Main use |
+|--------|------------------|--------|----------|
+| **US liquid gallon** | 231 in³ | **3.785411784 L** | USA, Latin America, Philippines, South Korea |
+| **UK imperial gallon** | 4.54609 L (defined) | **4.54609 L** | UK, Ireland, Canada (historical), Anglophone Caribbean |
+| **US dry gallon** | 268.8025 in³ | 4.40488 L | Grain/agricultural (rarely used) |
+
+> **1 UK gallon = 1.20095 US gallons** → **~20 % larger**.  
+> **Always verify** which gallon your source uses (country, "US gal" / "Imp gal" label).
+
+## Exact formulas
+
+### Liters → Gallons
+- **US**: `gal_US = L / 3.785411784`
+- **UK**: `gal_UK = L / 4.54609`
+
+### Gallons → Liters
+- **US**: `L = gal_US × 3.785411784`
+- **UK**: `L = gal_UK × 4.54609`
+
+## Reference table (Liters → US / UK Gallons)
+
+| Liters | Gal US | Gal UK | Context |
+|--------|--------|--------|---------|
+| 1 | 0.264 | 0.220 | Large glass |
+| 2 | 0.528 | 0.440 | Soda bottle |
+| 3.785 | 1.000 | 0.833 | **1 US gallon** |
+| 4.546 | 1.201 | 1.000 | **1 UK gallon** |
+| 5 | 1.321 | 1.100 | Water jug |
+| 10 | 2.642 | 2.200 | — |
+| 20 | 5.283 | 4.400 | Camping jerrycan |
+| 30 | 7.925 | 6.600 | — |
+| 40 | 10.567 | 8.799 | Large motorcycle tank |
+| 50 | 13.209 | 10.998 | Small car tank |
+| 60 | 15.850 | 13.198 | Medium car tank |
+| 70 | 18.492 | 15.398 | Large car tank |
+| 80 | 21.134 | 17.597 | — |
+| 100 | 26.417 | 21.997 | Beer keg (1/2 US keg = 15.5 gal) |
+| 200 | 52.834 | 43.994 | Small cistern |
+
+## Mental tricks
+
+| Gallon | Approximation | Mental formula | Error |
+|--------|---------------|----------------|-------|
+| **US** | 1 gal ≈ **3.8 L** | gal ≈ L / 3.8 | +0.4 % |
+| **UK** | 1 gal ≈ **4.5 L** | gal ≈ L / 4.5 | -1.0 % |
+
+**Inverse:**
+- **US**: L ≈ gal × 3.8
+- **UK**: L ≈ gal × 4.5
+
+## Fuel economy: L/100 km ↔ mpg
+
+| Conversion | Exact formula | Approximation |
+|------------|---------------|---------------|
+| **L/100 km → mpg US** | `mpg_US = 235.214583 / (L/100km)` | `≈ 235 / (L/100km)` |
+| **L/100 km → mpg UK** | `mpg_UK = 282.480936 / (L/100km)` | `≈ 282 / (L/100km)` |
+| **mpg US → L/100 km** | `L/100km = 235.214583 / mpg_US` | `≈ 235 / mpg_US` |
+| **mpg UK → L/100 km** | `L/100km = 282.480936 / mpg_UK` | `≈ 282 / mpg_UK` |
+
+**Quick examples:**
+| L/100 km | mpg US | mpg UK |
+|----------|--------|--------|
+| 4.0 | 58.8 | 70.6 |
+| 5.0 | 47.0 | 56.5 |
+| 6.0 | 39.2 | 47.1 |
+| 7.0 | 33.6 | 40.4 |
+| 8.0 | 29.4 | 35.3 |
+| 10.0 | 23.5 | 28.2 |
+
+## Real-life references
+
+| Object / Situation | Liters | Gal US | Gal UK |
+|--------------------|--------|--------|--------|
+| Glass of water | 0.25 L | 0.066 | 0.055 |
+| Soda can | 0.33 L | 0.087 | 0.073 |
+| Wine bottle | 0.75 L | 0.198 | 0.165 |
+| Large water bottle | 1.5 L | 0.396 | 0.330 |
+| 6-pack beer (355 ml each) | 2.13 L | 0.563 | 0.468 |
+| Motorcycle tank | 12–18 L | 3.2–4.8 | 2.6–4.0 |
+| Compact car tank | 40–50 L | 10.6–13.2 | 8.8–11.0 |
+| Family car tank | 60–75 L | 15.9–19.8 | 13.2–16.5 |
+| Beer keg (1/2 US keg) | 58.7 L | 15.5 | 12.9 |
+| Beer keg (1/4 US keg) | 29.3 L | 7.75 | 6.45 |
+| Garden watering (1h hose 15 L/min) | 900 L | 238 | 198 |
+| 3 m inflatable pool | ~3,000 L | ~793 | ~660 |
+
+## Conclusion
+
+- **First**: find out if it's **US gallon (3.785 L)** or **UK (4.546 L)** — they differ by 20 %.
+- **Exact**: divide L by 3.78541 (US) or 4.54609 (UK).
+- **Mental**: L / 3.8 ≈ gal US; L / 4.5 ≈ gal UK.
+- **Fuel economy**: mpg US = 235 / (L/100km); mpg UK = 282 / (L/100km).
+- **Tool**: [unit converter](/herramienta/unidades/) — pick "Volume" and the correct gallon.
+
+[Convert liters to gallons (US/UK) now](/herramienta/unidades/).

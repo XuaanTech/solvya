@@ -1,0 +1,92 @@
+---
+lang: en
+title: "QR Code Generator: Create Free QR, Customize and Download"
+description: "Generate free QR codes for URL, text, WiFi, vCard, email, SMS. Customize colors, logo, size and margin. Download PNG, SVG. No registration, no limits."
+category: generadores
+date: 2026-09-13
+---
+
+A **QR code (Quick Response)** stores information in a dot matrix that any phone reads instantly. Our **free QR generator** creates unlimited static codes, **no registration**, **no watermark** and **all in your browser** (total privacy).
+
+## Supported QR types
+
+| Type | Typical use | Fields |
+|------|-------------|--------|
+| **URL** | Web, landing, social | `https://...` |
+| **Text** | Notes, codes, keys | Free text (up to ~2.9 KB) |
+| **WiFi** | Guests, offices | SSID, password, WPA/WEP/open, hidden |
+| **vCard** | Business cards | Name, phone, email, org, title, web, address |
+| **Email** | Quick contact | `mailto:email?subject=...&body=...` |
+| **SMS** | Campaigns, support | Number + predefined message |
+| **Phone** | Click-to-call | `tel:+15551234567` |
+| **Geo** | Maps, events | Latitude, longitude |
+| **Event (iCal)** | Calendar | Title, start/end, location, description |
+
+> **Real limit**: a v40 QR (max) holds ~2.9 KB (≈ 4,200 alphanumeric chars). For long URLs, use a shortener first.
+
+## Advanced customization
+
+| Option | Recommendation |
+|--------|----------------|
+| **Foreground color** | Dark on light background (contrast ≥ 4.5:1 for accessibility). |
+| **Background color** | White or very light. Avoid gradients or background images. |
+| **Center logo** | PNG/SVG with transparency. Size ≤ 20–25 % of QR. Error correction **M (15 %)** or **Q (25 %)**. |
+| **Margin (quiet zone)** | Minimum 4 modules (standard). Increase if framing or colored background. |
+| **Error correction** | **L (7 %)** = more data, less robustness. **M (15 %)** = balance. **Q (25 %)** = with logo. **H (30 %)** = dirty/industrial environments. |
+
+## PNG vs SVG: which to download?
+
+| Format | Advantages | Use for |
+|--------|------------|---------|
+| **PNG** | Ready for web, email, Office, standard offset print | Web, social media, A5/A4 flyers, business cards |
+| **SVG** | Vector, infinite scaling, editable in Illustrator/Figma/Sketch | Large signage, vinyl, packaging, brand master |
+
+> **Tip**: download **both**. Use PNG for web and SVG for any professional print.
+
+## Best practices (checklist before printing)
+
+- [ ] **Contrast**: dark color on light (black on white is safest).
+- [ ] **Quiet zone**: minimum 4 modules margin (don't place text/images at the edge).
+- [ ] **Minimum size**: 2 × 2 cm (≈ 76 × 76 px at 96 DPI) for reliable scanning.
+- [ ] **Real test**: scan **with 2 different phones** (iOS + Android) before sending to print.
+- [ ] **Short URL**: if URL exceeds ~100 chars, shorten it (bit.ly, your domain) → cleaner, faster QR.
+- [ ] **Logo**: if using logo, bump error correction to **Q** or **H**.
+
+## Static QR vs Dynamic QR
+
+| Feature | Static QR (this generator) | Dynamic QR (external service) |
+|---------|----------------------------|-------------------------------|
+| **Change destination** | No (regenerate QR) | Yes (dashboard) |
+| **Analytics / scans** | No | Yes |
+| **Expiration** | Never | Per plan |
+| **Cost** | **Free forever** | Freemium / subscription |
+| **Privacy** | 100 % local (client-side) | Data on provider's server |
+
+> **Use static** for: WiFi, vCard, fixed URLs, events, packaging, signage.  
+> **Use dynamic** for: marketing campaigns with tracking, changing URLs, A/B testing.
+
+## Privacy: everything in your browser
+
+This generator uses the **`qrcode` / `qr-code-styling`** library compiled to WebAssembly running **100 % client-side**.
+
+- **Nothing sent to server**: not the URL, not the WiFi password, not the vCard.
+- **Works offline** (after first load): open page, disconnect internet, keep generating QR.
+- **Zero tracking**: no analytics, no cookies, no fingerprinting.
+
+[Generate my free QR code now](/herramienta/qr/).
+
+## Quick use cases
+
+| Case | Type | Example |
+|------|------|---------|
+| Restaurant menu | URL | `https://mydomain.com/menu` |
+| Guest WiFi | WiFi | SSID: `Guests`, Pass: `wifi2024`, WPA2 |
+| Business card | vCard | Name, phone, email, LinkedIn, web |
+| Networking event | Event | "JS Meetup", 2026-10-15 18:00, Coworking X |
+| Tech support | Email | `mailto:support@myweb.com?subject=Help` |
+| SMS campaign | SMS | `+15551234567`, "Hi, I want info" |
+| Store location | Geo | `40.7128,-74.0060` (NYC) |
+
+---
+
+**Ready? → [Open QR generator](/herramienta/qr/) and create your code in 10 seconds.**

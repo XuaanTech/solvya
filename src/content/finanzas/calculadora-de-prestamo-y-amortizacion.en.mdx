@@ -1,0 +1,115 @@
+---
+lang: en
+title: "Loan and Amortization Calculator: Payment, Schedule and Total"
+description: "Calculate the monthly payment, full amortization schedule and total payable of any loan. French, German and American systems explained with examples."
+category: "finanzas"
+date: "2026-09-14"
+author: "Equipo Solvya"
+---
+
+<article>
+
+## What is a loan and amortization calculator?
+
+A **loan calculator** lets you know, before signing, how much you'll pay each month, how much of that payment is interest and how much actually reduces your debt. It also generates the **amortization schedule**: the month-by-month breakdown of principal repaid, interest paid and outstanding balance.
+
+This tool covers the **three main systems** used in banking and finance:
+
+| System | Payment | Principal Repayment | Interest | Typical Use |
+|--------|---------|---------------------|----------|-------------|
+| **French** | Constant | Grows each month | Decreases each month | Mortgages, personal loans, car (Spain, Europe, LatAm) |
+| **German** | Decreasing | Constant | Decreases each month | Business loans, some Nordic countries |
+| **American** | Interest-only (constant) | Zero until end | Constant | Bridge loans, bonds, corporate operations |
+
+---
+
+## How each system works
+
+### French System (fixed payment) — The Standard
+
+This is the most widespread for mortgages and consumer loans in Spain. The **monthly payment doesn't change** throughout the loan, but its composition does:
+
+- **At the start**: most of the payment is **interest**, little principal
+- **At the end**: most is **principal**, almost no interest
+
+The monthly payment formula:
+
+`Payment = (P × i) / (1 - (1 + i)^(-n))`
+
+Where:
+- $P$ = Initial principal
+- $i$ = Monthly interest rate (annual / 12)
+- $n$ = Total number of payments (years × 12)
+
+> **Example**: €150,000 at 3.5% for 30 years → Payment €673.57. Total paid: €242,485. Interest: €92,485.
+
+### German System (constant principal repayment)
+
+Here you **repay the same amount of principal each month**. The payment **starts higher and decreases progressively** because interest is calculated on a linearly decreasing balance.
+
+- Month 1 payment = (Principal / n) + (Principal × i)
+- Month n payment = (Principal / n) + ((Principal / n) × i)
+
+> **Advantage**: You pay less total interest than French system.
+> **Disadvantage**: Initial payment is higher, reducing borrowing capacity.
+
+### American System (interest-only)
+
+You only pay interest during the loan term. At maturity, **you repay all principal at once**.
+
+- Monthly payment = Principal × i (constant)
+- At end: final payment = Principal + last interest payment
+
+> **Real use**: Bridge loans, developer financing, corporate bonds. **Not common for residential mortgages**.
+
+---
+
+## What data do you need to calculate?
+
+| Data | Description | Example |
+|------|-------------|---------|
+| **Principal** | Total amount borrowed | €150,000 |
+| **Annual Interest (APR or nominal)** | Fixed or variable rate (we use fixed for simulation) | 3.5% |
+| **Term** | Years of loan duration | 30 years |
+| **System** | French, German or American | French |
+| **Start Date** (optional) | To see real months in schedule | 01/2025 |
+
+---
+
+## What the calculator returns
+
+1. **Monthly payment** (or first payment in German system)
+2. **Total interest** paid over the whole loan
+3. **Total paid** (principal + interest)
+4. **Complete amortization schedule** with columns:
+   - Period (month)
+   - Date
+   - Payment
+   - Principal repaid
+   - Interest
+   - Outstanding balance
+
+You can **download or copy** the schedule for your calculations, compare bank offers or plan early repayments.
+
+---
+
+## Early repayment: is it worth it?
+
+If you receive an inheritance, a bonus or save money, you can **repay principal early**. Two options:
+
+| Option | What changes | When it makes sense |
+|--------|--------------|---------------------|
+| **Reduce payment** | Same end date, lower payment | If you want to ease your monthly burden |
+| **Shorten term** | Same payment, finish earlier | **Save more interest** (recommended if you can) |
+
+> **Tip**: Ask your bank about early repayment fees (in Spain, max 0.5% first 5 years and 0.25% after for variable mortgage; 2% / 1.5% for fixed).
+
+---
+
+## Try the calculator now
+
+Enter your details and get the payment, amortization schedule and total cost of your loan instantly. Free, no sign-up, 100% in your browser.
+
+[Calculate your loan payment and schedule](/herramienta/prestamo-amortizacion/) and get your complete table instantly.
+
+</article>

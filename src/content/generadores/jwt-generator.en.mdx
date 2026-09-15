@@ -1,0 +1,90 @@
+---
+lang: en
+title: "Online JWT (JSON Web Token) Generator"
+description: "Generate and decode JWTs signed with HS256/384/512. Customizable JSON header and payload. Local and secure."
+category: "generadores"
+date: "2026-09-14"
+author: "Equipo Solvya"
+---
+
+<article>
+
+## What is a JWT (JSON Web Token)?
+
+A **JWT (JSON Web Token)** is an open standard (RFC 7519) for securely transmitting information between parties as a JSON object. It's primarily used for **authentication and authorization** in modern APIs and web applications.
+
+A JWT consists of **three parts** separated by dots:
+
+```
+xxxxx.yyyyy.zzzzz
+```
+
+| Part | Content | Encoding |
+|------|---------|----------|
+| **Header** | Algorithm and token type | Base64URL |
+| **Payload** | Claims (data: user, permissions, expiration) | Base64URL |
+| **Signature** | Cryptographic signature of header + payload | Base64URL |
+
+> **Important**: The header and payload are **not encrypted**, only Base64URL encoded. Anyone can read them. The **signature** guarantees the token hasn't been tampered with.
+
+---
+
+## Supported Algorithms
+
+This tool implements **HMAC with SHA-2** (symmetric key):
+
+| Algorithm | Hash Function | Signature Length | Recommended Use |
+|-----------|---------------|------------------|-----------------|
+| **HS256** | SHA-256 | 256 bits (32 bytes) | General standard, good security/performance |
+| **HS384** | SHA-384 | 384 bits (48 bytes) | Higher security, compatible with more systems |
+| **HS512** | SHA-512 | 512 bits (64 bytes) | Maximum HMAC security |
+
+> **Note**: **RS256/RS384/RS512** (RSA) and **ES256/ES384/ES512** (ECDSA) algorithms use asymmetric keys (public/private) and are **not implemented** in this version as they require certificate management.
+
+---
+
+## Common Claims in Payload
+
+| Claim | Name | Description | Example |
+|-------|------|-------------|---------|
+| `iss` | Issuer | Who issues the token | `"my-app.com"` |
+| `sub` | Subject | User identifier | `"user_12345"` |
+| `aud` | Audience | Intended recipient | `"api.my-app.com"` |
+| `exp` | Expiration | Expiration timestamp (Unix seconds) | `1735689600` |
+| `nbf` | Not Before | Not valid before this timestamp | `1704067200` |
+| `iat` | Issued At | Issuance timestamp | `1704067200` |
+| `jti` | JWT ID | Unique token identifier | `"a1b2c3d4-e5f6"` |
+| *custom* | — | Custom data (roles, permissions, etc.) | `"roles": ["admin", "editor"]` |
+
+---
+
+## Security: Your Key Never Leaves the Browser
+
+This tool uses the browser's native **Web Crypto API** (`crypto.subtle`):
+
+- ✅ **Local signing**: Secret key and payload never leave your device
+- ✅ **No network**: No HTTP requests, everything happens client-side
+- ✅ **Standard**: Implementation compliant with RFC 7519 and Web Crypto API
+- ✅ **Auditable**: Code is visible in browser inspector
+
+> **Warning**: In production, **never** expose your secret key in frontend. JWTs should be signed in backend. This tool is only for **development, testing and learning**.
+
+---
+
+## Decode Without Validating Signature
+
+The **"Decode"** button:
+1. Splits the JWT into its 3 parts by `.`
+2. Decodes Base64URL of header and payload
+3. Shows formatted JSON
+4. **Does NOT validate signature** — useful for inspecting third-party tokens or debugging
+
+---
+
+## Try the generator now
+
+Generate signed JWTs for your APIs, authentication or testing. Fully local, free and no sign-up.
+
+[Generate your JWT online](/herramienta/jwt-generator/) and decode tokens instantly.
+
+</article>

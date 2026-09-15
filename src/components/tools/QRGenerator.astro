@@ -1,0 +1,91 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="qr">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="qr-texto" data-i18n="calc.qrText">{langText(es, 'calc.qrText')}</label>
+      <textarea id="qr-texto" class="tool-widget__textarea" rows="3" spellcheck="false" data-field="texto">https://solvya.pages.dev</textarea>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.generate">{langText(es, 'calc.generate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalidQR">
+      <span data-lang-region="es">{langText(es, 'calc.invalidQR')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalidQR')}</span>
+    </p>
+    <div class="tool-widget__qr" data-val="qrbox" role="img" data-i18n-aria="calc.qrAlt"></div>
+    <p class="tool-widget__note">
+      <span class="tool-widget__qr-content" data-val="contenido"></span>
+    </p>
+    <button type="button" class="btn btn--ghost btn--sm" data-download data-i18n="calc.qrDownload">{langText(es, 'calc.qrDownload')}</button>
+  </div>
+</div>
+
+<script>
+  import qrcode from 'qrcode-generator';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="qr"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const texto = root.querySelector('[data-field="texto"]');
+    const qrbox = root.querySelector('[data-val="qrbox"]');
+    const contenido = root.querySelector('[data-val="contenido"]');
+    let lastSvg = '';
+
+    function generate() {
+      const content = texto.value.trim();
+      if (!content) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+
+      const qr = qrcode(0, 'M');
+      qr.addData(content);
+      qr.make();
+
+      const cells = qr.getModuleCount();
+      const size = 320;
+      const cell = size / cells;
+      const pad = 4 * cell;
+      let path = '';
+      for (let r = 0; r < cells; r++) {
+        for (let c = 0; c < cells; c++) {
+          if (qr.isDark(r, c)) path += `M${(c * cell + pad).toFixed(2)},${(r * cell + pad).toFixed(2)}h${cell.toFixed(2)}v${cell.toFixed(2)}h${(-cell).toFixed(2)}z`;
+        }
+      }
+
+      lastSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${(size + pad * 2).toFixed(2)} ${(size + pad * 2).toFixed(2)}" width="200" height="200" role="img"><rect width="100%" height="100%" fill="#ffffff"/><path d="${path}" fill="#111827"/></svg>`;
+      qrbox.innerHTML = lastSvg;
+      contenido.textContent = content;
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    function download() {
+      if (!lastSvg) return;
+      const blob = new Blob([lastSvg], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'codigo-qr.svg';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); generate(); });
+    texto.addEventListener('input', generate);
+    root.querySelector('[data-download]')?.addEventListener('click', download);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      texto.value = texto.defaultValue;
+      generate();
+    });
+    generate();
+  }
+</script>

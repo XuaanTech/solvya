@@ -1,0 +1,182 @@
+﻿---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FAQSection from '../../../components/FAQSection.astro';
+import AdSlot from '../../../components/AdSlot.astro';
+import ArticleDisclaimer from '../../../components/ArticleDisclaimer.astro';
+import ToolCTA from '../../../components/ToolCTA.astro';
+import RelatedArticles from '../../../components/RelatedArticles.astro';
+
+import { SITE } from '../../../data/site';
+import categories from '../../../data/categories.json';
+import tools from '../../../data/tools.json';
+import { articleSchema, breadcrumbSchema, faqSchema, howToSchema } from '../../../lib/seo';
+import { categoryFromPath, readingTimeFromFile, formatDate, pick } from '../../../lib/utils';
+
+export const getStaticPaths = () => {
+  const allModules = import.meta.glob('../../../content/**/*.mdx', { eager: true });
+  return Object.entries(allModules)
+    .filter(([path]) => path.endsWith('.en.mdx'))
+    .map(([path, mod]) => {
+      const category = categoryFromPath(path);
+      const slug = String(path).split(/[\\/]/).pop().replace(/\.en\.mdx$/, '');
+      return { params: { category, slug }, props: { category, slug } };
+    });
+};
+
+const { category, slug } = Astro.props;
+const allModules = import.meta.glob('../../../content/**/*.mdx', { eager: true });
+
+// EN module is primary; ES companion is the alternate
+const enEntries = Object.entries(allModules).filter(
+  ([p]) => categoryFromPath(p) === category && p.endsWith(`${slug}.en.mdx`)
+);
+const esEntries = Object.entries(allModules).filter(
+  ([p]) => categoryFromPath(p) === category && p.endsWith(`${slug}.mdx`) && !p.endsWith(`${slug}.en.mdx`)
+);
+const enEntry = enEntries[0] ?? null;
+const esEntry = esEntries[0] ?? null;
+if (!enEntry) return Astro.redirect('/404/');
+
+const [enFilePath, enMod] = enEntry;
+const Content = enMod.default;
+const ContentEs = esEntry?.[1]?.default ?? null;
+const fm = enMod.frontmatter ?? {};
+
+const catData = categories.find((c) => c.slug === category);
+const categoryNameEn = pick(catData?.name, 'en');
+const categoryNameEs = pick(catData?.name, 'es');
+const url = `${SITE.url}/en/${category}/${slug}/`;
+
+let readingTimeEn = '';
+let readingTimeEs = '';
+try { readingTimeEn = readingTimeFromFile(enMod.file ?? enFilePath, 'en'); } catch { /* ignore */ }
+if (esEntry) {
+  try { readingTimeEs = readingTimeFromFile(esEntry[1].file ?? esEntry[0], 'es'); } catch { /* ignore */ }
+}
+
+const schemaUrl = `${SITE.url}/en/${category}/${slug}/`;
+const articleSchemaData = articleSchema({
+  title: fm.title ?? slug,
+  description: fm.description ?? '',
+  url,
+  date: fm.date ?? '',
+  updated: fm.updated,
+  author: fm.author,
+  categoryName: categoryNameEn,
+  lang: 'en',
+});
+
+const schemas = [
+  JSON.stringify(articleSchemaData),
+  JSON.stringify(breadcrumbSchema([
+    { label: categoryNameEn, href: `/en/${category}/` },
+    { label: fm.title ?? slug },
+  ])),
+];
+if (Array.isArray(fm.faqs) && fm.faqs.length) {
+  schemas.push(JSON.stringify(faqSchema(fm.faqs.map((f) => ({
+    question: pick(f.q, 'en'),
+    answer: pick(f.a, 'en'),
+  })))));
+}
+if (Array.isArray(fm.steps) && fm.steps.length) {
+  schemas.push(JSON.stringify(howToSchema({
+    name: fm.title ?? slug,
+    description: fm.description ?? '',
+    url,
+    steps: fm.steps.map((s) => ({
+      title: pick(s.title, 'en'),
+      text: pick(s.text, 'en'),
+    })),
+  })));
+}
+
+const toolSlug = fm.tool;
+const toolData = toolSlug ? tools.find((t) => t.slug === toolSlug) ?? null : null;
+
+// Related articles — score against EN content, link to /en/ equivalents
+const myTags = (fm.tags ?? []).map((t) => String(t).toLowerCase());
+const myTitleWords = (fm.title ?? '').toLowerCase().split(/\s+/).filter((w) => w.length > 3);
+
+const relatedPosts = Object.values(allModules)
+  .map((_, i) => Object.entries(allModules)[i])
+  .filter(([p, m]) => p.endsWith('.en.mdx') && p !== enFilePath && m.frontmatter?.title)
+  .map(([p, m]) => {
+    const otherTags = (m.frontmatter.tags ?? []).map((t) => String(t).toLowerCase());
+    let score = otherTags.filter((t) => myTags.includes(t)).length * 3;
+    const otherWords = String(m.frontmatter.title).toLowerCase().split(/\s+/).filter((w) => w.length > 3);
+    score += otherWords.filter((w) => myTitleWords.includes(w)).length * 2;
+    const cat = categoryFromPath(p);
+    const catDef = categories.find((c) => c.slug === cat);
+    return {
+      score,
+      url: `/${cat}/${String(p).split(/[\\/]/).pop().replace(/\.en\.mdx$/, '')}/`,
+      data: {
+        title: m.frontmatter.title,
+        titleEn: m.frontmatter.titleEn ?? m.frontmatter.title,
+        date: m.frontmatter.date ?? '',
+        category: catDef?.name ?? categoryNameEn,
+      },
+    };
+  })
+  .filter((r) => r.score > 0)
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title={fm.title ?? slug}
+  description={fm.description ?? ''}
+  canonicalURL={url}
+  ogType="article"
+  articlePublishedTime={fm.date}
+  articleModifiedTime={fm.updated ?? fm.date}
+  articleAuthor={fm.author ?? SITE.author}
+  articleSection={categoryNameEn}
+  lang="en"
+>
+  <article class="container container--narrow article-page">
+    <Breadcrumbs lang="en" items={[
+      { label: { es: categoryNameEs, en: categoryNameEn }, href: `/${category}/` },
+      { label: { es: esEntry?.[1]?.frontmatter?.title ?? fm.title ?? slug, en: fm.title ?? slug } },
+    ]} />
+
+    <header class="article-header">
+      <span class="article-header__category">{categoryNameEn}</span>
+      <h1 class="article-header__title">{fm.title ?? slug}</h1>
+      <div class="article-header__meta">
+        <time datetime={fm.date}>{formatDate(fm.date, 'en')}</time>
+        <span class="article-header__dot">·</span>
+        <span>{fm.author ?? SITE.author}</span>
+        <span class="article-header__dot">·</span>
+        <span>{readingTimeEn}</span>
+      </div>
+      {fm.description && (
+        <p class="article-header__excerpt">{fm.description}</p>
+      )}
+    </header>
+
+    <script type="application/ld+json" set:html={schemas.join('\n')} />
+
+    <ArticleDisclaimer lang="en" />
+
+    <div class="article-content prose">
+      <Content />
+    </div>
+
+    {toolData && (
+      <ToolCTA lang="en" tool={{ slug: toolData.slug, name: toolData.name }} />
+    )}
+
+    <AdSlot slot="articleBottom" />
+
+    {Array.isArray(fm.faqs) && fm.faqs.length > 0 && (
+      <FAQSection faqs={fm.faqs} lang="en" />
+    )}
+
+    {relatedPosts.length > 0 && (
+      <RelatedArticles posts={relatedPosts} lang="en" />
+    )}
+  </article>
+</BaseLayout>

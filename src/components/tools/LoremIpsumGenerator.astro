@@ -1,0 +1,99 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="lorem-ipsum">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--3">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="li-parrafos" data-i18n="calc.liParagraphs">{langText(es, 'calc.liParagraphs')}</label>
+        <input id="li-parrafos" class="tool-widget__input" type="number" min="1" max="20" inputmode="numeric" value="3" data-field="parrafos" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="li-palabras" data-i18n="calc.liWords">{langText(es, 'calc.liWords')}</label>
+        <input id="li-palabras" class="tool-widget__input" type="number" min="5" max="100" inputmode="numeric" value="25" data-field="palabras" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="li-comienzo" data-i18n="calc.liClassic">{langText(es, 'calc.liClassic')}</label>
+        <select id="li-comienzo" class="tool-widget__select" data-field="clasico">
+          <option value="yes" data-i18n="calc.liYes">{langText(es, 'calc.liYes')}</option>
+          <option value="no" data-i18n="calc.liNo">{langText(es, 'calc.liNo')}</option>
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.liGenerate">{langText(es, 'calc.liGenerate')}</button>
+      <button type="button" class="btn btn--ghost" data-copy data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <textarea class="tool-widget__textarea" rows="10" readonly data-val="texto"></textarea>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="lorem-ipsum"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const fields = {
+      parrafos: root.querySelector('[data-field="parrafos"]'),
+      palabras: root.querySelector('[data-field="palabras"]'),
+      clasico: root.querySelector('[data-field="clasico"]'),
+    };
+    const texto = root.querySelector('[data-val="texto"]');
+
+    const LATIN = ['lorem','ipsum','dolor','sit','amet','consectetur','adipiscing','elit','sed','do','eiusmod','tempor','incididunt','ut','labore','et','dolore','magna','aliqua','enim','ad','minim','veniam','quis','nostrud','exercitation','ullamco','laboris','nisi','aliquip','ex','ea','commodo','consequat','duis','aute','irure','in','reprehenderit','voluptate','velit','esse','cillum','fugiat','nulla','pariatur','excepteur','sint','occaecat','cupidatat','non','proident','sunt','culpa','qui','officia','deserunt','mollit','anim','id','est','laborum'];
+
+    function initLorem() {
+      const lc = LATIN[0].toUpperCase() + LATIN.slice(1).join(' ');
+      let parts = lc.split(' ');
+      let count = 25;
+      while (count-- > 0) parts.push(LATIN[Math.floor(Math.random() * LATIN.length)]);
+      return parts.join(' ') + '.';
+    }
+
+    function generate() {
+      const paragraphs = Math.max(1, Math.min(20, Math.round(Number(fields.parrafos.value || 3))));
+      const words = Math.max(5, Math.min(100, Math.round(Number(fields.palabras.value || 25))));
+      const classic = fields.clasico.value === 'yes';
+      const out = [];
+      for (let p = 0; p < paragraphs; p++) {
+        let first = true;
+        const pool = [];
+        while (pool.length < words) {
+          const start = first && classic && p === 0 ? initLorem() : '';
+          if (start) { pool.push(start); }
+          else {
+            const sentenceLen = 8 + Math.floor(Math.random() * 10);
+            const words2 = [];
+            for (let i = 0; i < sentenceLen && pool.length < words; i++) {
+              words2.push(LATIN[Math.floor(Math.random() * LATIN.length)]);
+              pool.length++;
+            }
+            pool.length -= words2.length;
+            pool.push(capitalize(words2.join(' ')) + '.');
+          }
+          first = false;
+        }
+        out.push(pool.join(' '));
+      }
+      texto.value = out.join('\n\n');
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); generate(); });
+    for (const f of Object.values(fields)) f.addEventListener('change', generate);
+    root.querySelector('[data-copy]')?.addEventListener('click', () => {
+      if (!texto.value) return;
+      navigator.clipboard.writeText(texto.value);
+    });
+    generate();
+  }
+</script>

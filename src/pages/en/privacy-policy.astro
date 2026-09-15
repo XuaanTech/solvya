@@ -1,0 +1,40 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+const es = 'en';
+---
+<BaseLayout title={langText(es, 'privacy.title')} description={langText(es, 'about.privacy')} lang="en">
+  <div class="page-simple container">
+    <Breadcrumbs lang="en" items={[{ label: langText(es, 'privacy.title') }]} />
+
+    <h1 class="page-title">{langText(es, 'privacy.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">{langText(es, 'about.privacy')}</p>
+
+      <h2>1. Data we collect</h2>
+      <p>We do not create accounts or collect personal data through registration forms. The calculators work entirely in your browser: the figures you enter are never sent to our servers.</p>
+
+      <h2>2. Cookies and advertising (Google AdSense)</h2>
+      <p>We display ads through <strong>Google AdSense</strong>. Google and its partners may use cookies (such as Google's double-click cookies) to serve ads based on your visits to this site and other websites.</p>
+      <p>You can see how Google uses data at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener noreferrer" target="_blank">Google's partner policy</a>.</p>
+
+      <h2>3. How to opt out of personalized advertising</h2>
+      <p>You can opt out of personalized Google ads at <a href="https://adssettings.google.com" rel="noopener noreferrer" target="_blank">Google Ads Settings</a>. You can also configure your browser to reject cookies or warn you before installing them.</p>
+
+      <h2>4. Analytics</h2>
+      <p>We do not use third-party analytics tools. There are no first-party tracking cookies.</p>
+
+      <h2>5. Local storage</h2>
+      <p>The language preference you choose is stored in your browser's local storage (localStorage), exclusively to remember your choice on future visits. You can delete it at any time from your browser settings.</p>
+
+      <h2>6. Your rights (GDPR)</h2>
+      <p>Since we do not store personal data, there is no information to request, rectify, or delete. For any privacy questions, write to us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+      <h2>7. Changes to this policy</h2>
+      <p>We may update this policy. Changes will be published on this page with their revision date.</p>
+    </div>
+  </div>
+</BaseLayout>

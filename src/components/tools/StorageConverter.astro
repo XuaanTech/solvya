@@ -1,0 +1,122 @@
+---
+import { langText } from '../../lib/i18n';
+import { STORAGE_UNITS } from '../../data/units.js';
+const es = 'es';
+const groupId = 'almacenamiento';
+---
+<div class="tool-widget" data-widget="almacenamiento">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="alm-valor" data-i18n="calc.value">{langText(es, 'calc.value')}</label>
+        <div class="tool-widget__control">
+          <input id="alm-valor" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="1" data-field="valor" />
+          <span class="tool-widget__adorn tool-widget__adorn--right" data-val="simboloDesde">GB</span>
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="alm-desde" data-i18n="calc.from">{langText(es, 'calc.from')}</label>
+        <select id="alm-desde" class="tool-widget__select" data-field="desde">
+          {STORAGE_UNITS.map((u) => (
+            <option value={u.id} selected={u.id === 'GB'} data-i18n={`calc.units.${groupId}.${u.id}`}>
+              {langText(es, `calc.units.${groupId}.${u.id}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="alm-hasta" data-i18n="calc.to">{langText(es, 'calc.to')}</label>
+        <select id="alm-hasta" class="tool-widget__select" data-field="hasta">
+          {STORAGE_UNITS.map((u) => (
+            <option value={u.id} selected={u.id === 'MB'} data-i18n={`calc.units.${groupId}.${u.id}`}>
+              {langText(es, `calc.units.${groupId}.${u.id}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-swap data-i18n="calc.swap">{langText(es, 'calc.swap')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalidValue">
+      <span data-lang-region="es">{langText(es, 'calc.invalidValue')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalidValue')}</span>
+    </p>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-val="operacion">1 GB</span>
+      <strong class="tool-widget__conversion-value" data-val="resultado">= 1.000 MB</strong>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.storageHint">{langText(es, 'calc.storageHint')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.storageHint">{langText('en', 'calc.storageHint')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { STORAGE_UNITS, convertLinear } from '../../data/units.js';
+  import { parseDecimal, formatSmart } from '../../lib/format.js';
+  import { textOf, applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="almacenamiento"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      valor: root.querySelector('[data-field="valor"]'),
+      desde: root.querySelector('[data-field="desde"]'),
+      hasta: root.querySelector('[data-field="hasta"]'),
+    };
+    const val = {
+      operacion: root.querySelector('[data-val="operacion"]'),
+      resultado: root.querySelector('[data-val="resultado"]'),
+      simboloDesde: root.querySelector('[data-val="simboloDesde"]'),
+    };
+    const unitById = (id) => STORAGE_UNITS.find((u) => u.id === id);
+    const unitName = (lang, id) => textOf(lang, 'calc.units.almacenamiento.' + id) || id;
+
+    function compute() {
+      const valor = parseDecimal(fields.valor.value);
+      const desde = unitById(fields.desde.value);
+      const hasta = unitById(fields.hasta.value);
+      if (valor <= 0 || !desde || !hasta) { error.hidden = false; result.hidden = true; return; }
+      const res = convertLinear(valor, desde, hasta);
+      if (!Number.isFinite(res)) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const lang = currentLang();
+      val.operacion.textContent = formatSmart(valor) + ' ' + desde.symbol;
+      val.resultado.textContent = '= ' + formatSmart(res) + ' ' + hasta.symbol + ' (' + unitName(lang, hasta.id) + ')';
+      applyLang(lang);
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.desde.addEventListener('change', () => {
+      val.simboloDesde.textContent = unitById(fields.desde.value)?.symbol ?? '';
+      compute();
+    });
+    fields.hasta.addEventListener('change', compute);
+    fields.valor.addEventListener('input', compute);
+    root.querySelector('[data-swap]')?.addEventListener('click', () => {
+      const t = fields.desde.value;
+      fields.desde.value = fields.hasta.value;
+      fields.hasta.value = t;
+      val.simboloDesde.textContent = unitById(fields.desde.value)?.symbol ?? '';
+      compute();
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.valor.value = fields.valor.defaultValue;
+      fields.desde.value = 'GB';
+      fields.hasta.value = 'MB';
+      val.simboloDesde.textContent = 'GB';
+      result.hidden = true; error.hidden = true;
+    });
+    compute();
+  }
+</script>

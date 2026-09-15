@@ -1,0 +1,137 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="peso-ideal">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <span class="tool-widget__label" data-i18n="calc.sex">{langText(es, 'calc.sex')}</span>
+        <div class="tool-widget__segmented" data-field="sexo">
+          <button type="button" class="tool-widget__segment is-active" data-sex="male" data-i18n="calc.male">{langText(es, 'calc.male')}</button>
+          <button type="button" class="tool-widget__segment" data-sex="female" data-i18n="calc.female">{langText(es, 'calc.female')}</button>
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ideal-altura" data-i18n="calc.idealHeight">{langText(es, 'calc.idealHeight')}</label>
+        <input id="ideal-altura" class="tool-widget__input" type="number" min="100" max="230" inputmode="numeric" value="170" data-field="altura" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.idealInvalid">{langText(es, 'calc.idealInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.idealInvalid">{langText('en', 'calc.idealInvalid')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.idealRobinson">{langText(es, 'calc.idealRobinson')}</span>
+        <strong class="result-stat__value" data-val="robinson">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.idealMiller">{langText(es, 'calc.idealMiller')}</span>
+        <strong class="result-stat__value" data-val="miller">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.idealDevine">{langText(es, 'calc.idealDevine')}</span>
+        <strong class="result-stat__value" data-val="devine">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.idealHamwi">{langText(es, 'calc.idealHamwi')}</span>
+        <strong class="result-stat__value" data-val="hamwi">—</strong>
+      </div>
+    </div>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-i18n="calc.idealRange">{langText(es, 'calc.idealRange')}</span>
+      <strong class="tool-widget__conversion-value" data-val="rango">—</strong>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.idealNote">{langText(es, 'calc.idealNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.idealNote">{langText('en', 'calc.idealNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { parseDecimal, formatSmart } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="peso-ideal"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const altura = root.querySelector('[data-field="altura"]');
+    const segments = root.querySelectorAll('[data-sex]');
+    const val = {
+      robinson: root.querySelector('[data-val="robinson"]'),
+      miller: root.querySelector('[data-val="miller"]'),
+      devine: root.querySelector('[data-val="devine"]'),
+      hamwi: root.querySelector('[data-val="hamwi"]'),
+      rango: root.querySelector('[data-val="rango"]'),
+    };
+    let sex = 'male';
+
+    segments.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        segments.forEach((b) => b.classList.toggle('is-active', b === btn));
+        sex = btn.dataset.sex;
+        compute();
+      });
+    });
+
+    function formulas(cm) {
+      const inchesOver = (cm - 152.4) / 2.54; // pulgadas sobre 5 pies
+      if (sex === 'male') {
+        return {
+          robinson: 52 + 1.9 * inchesOver,
+          miller: 56.2 + 1.41 * inchesOver,
+          devine: 50 + 2.3 * inchesOver,
+          hamwi: 48 + 2.7 * inchesOver,
+        };
+      }
+      return {
+        robinson: 49 + 1.7 * inchesOver,
+        miller: 53.1 + 1.36 * inchesOver,
+        devine: 45.5 + 2.3 * inchesOver,
+        hamwi: 45.5 + 2.2 * inchesOver,
+      };
+    }
+
+    function fmtNums(v) { return formatSmart(v, 1) + ' kg'; }
+
+    function compute() {
+      const cm = parseDecimal(altura.value);
+      if (cm < 100 || cm > 230) {
+        error.hidden = false;
+        result.hidden = true;
+        return;
+      }
+      error.hidden = true;
+      const f = formulas(cm);
+      val.robinson.textContent = fmtNums(f.robinson);
+      val.miller.textContent = fmtNums(f.miller);
+      val.devine.textContent = fmtNums(f.devine);
+      val.hamwi.textContent = fmtNums(f.hamwi);
+      const vals = Object.values(f);
+      val.rango.textContent = fmtNums(Math.min(...vals)) + ' – ' + fmtNums(Math.max(...vals));
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    altura.addEventListener('input', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      altura.value = '170';
+      segments.forEach((b) => b.classList.toggle('is-active', b.dataset.sex === 'male'));
+      sex = 'male';
+      compute();
+    });
+    compute();
+  }
+</script>

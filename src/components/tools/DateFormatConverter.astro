@@ -1,0 +1,370 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+const PRESETS = [
+  { key: 'iso', label: { es: 'ISO 8601', en: 'ISO 8601' }, pattern: "yyyy-MM-dd'T'HH:mm:ss.SSSxxx" },
+  { key: 'iso_date', label: { es: 'ISO Fecha', en: 'ISO Date' }, pattern: 'yyyy-MM-dd' },
+  { key: 'iso_time', label: { es: 'ISO Hora', en: 'ISO Time' }, pattern: 'HH:mm:ss' },
+  { key: 'rfc2822', label: { es: 'RFC 2822', en: 'RFC 2822' }, pattern: 'EEE, dd MMM yyyy HH:mm:ss xxx' },
+  { key: 'rfc3339', label: { es: 'RFC 3339', en: 'RFC 3339' }, pattern: "yyyy-MM-dd'T'HH:mm:ssxxx" },
+  { key: 'unix', label: { es: 'Unix Timestamp', en: 'Unix Timestamp' }, pattern: 'unix' },
+  { key: 'unix_ms', label: { es: 'Unix ms', en: 'Unix ms' }, pattern: 'unix_ms' },
+  { key: 'eu', label: { es: 'Europeo (dd/MM/yyyy)', en: 'European (dd/MM/yyyy)' }, pattern: 'dd/MM/yyyy' },
+  { key: 'us', label: { es: 'EE.UU. (MM/dd/yyyy)', en: 'US (MM/dd/yyyy)' }, pattern: 'MM/dd/yyyy' },
+  { key: 'sql', label: { es: 'SQL DateTime', en: 'SQL DateTime' }, pattern: 'yyyy-MM-dd HH:mm:ss' },
+  { key: 'log', label: { es: 'Log común', en: 'Common Log' }, pattern: 'dd/MMM/yyyy:HH:mm:ss xxx' },
+  { key: 'custom', label: { es: 'Personalizado', en: 'Custom' }, pattern: '' },
+];
+const TOKENS = [
+  { token: 'yyyy', desc: { es: 'Año 4 dígitos', en: '4-digit year' } },
+  { token: 'yy', desc: { es: 'Año 2 dígitos', en: '2-digit year' } },
+  { token: 'MM', desc: { es: 'Mes 2 dígitos (01-12)', en: 'Month 2 digits (01-12)' } },
+  { token: 'M', desc: { es: 'Mes (1-12)', en: 'Month (1-12)' } },
+  { token: 'MMM', desc: { es: 'Mes abreviado (ene, feb...)', en: 'Abbreviated month (Jan, Feb...)' } },
+  { token: 'MMMM', desc: { es: 'Mes completo (enero, febrero...)', en: 'Full month (January, February...)' } },
+  { token: 'dd', desc: { es: 'Día 2 dígitos (01-31)', en: 'Day 2 digits (01-31)' } },
+  { token: 'd', desc: { es: 'Día (1-31)', en: 'Day (1-31)' } },
+  { token: 'EEE', desc: { es: 'Día semana abreviado (lun, mar...)', en: 'Abbrev. weekday (Mon, Tue...)' } },
+  { token: 'EEEE', desc: { es: 'Día semana completo', en: 'Full weekday' } },
+  { token: 'HH', desc: { es: 'Hora 24h 2 dígitos (00-23)', en: 'Hour 24h 2 digits (00-23)' } },
+  { token: 'H', desc: { es: 'Hora 24h (0-23)', en: 'Hour 24h (0-23)' } },
+  { token: 'hh', desc: { es: 'Hora 12h 2 dígitos (01-12)', en: 'Hour 12h 2 digits (01-12)' } },
+  { token: 'h', desc: { es: 'Hora 12h (1-12)', en: 'Hour 12h (1-12)' } },
+  { token: 'mm', desc: { es: 'Minutos 2 dígitos (00-59)', en: 'Minutes 2 digits (00-59)' } },
+  { token: 'm', desc: { es: 'Minutos (0-59)', en: 'Minutes (0-59)' } },
+  { token: 'ss', desc: { es: 'Segundos 2 dígitos (00-59)', en: 'Seconds 2 digits (00-59)' } },
+  { token: 's', desc: { es: 'Segundos (0-59)', en: 'Seconds (0-59)' } },
+  { token: 'SSS', desc: { es: 'Milisegundos 3 dígitos', en: 'Milliseconds 3 digits' } },
+  { token: 'a', desc: { es: 'AM/PM', en: 'AM/PM' } },
+  { token: 'xxx', desc: { es: 'Zona horaria ±HH:mm', en: 'Timezone ±HH:mm' } },
+  { token: 'xx', desc: { es: 'Zona horaria ±HHmm', en: 'Timezone ±HHmm' } },
+  { token: 'x', desc: { es: 'Zona horaria ±HH', en: 'Timezone ±HH' } },
+];
+---
+<div class="tool-widget" data-widget="datefmt">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="df-input" data-i18n="calc.dfInput">{langText(es, 'calc.dfInput')}</label>
+        <div class="tool-widget__input-group">
+          <input id="df-input" class="tool-widget__input" type="text" data-field="input" placeholder="2024-01-15T10:30:00Z" spellcheck="false" />
+          <button type="button" class="btn btn--ghost btn--sm" data-now data-i18n="calc.dfNow">{langText(es, 'calc.dfNow')}</button>
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="df-preset" data-i18n="calc.dfPreset">{langText(es, 'calc.dfPreset')}</label>
+        <select id="df-preset" class="tool-widget__select" data-field="preset">
+          {PRESETS.map(p => (
+            <option value={p.key} data-pattern={p.pattern} data-i18n={`calc.dfPreset${p.key.charAt(0).toUpperCase() + p.key.slice(1)}`}>
+              {langText(es, `calc.dfPreset${p.key.charAt(0).toUpperCase() + p.key.slice(1)}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="tool-widget__field" style="grid-column:1/-1">
+        <label class="tool-widget__label" for="df-pattern" data-i18n="calc.dfPattern">{langText(es, 'calc.dfPattern')}</label>
+        <input id="df-pattern" class="tool-widget__input" type="text" data-field="pattern" placeholder="yyyy-MM-dd HH:mm:ss" spellcheck="false" />
+      </div>
+      <div class="tool-widget__field" style="grid-column:1/-1">
+        <label class="tool-widget__label" for="df-timezone" data-i18n="calc.dfTimezone">{langText(es, 'calc.dfTimezone')}</label>
+        <select id="df-timezone" class="tool-widget__select" data-field="timezone">
+          <option value="local" data-i18n="calc.dfTzLocal">{langText(es, 'calc.dfTzLocal')}</option>
+          <option value="utc" data-i18n="calc.dfTzUtc">{langText(es, 'calc.dfTzUtc')}</option>
+          <option value="auto" data-i18n="calc.dfTzAuto">{langText(es, 'calc.dfTzAuto')}</option>
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__field" style="grid-column:1/-1; margin-top:0.5rem;">
+      <label class="tool-widget__label" data-i18n="calc.dfTokens">{langText(es, 'calc.dfTokens')}</label>
+      <div class="tool-widget__tokens" role="list">
+        {TOKENS.map(t => (
+          <span class="tool-widget__token" role="listitem" title={t.desc.es + ' / ' + t.desc.en} data-token={t.token}>{t.token}</span>
+        ))}
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-swap data-i18n="calc.swap">{langText(es, 'calc.swap')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.dfError">{langText(es, 'calc.dfError')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.dfError">{langText('en', 'calc.dfError')}</span>
+    </p>
+    <div class="tool-widget__field" style="grid-column:1/-1; margin-top:0;">
+      <label class="tool-widget__label" data-i18n="calc.dfOutput">{langText(es, 'calc.dfOutput')}</label>
+      <input class="tool-widget__input tool-widget__result-output" readonly data-output spellcheck="false" />
+    </div>
+    <div class="tool-widget__result-stats tool-widget__result-stats--grid" style="margin-top:0.75rem;">
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.dfParsed">{langText(es, 'calc.dfParsed')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="parsed">—</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.dfUnix">{langText(es, 'calc.dfUnix')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="unix">—</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.dfUnixMs">{langText(es, 'calc.dfUnixMs')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="unixMs">—</strong>
+      </div>
+    </div>
+    <div class="tool-widget__details" data-all-formats hidden>
+      <h4 data-i18n="calc.dfAllFormats">{langText(es, 'calc.dfAllFormats')}</h4>
+      <div class="tool-widget__table-wrapper">
+        <table class="tool-widget__table">
+          <thead>
+            <tr>
+              <th data-i18n="calc.dfFormat">{langText(es, 'calc.dfFormat')}</th>
+              <th data-i18n="calc.dfResult">{langText(es, 'calc.dfResult')}</th>
+            </tr>
+          </thead>
+          <tbody data-all-formats-body></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="datefmt"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const allFormatsDiv = root.querySelector('[data-all-formats]');
+    const allFormatsBody = root.querySelector('[data-all-formats-body]');
+    const output = root.querySelector('[data-output]');
+    const parsedVal = root.querySelector('[data-val="parsed"]');
+    const unixVal = root.querySelector('[data-val="unix"]');
+    const unixMsVal = root.querySelector('[data-val="unixMs"]');
+    const fields = {
+      input: root.querySelector('[data-field="input"]'),
+      preset: root.querySelector('[data-field="preset"]'),
+      pattern: root.querySelector('[data-field="pattern"]'),
+      timezone: root.querySelector('[data-field="timezone"]'),
+    };
+
+    const PRESET_PATTERNS = {
+      iso: "yyyy-MM-dd'T'HH:mm:ss.SSSxxx",
+      iso_date: 'yyyy-MM-dd',
+      iso_time: 'HH:mm:ss',
+      rfc2822: 'EEE, dd MMM yyyy HH:mm:ss xxx',
+      rfc3339: "yyyy-MM-dd'T'HH:mm:ssxxx",
+      unix: 'unix',
+      unix_ms: 'unix_ms',
+      eu: 'dd/MM/yyyy',
+      us: 'MM/dd/yyyy',
+      sql: 'yyyy-MM-dd HH:mm:ss',
+      log: 'dd/MMM/yyyy:HH:mm:ss xxx',
+      custom: '',
+    };
+
+    function parseInput(input, tz) {
+      const trimmed = input.trim();
+      if (!trimmed) return null;
+
+      // Unix timestamp (seconds or ms)
+      if (/^\d{10}$/.test(trimmed)) return new Date(parseInt(trimmed, 10) * 1000);
+      if (/^\d{13}$/.test(trimmed)) return new Date(parseInt(trimmed, 10));
+
+      // Try ISO string
+      const isoDate = new Date(trimmed);
+      if (!isNaN(isoDate.getTime())) return isoDate;
+
+      // Try common formats
+      const formats = [
+        /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})/,
+        /^(\d{2})\/(\d{2})\/(\d{4})/,
+        /^(\d{2})-(\d{2})-(\d{4})/,
+        /^(\d{4})\.(\d{2})\.(\d{2})/,
+      ];
+
+      for (const fmt of formats) {
+        const m = trimmed.match(fmt);
+        if (m) {
+          const year = parseInt(m[1], 10);
+          const month = parseInt(m[2], 10) - 1;
+          const day = parseInt(m[3], 10);
+          const hour = m[4] ? parseInt(m[4], 10) : 0;
+          const min = m[5] ? parseInt(m[5], 10) : 0;
+          const sec = m[6] ? parseInt(m[6], 10) : 0;
+          return new Date(year, month, day, hour, min, sec);
+        }
+      }
+
+      return null;
+    }
+
+    function formatDate(date, pattern, tz) {
+      if (pattern === 'unix') return Math.floor(date.getTime() / 1000).toString();
+      if (pattern === 'unix_ms') return date.getTime().toString();
+
+      const pad = (n, width = 2) => String(n).padStart(width, '0');
+      const pad3 = (n) => String(n).padStart(3, '0');
+
+      const year = tz === 'utc' ? date.getUTCFullYear() : date.getFullYear();
+      const month = (tz === 'utc' ? date.getUTCMonth() : date.getMonth()) + 1;
+      const day = tz === 'utc' ? date.getUTCDate() : date.getDate();
+      const hours24 = tz === 'utc' ? date.getUTCHours() : date.getHours();
+      const hours12 = hours24 % 12 || 12;
+      const minutes = tz === 'utc' ? date.getUTCMinutes() : date.getMinutes();
+      const seconds = tz === 'utc' ? date.getUTCSeconds() : date.getSeconds();
+      const ms = tz === 'utc' ? date.getUTCMilliseconds() : date.getMilliseconds();
+      const dayOfWeek = tz === 'utc' ? date.getUTCDay() : date.getDay();
+
+      const monthsShort = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+      const monthsLong = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const daysShort = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+      const daysLong = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+
+      const monthsShortEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const monthsLongEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const daysShortEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const daysLongEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+      const isEn = currentLang() === 'en';
+      const mShort = isEn ? monthsShortEn : monthsShort;
+      const mLong = isEn ? monthsLongEn : monthsLong;
+      const dShort = isEn ? daysShortEn : daysShort;
+      const dLong = isEn ? daysLongEn : daysLong;
+
+      // Timezone offset
+      const offset = tz === 'utc' ? 0 : -date.getTimezoneOffset();
+      const offsetSign = offset >= 0 ? '+' : '-';
+      const offsetHours = Math.floor(Math.abs(offset) / 60);
+      const offsetMinutes = Math.abs(offset) % 60;
+      const tzStr = `${offsetSign}${pad(offsetHours)}:${pad(offsetMinutes)}`;
+      const tzStrCompact = `${offsetSign}${pad(offsetHours)}${pad(offsetMinutes)}`;
+      const tzStrHours = `${offsetSign}${pad(offsetHours)}`;
+
+      let result = pattern;
+      result = result.replace(/yyyy/g, String(year));
+      result = result.replace(/yy/g, String(year).slice(-2));
+      result = result.replace(/MMMM/g, mLong[month - 1]);
+      result = result.replace(/MMM/g, mShort[month - 1]);
+      result = result.replace(/MM/g, pad(month));
+      result = result.replace(/(?<!M)M(?!M)/g, String(month));
+      result = result.replace(/dd/g, pad(day));
+      result = result.replace(/(?<!d)d(?!d)/g, String(day));
+      result = result.replace(/EEEE/g, dLong[dayOfWeek]);
+      result = result.replace(/EEE/g, dShort[dayOfWeek]);
+      result = result.replace(/HH/g, pad(hours24));
+      result = result.replace(/(?<!H)H(?!H)/g, String(hours24));
+      result = result.replace(/hh/g, pad(hours12));
+      result = result.replace(/(?<!h)h(?!h)/g, String(hours12));
+      result = result.replace(/mm/g, pad(minutes));
+      result = result.replace(/(?<!m)m(?!m)/g, String(minutes));
+      result = result.replace(/ss/g, pad(seconds));
+      result = result.replace(/(?<!s)s(?!s)/g, String(seconds));
+      result = result.replace(/SSS/g, pad3(ms));
+      result = result.replace(/a/g, hours24 >= 12 ? (isEn ? 'PM' : 'PM') : (isEn ? 'AM' : 'AM'));
+      result = result.replace(/xxx/g, tzStr);
+      result = result.replace(/xx/g, tzStrCompact);
+      result = result.replace(/(?<!x)x(?!x)/g, tzStrHours);
+
+      return result;
+    }
+
+    function renderAllFormats(date, tz) {
+      allFormatsBody.innerHTML = PRESETS.filter(p => p.pattern !== 'custom').map(p => `
+        <tr>
+          <td><code>${p.pattern}</code></td>
+          <td><code>${formatDate(date, p.pattern, tz)}</code></td>
+        </tr>
+      `).join('');
+    }
+
+    function compute() {
+      const input = fields.input.value;
+      const preset = fields.preset.value;
+      const pattern = fields.pattern.value || PRESET_PATTERNS[preset] || '';
+      const tz = fields.timezone.value;
+
+      if (!input || !pattern) {
+        result.hidden = true;
+        return;
+      }
+
+      const date = parseInput(input, tz);
+      if (!date) {
+        error.hidden = false;
+        result.hidden = true;
+        return;
+      }
+
+      error.hidden = true;
+
+      const formatted = formatDate(date, pattern, tz);
+      output.value = formatted;
+      parsedVal.textContent = date.toISOString();
+      unixVal.textContent = Math.floor(date.getTime() / 1000).toString();
+      unixMsVal.textContent = date.getTime().toString();
+
+      renderAllFormats(date, tz);
+      allFormatsDiv.hidden = false;
+
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.input.addEventListener('input', compute);
+    fields.preset.addEventListener('change', () => {
+      const opt = fields.preset.options[fields.preset.selectedIndex];
+      if (opt.dataset.pattern && opt.value !== 'custom') {
+        fields.pattern.value = opt.dataset.pattern;
+      }
+      compute();
+    });
+    fields.pattern.addEventListener('input', compute);
+    fields.timezone.addEventListener('change', compute);
+
+    root.querySelector('[data-now]')?.addEventListener('click', () => {
+      const now = new Date();
+      fields.input.value = now.toISOString();
+      compute();
+    });
+
+    root.querySelector('[data-swap]')?.addEventListener('click', () => {
+      // Swap: parse output as input
+      if (output.value) {
+        fields.input.value = output.value;
+        compute();
+      }
+    });
+
+    root.querySelectorAll('.tool-widget__token').forEach(tok => {
+      tok.addEventListener('click', () => {
+        const token = tok.dataset.token;
+        const start = fields.pattern.selectionStart;
+        const end = fields.pattern.selectionEnd;
+        const val = fields.pattern.value;
+        fields.pattern.value = val.slice(0, start) + token + val.slice(end);
+        fields.pattern.focus();
+        fields.pattern.setSelectionRange(start + token.length, start + token.length);
+        compute();
+      });
+    });
+
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.input.value = '';
+      fields.preset.value = 'iso';
+      fields.pattern.value = PRESET_PATTERNS.iso;
+      fields.timezone.value = 'local';
+      output.value = '';
+      result.hidden = true;
+      error.hidden = true;
+      allFormatsDiv.hidden = true;
+    });
+
+    fields.preset.value = 'iso';
+    fields.pattern.value = PRESET_PATTERNS.iso;
+    compute();
+  }
+</script>

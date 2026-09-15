@@ -1,0 +1,16 @@
+---
+import ArticleCard from './ArticleCard.astro';
+import { langText } from '../lib/i18n';
+
+interface Props {
+  posts: Array<{ data: Record<string, any>; url: string }>;
+  lang?: string;
+}
+const { posts, lang = 'es' } = Astro.props;
+---
+<section class="section related">
+  <h2 class="section__title" data-i18n="related">{langText(lang, 'related')}</h2>
+  <div class="article-grid article-grid--columns-3">
+    {posts.map((post) => <ArticleCard post={post} lang={lang} />)}
+  </div>
+</section>

@@ -1,0 +1,130 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="grasa-corporal">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="bf-sexo" data-i18n="calc.sex">{langText(es, 'calc.sex')}</label>
+        <select id="bf-sexo" class="tool-widget__select" data-field="sexo">
+          <option value="M" selected data-i18n="calc.male">{langText(es, 'calc.male')}</option>
+          <option value="F" data-i18n="calc.female">{langText(es, 'calc.female')}</option>
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="bf-altura" data-i18n="calc.height">{langText(es, 'calc.height')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">cm</span>
+          <input id="bf-altura" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="175" data-field="altura" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="bf-cuello" data-i18n="calc.neck">{langText(es, 'calc.neck')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">cm</span>
+          <input id="bf-cuello" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="40" data-field="cuello" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="bf-cintura" data-i18n="calc.waist">{langText(es, 'calc.waist')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">cm</span>
+          <input id="bf-cintura" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="90" data-field="cintura" />
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__field" data-hip-field>
+      <label class="tool-widget__label" for="bf-cadera" data-i18n="calc.hip">{langText(es, 'calc.hip')}</label>
+      <div class="tool-widget__control">
+        <span class="tool-widget__adorn tool-widget__adorn--left">cm</span>
+        <input id="bf-cadera" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="100" data-field="cadera" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalid">
+      <span data-lang-region="es">{langText(es, 'calc.invalid')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalid')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.bodyFatPercent">{langText(es, 'calc.bodyFatPercent')}</span>
+        <strong class="result-stat__value" data-val="pct">—</strong>
+        <span class="result-stat__unit">%</span>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.classification">{langText(es, 'calc.classification')}</span>
+        <strong class="result-stat__value">
+          <span data-val="cls-es" data-lang-region="es"></span>
+          <span data-val="cls-en" data-lang-region="en" hidden></span>
+        </strong>
+      </div>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.grasaNote">{langText(es, 'calc.grasaNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.grasaNote">{langText('en', 'calc.grasaNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { grasaCorporalNavy, clasificarGrasaKey } from '../../lib/health-calc.js';
+  import { parseDecimal, formatEs } from '../../lib/format.js';
+  import { textOf, applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="grasa-corporal"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const hipField = root.querySelector('[data-hip-field]');
+    const fields = {
+      sexo: root.querySelector('[data-field="sexo"]'),
+      altura: root.querySelector('[data-field="altura"]'),
+      cuello: root.querySelector('[data-field="cuello"]'),
+      cintura: root.querySelector('[data-field="cintura"]'),
+      cadera: root.querySelector('[data-field="cadera"]'),
+    };
+    const val = {
+      pct: root.querySelector('[data-val="pct"]'),
+      clsEs: root.querySelector('[data-val="cls-es"]'),
+      clsEn: root.querySelector('[data-val="cls-en"]'),
+    };
+
+    function compute() {
+      const sexo = fields.sexo.value;
+      if (hipField) hipField.hidden = sexo === 'M';
+      const altura = parseDecimal(fields.altura.value);
+      const cuello = parseDecimal(fields.cuello.value);
+      const cintura = parseDecimal(fields.cintura.value);
+      const cadera = parseDecimal(fields.cadera.value);
+      const pct = grasaCorporalNavy({ sexo, alturaCm: altura, cuelloCm: cuello, cinturaCm: cintura, caderaCm: cadera });
+      if (!Number.isFinite(pct)) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const key = clasificarGrasaKey(pct, sexo);
+      val.pct.textContent = formatEs(pct, 1) + ' %';
+      val.clsEs.textContent = textOf('es', 'calc.grasaClasses.' + key) || key;
+      val.clsEn.textContent = textOf('en', 'calc.grasaClasses.' + key) || key;
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.sexo.addEventListener('change', compute);
+    fields.altura.addEventListener('input', compute);
+    fields.cuello.addEventListener('input', compute);
+    fields.cintura.addEventListener('input', compute);
+    fields.cadera.addEventListener('input', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      for (const f of Object.values(fields)) f.value = f.defaultValue;
+      result.hidden = true; error.hidden = true;
+    });
+    compute();
+  }
+</script>

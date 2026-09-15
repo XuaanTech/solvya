@@ -1,0 +1,94 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="agua">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="agua-peso" data-i18n="calc.weight">{langText(es, 'calc.weight')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">kg</span>
+          <input id="agua-peso" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="70" data-field="peso" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="agua-actividad" data-i18n="calc.activityMinutes">{langText(es, 'calc.activityMinutes')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">min</span>
+          <input id="agua-actividad" class="tool-widget__input" type="text" inputmode="numeric" autocomplete="off" value="30" data-field="actividad" />
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalid">
+      <span data-lang-region="es">{langText(es, 'calc.invalid')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalid')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.waterLiters">{langText(es, 'calc.waterLiters')}</span>
+        <strong class="result-stat__value" data-val="litros">—</strong>
+        <span class="result-stat__unit" data-lang-region="es">{langText(es, 'calc.liters')}</span>
+        <span class="result-stat__unit" data-lang-region="en" hidden>{langText('en', 'calc.liters')}</span>
+      </div>
+    </div>
+    <p class="tool-widget__note tool-widget__conversion">
+      <strong data-val="vasos">—</strong>
+    </p>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.waterNote">{langText(es, 'calc.waterNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.waterNote">{langText('en', 'calc.waterNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { aguaDiaria } from '../../lib/health-calc.js';
+  import { parseDecimal, formatEs } from '../../lib/format.js';
+  import { textOf, applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="agua"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      peso: root.querySelector('[data-field="peso"]'),
+      actividad: root.querySelector('[data-field="actividad"]'),
+    };
+    const val = {
+      litros: root.querySelector('[data-val="litros"]'),
+      vasos: root.querySelector('[data-val="vasos"]'),
+    };
+
+    function compute() {
+      const peso = parseDecimal(fields.peso.value);
+      const minutos = parseDecimal(fields.actividad.value) ?? 0;
+      if (!Number.isFinite(peso) || peso <= 0) { error.hidden = false; result.hidden = true; return; }
+      const litros = aguaDiaria({ pesoKg: peso, minutosActividad: minutos });
+      if (!Number.isFinite(litros)) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const vasos = Math.max(1, Math.round(litros / 0.25));
+      val.litros.textContent = formatEs(litros, 1);
+      val.vasos.textContent = '≈ ' + textOf(currentLang(), 'calc.cups').replace('{0}', vasos);
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.peso.addEventListener('input', compute);
+    fields.actividad.addEventListener('input', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      for (const f of Object.values(fields)) f.value = f.defaultValue;
+      result.hidden = true; error.hidden = true;
+    });
+    compute();
+  }
+</script>

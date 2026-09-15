@@ -1,0 +1,190 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="jsonfmt">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field" style="grid-column:1/-1">
+      <label class="tool-widget__label" for="json-input" data-i18n="calc.jsonInput">{langText(es, 'calc.jsonInput')}</label>
+      <textarea id="json-input" class="tool-widget__textarea" data-field="input" rows="12" spellcheck="false" placeholder='{"ejemplo": "objeto", "array": [1, 2, 3], "anidado": {"clave": "valor"}'></textarea>
+    </div>
+    <div class="tool-widget__grid tool-widget__grid--3">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="json-indent" data-i18n="calc.jsonIndent">{langText(es, 'calc.jsonIndent')}</label>
+        <select id="json-indent" class="tool-widget__select" data-field="indent">
+          <option value="2" data-i18n="calc.jsonIndent2">{langText(es, 'calc.jsonIndent2')}</option>
+          <option value="4" data-i18n="calc.jsonIndent4">{langText(es, 'calc.jsonIndent4')}</option>
+          <option value="t" data-i18n="calc.jsonIndentTab">{langText(es, 'calc.jsonIndentTab')}</option>
+          <option value="0" data-i18n="calc.jsonIndentNone">{langText(es, 'calc.jsonIndentNone')}</option>
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="json-sort" data-i18n="calc.jsonSortKeys">{langText(es, 'calc.jsonSortKeys')}</label>
+        <select id="json-sort" class="tool-widget__select" data-field="sort">
+          <option value="false" data-i18n="calc.jsonSortNo">{langText(es, 'calc.jsonSortNo')}</option>
+          <option value="true" data-i18n="calc.jsonSortYes">{langText(es, 'calc.jsonSortYes')}</option>
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="json-mode" data-i18n="calc.jsonMode">{langText(es, 'calc.jsonMode')}</label>
+        <select id="json-mode" class="tool-widget__select" data-field="mode">
+          <option value="format" data-i18n="calc.jsonModeFormat">{langText(es, 'calc.jsonModeFormat')}</option>
+          <option value="minify" data-i18n="calc.jsonModeMinify">{langText(es, 'calc.jsonModeMinify')}</option>
+          <option value="validate" data-i18n="calc.jsonModeValidate">{langText(es, 'calc.jsonModeValidate')}</option>
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.process">{langText(es, 'calc.process')}</button>
+      <button type="button" class="btn btn--ghost" data-sample data-i18n="calc.jsonSample">{langText(es, 'calc.jsonSample')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.jsonError">{langText(es, 'calc.jsonError')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.jsonError">{langText('en', 'calc.jsonError')}</span>
+    </p>
+    <div class="tool-widget__field" style="grid-column:1/-1; margin-top:0;">
+      <label class="tool-widget__label" data-i18n="calc.jsonOutput">{langText(es, 'calc.jsonOutput')}</label>
+      <textarea class="tool-widget__textarea tool-widget__result-output" readonly data-output rows="12" spellcheck="false"></textarea>
+    </div>
+    <div class="tool-widget__actions" style="margin-top:0.75rem;">
+      <button type="button" class="btn btn--ghost" data-copy data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+      <button type="button" class="btn btn--ghost" data-download data-i18n="calc.download">{langText(es, 'calc.download')}</button>
+    </div>
+    <p class="tool-widget__note" data-stats hidden>
+      <span data-lang-region="es" data-i18n="calc.jsonStats">{langText(es, 'calc.jsonStats')}: <span data-val="chars">0</span> chars, <span data-val="lines">0</span> líneas</span>
+      <span data-lang-region="en" hidden data-i18n="calc.jsonStats">{langText('en', 'calc.jsonStats')}: <span data-val="chars">0</span> chars, <span data-val="lines">0</span> lines</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="jsonfmt"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const output = root.querySelector('[data-output]');
+    const stats = root.querySelector('[data-stats]');
+    const charsEl = root.querySelector('[data-val="chars"]');
+    const linesEl = root.querySelector('[data-val="lines"]');
+    const fields = {
+      input: root.querySelector('[data-field="input"]'),
+      indent: root.querySelector('[data-field="indent"]'),
+      sort: root.querySelector('[data-field="sort"]'),
+      mode: root.querySelector('[data-field="mode"]'),
+    };
+
+    const SAMPLE_JSON = `{
+  "usuarios": [
+    {"id": 1, "nombre": "Ana", "activo": true, "roles": ["admin", "editor"]},
+    {"id": 2, "nombre": "Carlos", "activo": false, "roles": ["viewer"]}
+  ],
+  "config": {
+    "tema": "oscuro",
+    "idioma": "es",
+    "notificaciones": {"email": true, "push": false}
+  },
+  "metadata": {"version": "1.0.0", "fecha": "2024-01-15"}
+}`;
+
+    function process() {
+      const raw = fields.input.value.trim();
+      const mode = fields.mode.value;
+
+      if (!raw) {
+        result.hidden = true;
+        return;
+      }
+
+      try {
+        error.hidden = true;
+        let parsed = JSON.parse(raw);
+
+        if (fields.sort.value === 'true') {
+          parsed = sortKeys(parsed);
+        }
+
+        let outputStr;
+        if (mode === 'minify') {
+          outputStr = JSON.stringify(parsed);
+        } else if (mode === 'validate') {
+          outputStr = JSON.stringify(parsed, null, getIndent());
+        } else {
+          outputStr = JSON.stringify(parsed, null, getIndent());
+        }
+
+        output.value = outputStr;
+        charsEl.textContent = outputStr.length;
+        linesEl.textContent = outputStr.split('\n').length;
+        stats.hidden = false;
+        applyLang(currentLang());
+        result.hidden = false;
+      } catch (e) {
+        error.hidden = false;
+        result.hidden = true;
+      }
+    }
+
+    function getIndent() {
+      const v = fields.indent.value;
+      if (v === 't') return '\t';
+      return parseInt(v, 10);
+    }
+
+    function sortKeys(obj) {
+      if (Array.isArray(obj)) return obj.map(sortKeys);
+      if (obj !== null && typeof obj === 'object') {
+        return Object.keys(obj).sort().reduce((acc, key) => {
+          acc[key] = sortKeys(obj[key]);
+          return acc;
+        }, {});
+      }
+      return obj;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); process(); });
+    ['input', 'indent', 'sort', 'mode'].forEach(f => fields[f]?.addEventListener('input', process));
+
+    root.querySelector('[data-sample]')?.addEventListener('click', () => {
+      fields.input.value = SAMPLE_JSON;
+      process();
+    });
+
+    root.querySelector('[data-copy]')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(output.value);
+      const btn = root.querySelector('[data-copy]');
+      const original = btn.textContent;
+      btn.textContent = '✓ Copiado';
+      setTimeout(() => btn.textContent = original, 1500);
+    });
+
+    root.querySelector('[data-download]')?.addEventListener('click', () => {
+      const blob = new Blob([output.value], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'formatted.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.input.value = '';
+      fields.indent.value = '2';
+      fields.sort.value = 'false';
+      fields.mode.value = 'format';
+      output.value = '';
+      result.hidden = true;
+      stats.hidden = true;
+      error.hidden = true;
+    });
+
+    process();
+  }
+</script>

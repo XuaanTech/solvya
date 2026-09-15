@@ -1,0 +1,42 @@
+---
+import { categoryFromPath, formatDateShort, langBase, pick } from '../lib/utils';
+
+interface Props {
+  post: {
+    data?: Record<string, any>;
+    url: string;
+  };
+  lang?: string;
+}
+
+const { post, lang = 'es' } = Astro.props;
+const data = post.data ?? {};
+const url = `${langBase(lang)}${post.url}`;
+const catSource = data.category || categoryFromPath(url);
+const category = pick(catSource, lang) || '';
+const title = pick(data.title, lang) || '';
+const description = pick(data.description, lang) || '';
+const date = data.date || '';
+const readingTime = lang === 'en' ? (data.readingTimeEn || data.readingTime) : (data.readingTime || data.readingTimeEn);
+---
+<article class="article-card">
+  <a href={url} class="article-card__link" data-astro-prefetch="hover">
+    <div class="article-card__body">
+      <div class="article-card__meta">
+        {category && (
+          <span class="article-card__category">{category}</span>
+        )}
+        {date && (
+          <time class="article-card__date" datetime={date}>{formatDateShort(date, lang)}</time>
+        )}
+      </div>
+      <h3 class="article-card__title">{title}</h3>
+      {description && (
+        <p class="article-card__excerpt">{description}</p>
+      )}
+      {readingTime && (
+        <span class="article-card__reading">{readingTime}</span>
+      )}
+    </div>
+  </a>
+</article>

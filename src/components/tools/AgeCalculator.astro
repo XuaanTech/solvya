@@ -1,0 +1,114 @@
+---
+import { langText } from '../../lib/i18n';
+import { todayLocal } from '../../lib/format';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="edad">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="age-nac" data-i18n="calc.ageBirth">{langText(es, 'calc.ageBirth')}</label>
+        <input id="age-nac" class="tool-widget__input" type="date" data-field="nacimiento" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="age-ref" data-i18n="calc.ageReference">{langText(es, 'calc.ageReference')}</label>
+        <input id="age-ref" class="tool-widget__input" type="date" data-field="referencia" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.ageInvalid">{langText(es, 'calc.ageInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.ageInvalid">{langText('en', 'calc.ageInvalid')}</span>
+    </p>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-i18n="calc.ageResult">{langText(es, 'calc.ageResult')}</span>
+      <strong class="tool-widget__conversion-value" data-val="ymd">—</strong>
+    </div>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ageTotalMonths">{langText(es, 'calc.ageTotalMonths')}</span>
+        <strong class="result-stat__value" data-val="meses">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ageTotalWeeks">{langText(es, 'calc.ageTotalWeeks')}</span>
+        <strong class="result-stat__value" data-val="semanas">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ageTotalDays">{langText(es, 'calc.ageTotalDays')}</span>
+        <strong class="result-stat__value" data-val="dias">—</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { parseISODate, dateBreakdown } from '../../lib/dates.js';
+  import { parseDecimal, formatSmart, todayLocal } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="edad"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      nacimiento: root.querySelector('[data-field="nacimiento"]'),
+      referencia: root.querySelector('[data-field="referencia"]'),
+    };
+    const val = {
+      ymd: root.querySelector('[data-val="ymd"]'),
+      meses: root.querySelector('[data-val="meses"]'),
+      semanas: root.querySelector('[data-val="semanas"]'),
+      dias: root.querySelector('[data-val="dias"]'),
+    };
+
+    function unitWord(lang, kind, n) {
+      if (lang === 'en') {
+        return kind === 'y' ? (n === 1 ? 'year' : 'years')
+          : kind === 'm' ? (n === 1 ? 'month' : 'months')
+          : (n === 1 ? 'day' : 'days');
+      }
+      return kind === 'y' ? (n === 1 ? 'año' : 'años')
+        : kind === 'm' ? (n === 1 ? 'mes' : 'meses')
+        : (n === 1 ? 'día' : 'días');
+    }
+
+    function compute() {
+      const lang = currentLang();
+      const a = parseISODate(fields.nacimiento.value);
+      const b = parseISODate(fields.referencia.value || todayLocal());
+      if (!a || !b) { error.hidden = false; result.hidden = true; return; }
+      const [start, end] = a <= b ? [a, b] : [b, a];
+      const bd = dateBreakdown(start, end);
+      error.hidden = true;
+      val.ymd.textContent = bd.years + ' ' + unitWord(lang, 'y', bd.years) + ' · ' + bd.months + ' ' + unitWord(lang, 'm', bd.months) + ' · ' + bd.days + ' ' + unitWord(lang, 'd', bd.days);
+      val.meses.textContent = formatSmart(bd.years * 12 + bd.months, 0);
+      val.semanas.textContent = formatSmart(bd.weeks, 0);
+      val.dias.textContent = formatSmart(bd.totalDays, 0);
+      applyLang(lang);
+      result.hidden = false;
+    }
+
+    fields.referencia.value = todayLocal();
+
+    function initDates() {
+      fields.nacimiento.value = '1995-01-01';
+      fields.referencia.value = todayLocal();
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.nacimiento.addEventListener('change', compute);
+    fields.referencia.addEventListener('change', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      initDates();
+      compute();
+    });
+    compute();
+  }
+</script>

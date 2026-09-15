@@ -1,0 +1,113 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="numeros-aleatorios">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--3">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="rn-min" data-i18n="calc.rnMin">{langText(es, 'calc.rnMin')}</label>
+        <input id="rn-min" class="tool-widget__input" type="number" inputmode="numeric" value="1" data-field="min" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="rn-max" data-i18n="calc.rnMax">{langText(es, 'calc.rnMax')}</label>
+        <input id="rn-max" class="tool-widget__input" type="number" inputmode="numeric" value="100" data-field="max" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="rn-count" data-i18n="calc.rnCount">{langText(es, 'calc.rnCount')}</label>
+        <input id="rn-count" class="tool-widget__input" type="number" min="1" max="50" inputmode="numeric" value="5" data-field="count" />
+      </div>
+    </div>
+    <div class="tool-widget__field">
+      <label class="tool-widget__checkbox">
+        <input type="checkbox" checked data-field="unique" />
+        <span data-i18n="calc.rnUnique">{langText(es, 'calc.rnUnique')}</span>
+      </label>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.rnGenerate">{langText(es, 'calc.rnGenerate')}</button>
+      <button type="button" class="btn btn--ghost" data-copy data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.rnInvalid">{langText(es, 'calc.rnInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.rnInvalid">{langText('en', 'calc.rnInvalid')}</span>
+    </p>
+    <div class="tool-widget__details">
+      <strong class="result-stat__value" data-val="lista" style="font-size:1.15rem;line-height:1.7"></strong>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="numeros-aleatorios"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      min: root.querySelector('[data-field="min"]'),
+      max: root.querySelector('[data-field="max"]'),
+      count: root.querySelector('[data-field="count"]'),
+      unique: root.querySelector('[data-field="unique"]'),
+    };
+    const lista = root.querySelector('[data-val="lista"]');
+    let current = [];
+
+    // Cryptographically secure uniform integer in [min, max] (inclusive)
+    function randomInt(min, max) {
+      const range = max - min + 1;
+      const limit = Math.floor(0xFFFFFFFF / range) * range;
+      let x;
+      const buf = new Uint32Array(1);
+      do {
+        crypto.getRandomValues(buf);
+        x = buf[0];
+      } while (x >= limit);
+      return min + (x % range);
+    }
+
+    function compute() {
+      const min = Math.round(Number(fields.min.value || 0));
+      const max = Math.round(Number(fields.max.value || 0));
+      const desired = Math.max(1, Math.min(50, Math.round(Number(fields.count.value || 1))));
+      if (!Number.isFinite(min) || !Number.isFinite(max) || max < min) { error.hidden = false; result.hidden = true; return; }
+      let n = desired;
+      if (fields.unique.checked) n = Math.min(n, max - min + 1);
+      const out = [];
+      if (fields.unique.checked) {
+        const pool = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+        for (let i = pool.length - 1; i > 0 && out.length < n; i--) {
+          const j = randomInt(0, i);
+          [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        for (let i = 0; i < n; i++) out.push(pool[i]);
+      } else {
+        for (let i = 0; i < n; i++) out.push(randomInt(min, max));
+      }
+      out.sort((a, b) => a - b);
+      current = out;
+      lista.textContent = out.join(', ');
+      error.hidden = true;
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    for (const k of ['min', 'max', 'count']) fields[k].addEventListener('change', compute);
+    root.querySelector('[data-copy]')?.addEventListener('click', async () => {
+      if (!current.length) return;
+      navigator.clipboard.writeText(current.join(', '));
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.min.value = '1'; fields.max.value = '100'; fields.count.value = '5';
+      compute();
+    });
+    compute();
+  }
+</script>

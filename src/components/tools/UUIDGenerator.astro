@@ -1,0 +1,88 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="uuid">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="uuid-num" data-i18n="calc.uuidCount">{langText(es, 'calc.uuidCount')}</label>
+        <div class="tool-widget__range">
+          <input id="uuid-num" class="tool-widget__range-input" type="range" min="1" max="20" value="5" data-field="num" />
+          <output class="tool-widget__range-value" data-val="numOut">5</output>
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.generate">{langText(es, 'calc.generate')}</button>
+      <button type="button" class="btn btn--ghost" data-copy data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result>
+    <ol class="tool-widget__uuids" data-uuids></ol>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.uuidNote">{langText(es, 'calc.uuidNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.uuidNote">{langText('en', 'calc.uuidNote')}</span>
+      <span class="tool-widget__copied" data-copied hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="uuid"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const uuidsEl = root.querySelector('[data-uuids]');
+    const numInput = root.querySelector('[data-field="num"]');
+    const numOut = root.querySelector('[data-val="numOut"]');
+
+    function randomUuid() {
+      const buf = new Uint8Array(16);
+      crypto.getRandomValues(buf);
+      buf[6] = (buf[6] & 0x0f) | 0x40; // versión 4
+      buf[8] = (buf[8] & 0x3f) | 0x80; // variante RFC 4122
+      const hex = [...buf].map((b) => b.toString(16).padStart(2, '0')).join('');
+      return hex.slice(0, 8) + '-' + hex.slice(8, 12) + '-' + hex.slice(12, 16) + '-' + hex.slice(16, 20) + '-' + hex.slice(20);
+    }
+
+    function generate() {
+      const n = parseInt(numInput.value, 10) || 5;
+      uuidsEl.innerHTML = '';
+      for (let i = 0; i < n; i++) {
+        const li = document.createElement('li');
+        const code = document.createElement('code');
+        code.textContent = randomUuid();
+        li.appendChild(code);
+        uuidsEl.appendChild(li);
+      }
+    }
+
+    function copyAll() {
+      const items = [...uuidsEl.querySelectorAll('code')].map((c) => c.textContent);
+      if (items.length === 0) return;
+      const text = items.join('\n');
+      const done = () => {
+        const fb = root.querySelector('[data-copied]');
+        if (fb) { fb.hidden = false; setTimeout(() => { fb.hidden = true; }, 1600); }
+      };
+      const write = navigator.clipboard && navigator.clipboard.writeText
+        ? navigator.clipboard.writeText(text).then(done).catch(() => done())
+        : done();
+      return write;
+    }
+
+    numInput.addEventListener('input', () => { numOut.value = numInput.value; generate(); });
+    form?.addEventListener('submit', (e) => { e.preventDefault(); generate(); });
+    root.querySelector('[data-copy]')?.addEventListener('click', copyAll);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      numInput.value = '5'; numOut.value = '5';
+      generate();
+    });
+    generate();
+    applyLang(currentLang());
+  }
+</script>

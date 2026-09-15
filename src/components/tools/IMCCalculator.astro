@@ -1,0 +1,103 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="imc">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="imc-peso" data-i18n="calc.weight">{langText(es, 'calc.weight')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">kg</span>
+          <input id="imc-peso" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="70" data-field="peso" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="imc-altura" data-i18n="calc.height">{langText(es, 'calc.height')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">cm</span>
+          <input id="imc-altura" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="175" data-field="altura" />
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalid">{langText(es, 'calc.invalid')}</p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.imc">IMC</span>
+        <strong class="result-stat__value" data-val="imc">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.classification">Clasificación</span>
+        <strong class="result-stat__value">
+          <span data-val="cat-es" data-lang-region="es"></span>
+          <span data-val="cat-en" data-lang-region="en" hidden></span>
+        </strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.healthyRange">Rango saludable</span>
+        <strong class="result-stat__value" data-val="rango">—</strong>
+      </div>
+    </div>
+    <p class="tool-widget__note">
+      <span data-val="imcnote-es" data-lang-region="es">{langText(es, 'calc.imcNote')}</span>
+      <span data-val="imcnote-en" data-lang-region="en" hidden>{langText('en', 'calc.imcNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { imc, clasificarImcKey, rangoSaludablePeso } from '../../lib/health-calc.js';
+  import { parseDecimal, formatEs } from '../../lib/format.js';
+  import { applyLang, textOf, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="imc"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      peso: root.querySelector('[data-field="peso"]'),
+      altura: root.querySelector('[data-field="altura"]'),
+    };
+    const val = {
+      imc: root.querySelector('[data-val="imc"]'),
+      rango: root.querySelector('[data-val="rango"]'),
+      catEs: root.querySelector('[data-val="cat-es"]'),
+      catEn: root.querySelector('[data-val="cat-en"]'),
+      imcNoteEs: root.querySelector('[data-val="imcnote-es"]'),
+      imcNoteEn: root.querySelector('[data-val="imcnote-en"]'),
+    };
+
+    function compute() {
+      const peso = parseDecimal(fields.peso.value);
+      const altura = parseDecimal(fields.altura.value);
+      if (peso <= 0 || altura <= 0) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const v = imc(peso, altura);
+      const key = clasificarImcKey(v);
+      const rango = rangoSaludablePeso(altura);
+      val.imc.textContent = formatEs(v, 1);
+      val.rango.textContent = formatEs(rango.min, 1) + ' – ' + formatEs(rango.max, 1) + ' kg';
+      val.catEs.textContent = textOf('es', 'calc.' + key);
+      val.catEn.textContent = textOf('en', 'calc.' + key);
+      val.imcNoteEs.textContent = textOf('es', 'calc.imcNote').replace('{0}', formatEs(v, 1));
+      val.imcNoteEn.textContent = textOf('en', 'calc.imcNote').replace('{0}', formatEs(v, 1));
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      for (const f of Object.values(fields)) f.value = f.defaultValue;
+      result.hidden = true; error.hidden = true;
+    });
+    compute();
+  }
+</script>

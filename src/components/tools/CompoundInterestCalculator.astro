@@ -1,0 +1,155 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="interes-compuesto">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ic-inicial" data-i18n="calc.initial">{langText(es, 'calc.initial')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">€</span>
+          <input id="ic-inicial" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="1000" data-field="inicial" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ic-mensual" data-i18n="calc.monthly">{langText(es, 'calc.monthly')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">€</span>
+          <input id="ic-mensual" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="100" data-field="mensual" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ic-tasa" data-i18n="calc.rate">{langText(es, 'calc.rate')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">%</span>
+          <input id="ic-tasa" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="5" data-field="tasa" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ic-anios" data-i18n="calc.years">{langText(es, 'calc.years')}</label>
+        <div class="tool-widget__control">
+          <input id="ic-anios" class="tool-widget__input" type="text" inputmode="numeric" autocomplete="off" value="10" data-field="anios" />
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalid">
+      <span data-lang-region="es">{langText(es, 'calc.invalid')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalid')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.finalAmount">{langText(es, 'calc.finalAmount')}</span>
+        <strong class="result-stat__value" data-val="final">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.totalContributed">{langText(es, 'calc.totalContributed')}</span>
+        <strong class="result-stat__value" data-val="aportado">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.totalInterest">{langText(es, 'calc.totalInterest')}</span>
+        <strong class="result-stat__value" data-val="interes">—</strong>
+      </div>
+    </div>
+    <h4 class="tool-widget__subtitle" data-i18n="calc.yearly">{langText(es, 'calc.yearly')}</h4>
+    <div class="tool-widget__table-wrap">
+      <table class="tool-widget__table">
+        <thead>
+          <tr>
+            <th data-i18n="calc.year">{langText(es, 'calc.year')}</th>
+            <th data-i18n="calc.totalContributed">{langText(es, 'calc.totalContributed')}</th>
+            <th data-i18n="calc.finalAmount">{langText(es, 'calc.finalAmount')}</th>
+            <th data-i18n="calc.totalInterest">{langText(es, 'calc.totalInterest')}</th>
+          </tr>
+        </thead>
+        <tbody data-years></tbody>
+      </table>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es">Interés compuesto mensual sobre el capital y las aportaciones. Resultado orientativo.</span>
+      <span data-lang-region="en" hidden>Monthly compound interest on capital and contributions. Indicative result.</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { interesCompuesto } from '../../lib/finance.js';
+  import { parseDecimal, formatEur } from '../../lib/format.js';
+  import { textOf, applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="interes-compuesto"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const yearsBody = root.querySelector('[data-years]');
+    const fields = {
+      inicial: root.querySelector('[data-field="inicial"]'),
+      mensual: root.querySelector('[data-field="mensual"]'),
+      tasa: root.querySelector('[data-field="tasa"]'),
+      anios: root.querySelector('[data-field="anios"]'),
+    };
+    const val = {
+      final: root.querySelector('[data-val="final"]'),
+      aportado: root.querySelector('[data-val="aportado"]'),
+      interes: root.querySelector('[data-val="interes"]'),
+    };
+
+    function yearRow(year, aportado, final, interes) {
+      const tr = document.createElement('tr');
+      if (year === Math.round(parseDecimal(fields.anios.value) || 0)) tr.className = 'tool-widget__table-row--last';
+      const cells = [year, aportado, final, interes];
+      cells.forEach((c) => {
+        const td = document.createElement('td');
+        td.textContent = c;
+        tr.appendChild(td);
+      });
+      return tr;
+    }
+
+    function compute() {
+      const inicial = parseDecimal(fields.inicial.value) || 0;
+      const mensual = parseDecimal(fields.mensual.value) || 0;
+      const tasa = parseDecimal(fields.tasa.value) || 0;
+      const anios = parseDecimal(fields.anios.value);
+      const r = interesCompuesto({ capitalInicial: inicial, aportacionMensual: mensual, interesAnual: tasa, anios });
+      if (!r) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      val.final.textContent = formatEur(r.final);
+      val.aportado.textContent = formatEur(r.totalAportado);
+      val.interes.textContent = formatEur(r.interes);
+
+      yearsBody.innerHTML = '';
+      const n = Math.round(anios * 12);
+      const monthlyRate = tasa / 100 / 12;
+      let accFinal = inicial;
+      for (let m = 1; m <= n; m++) {
+        const growth = Math.pow(1 + monthlyRate, m);
+        accFinal = inicial * growth + (monthlyRate > 0 ? mensual * ((growth - 1) / monthlyRate) : mensual * m);
+        if (m % 12 === 0 || m === n) {
+          const aportado = inicial + mensual * m;
+          yearsBody.appendChild(yearRow(m / 12, formatEur(aportado), formatEur(accFinal), formatEur(accFinal - aportado)));
+        }
+      }
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    for (const f of Object.values(fields)) {
+      f.addEventListener('input', compute);
+    }
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      for (const f of Object.values(fields)) f.value = f.defaultValue;
+      result.hidden = true; error.hidden = true;
+    });
+    compute();
+  }
+</script>

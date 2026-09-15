@@ -1,0 +1,25 @@
+---
+import { langText } from '../lib/i18n';
+import { langBase, pick } from '../lib/utils';
+
+interface Props {
+  tool?: {
+    slug: string;
+    name: { es: string; en: string };
+  };
+  lang?: string;
+}
+const { tool, lang = 'es' } = Astro.props;
+const base = langBase(lang);
+---
+<aside class="tool-cta">
+  <div class="tool-cta__body">
+    <span class="tool-cta__label" data-i18n="ctaTry">🗒️ {langText(lang, 'ctaTry')}</span>
+    {tool && (
+      <a href={`${base}/herramienta/${tool.slug}/`} class="tool-cta__btn" data-astro-prefetch="hover">
+        {pick(tool.name, lang)}
+        <span class="tool-cta__arrow" aria-hidden="true">→</span>
+      </a>
+    )}
+  </div>
+</aside>

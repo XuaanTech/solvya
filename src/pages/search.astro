@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import { langText } from '../lib/i18n';
+import { readingTimeFromFile, pick, isEnArticlePath } from '../lib/utils';
+import ArticleCard from '../components/ArticleCard.astro';
+import categories from '../data/categories.json';
+
+const es = 'es';
+
+const allModules = import.meta.glob('../content/**/*.mdx', { eager: true });
+
+const allArticles = [];
+for (const [filePath, mod] of Object.entries(allModules)) {
+  if (isEnArticlePath(filePath)) continue;
+  const parts = filePath.split(/[\\/]/);
+  const slug = String(parts[parts.length - 1] || '').replace(/\.mdx$/, '');
+  const category = parts[parts.length - 2] ?? '';
+  const fm = mod.frontmatter ?? mod.metadata ?? {};
+  if (!fm.title) continue;
+  const catDef = categories.find((c) => c.slug === category);
+  let readingTime = '';
+  let readingTimeEn = '';
+  try { readingTime = readingTimeFromFile(mod.file ?? filePath, 'es'); } catch { /* ignore */ }
+  try { readingTimeEn = readingTimeFromFile(mod.file ?? filePath, 'en'); } catch { /* ignore */ }
+  allArticles.push({ url: `/${category}/${slug}/`, data: { ...fm, readingTime, readingTimeEn, category: catDef?.name ?? { es: fm.categoryName ?? '', en: fm.categoryName ?? '' } } });
+}
+allArticles.sort((a, b) => String(b.data.date ?? '').localeCompare(String(a.data.date ?? '')));
+---
+<BaseLayout title={langText(es, 'ui.searchResults')} description={langText(es, 'search.hint')} noindex>
+  <div class="page-search container">
+    <Breadcrumbs items={[{ label: langText(es, 'ui.searchResults') }]} />
+
+    <h1 class="page-title" data-i18n="ui.searchResults">
+      {langText(es, 'ui.searchResults')}
+    </h1>
+    <p class="page-search__hint" data-i18n="search.hint">{langText(es, 'search.hint')}</p>
+
+    <div data-results class="search-results"></div>
+    <p data-empty class="search-empty" hidden>
+      <span data-i18n="search.empty">{langText(es, 'search.empty')}</span>{' '}
+      <strong data-query></strong>
+    </p>
+
+    {/* Fallback SSR para acceso directo sin query o JS deshabilitado */}
+    <div class="article-grid article-grid--columns-3" data-ssr-results>
+      {allArticles.map((a) => <ArticleCard post={a} />)}
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const q = (params.get('q') || '').trim();
+    const resultsEl = document.querySelector('[data-results]');
+    const emptyEl = document.querySelector('[data-empty]');
+    const queryEl = document.querySelector('[data-query]');
+    const ssrEl = document.querySelector('[data-ssr-results]');
+
+    const lang = document.documentElement.getAttribute('data-lang') || document.documentElement.lang || 'es';
+    const pickB = (es, en) => (lang === 'en' ? en || es : es || en);
+
+    if (queryEl) queryEl.textContent = q;
+
+    if (!q) {
+      // Sin query: ocultar SSR results si JS carga, y NO mostrar empty state
+      if (ssrEl) ssrEl.hidden = true;
+      emptyEl?.setAttribute('hidden', '');
+    } else if (resultsEl) {
+      // Con query: ocultar SSR, buscar en índice
+      if (ssrEl) ssrEl.hidden = true;
+      fetch('/search-index.json')
+        .then((r) => r.ok ? r.json() : Promise.reject())
+        .then((entries) => {
+          const needle = q.toLowerCase();
+          const matches = entries.filter((e) =>
+            !e.url.startsWith('/en/') &&
+            ((e.text || '').toLowerCase().includes(needle) ||
+            (e.titleEs || '').toLowerCase().includes(needle) ||
+            (e.titleEn || '').toLowerCase().includes(needle) ||
+            (e.descEs || '').toLowerCase().includes(needle) ||
+            (e.descEn || '').toLowerCase().includes(needle))
+          );
+          if (matches.length === 0) { emptyEl?.removeAttribute('hidden'); return; }
+          for (const m of matches) {
+            const card = document.createElement('a');
+            card.href = m.url;
+            card.className = 'search-result-card';
+            card.setAttribute('data-astro-prefetch', 'hover');
+            card.innerHTML = `
+              <span class="search-result-card__category">${pickB(m.categoryEs, m.categoryEn)}</span>
+              <h3 class="search-result-card__title">${pickB(m.titleEs, m.titleEn)}</h3>
+              <p class="search-result-card__desc">${pickB(m.descEs, m.descEn)}</p>
+            `;
+            resultsEl.appendChild(card);
+          }
+        });
+    }
+  </script>
+</BaseLayout>

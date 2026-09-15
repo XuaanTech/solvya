@@ -1,0 +1,46 @@
+---
+import { SITE, I18N } from '../data/site';
+import { langText } from '../lib/i18n';
+import { breadcrumbSchema } from '../lib/seo';
+import { langBase, pick } from '../lib/utils';
+
+interface Crumb {
+  label: string | { es: string; en: string };
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+  lang?: string;
+}
+
+const { items, lang = 'es' } = Astro.props;
+const base = langBase(lang);
+const homeCrumb = { label: langText(lang, 'ui.breadcrumbHome', I18N), href: `${base}/` };
+const fullItems = [homeCrumb, ...items.map((it) => ({
+  ...it,
+  ...(it.href ? { href: `${base}${it.href}` } : {}),
+}))];
+
+// schema uses the page-language label for each crumb
+const schema = breadcrumbSchema(fullItems.map((it) => ({ ...it, label: pick(it.label, lang) })));
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<nav class="breadcrumbs" aria-label="Migas de pan">
+  <ol class="breadcrumbs__list">
+    {fullItems.map((item, i) => {
+      const label = pick(item.label, lang);
+      return (
+        <li class="breadcrumbs__item">
+          {i === fullItems.length - 1 ? (
+            <span class="breadcrumbs__current" aria-current="page">{label}</span>
+          ) : item.href ? (
+            <a class="breadcrumbs__link" href={item.href}>{label}</a>
+          ) : (
+            <span class="breadcrumbs__current">{label}</span>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>

@@ -1,0 +1,159 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="porcentaje">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <span class="tool-widget__label" data-i18n="calc.pctMode">{langText(es, 'calc.pctMode')}</span>
+      <div class="tool-widget__segmented" data-field="modo">
+        <button type="button" class="tool-widget__segment is-active" data-mode="of" data-i18n="calc.pctOfNumber">{langText(es, 'calc.pctOfNumber')}</button>
+        <button type="button" class="tool-widget__segment" data-mode="ratio" data-i18n="calc.pctRatio">{langText(es, 'calc.pctRatio')}</button>
+        <button type="button" class="tool-widget__segment" data-mode="change" data-i18n="calc.pctChange">{langText(es, 'calc.pctChange')}</button>
+      </div>
+    </div>
+
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field" data-fields="of ratio change">
+        <label class="tool-widget__label" for="pct-a" data-i18n="calc.pctPercentage">{langText(es, 'calc.pctPercentage')}</label>
+        <input id="pct-a" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="20" data-field="a" />
+      </div>
+      <div class="tool-widget__field" data-fields="of">
+        <label class="tool-widget__label" for="pct-y" data-i18n="calc.pctBase">{langText(es, 'calc.pctBase')}</label>
+        <input id="pct-y" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="150" data-field="y" />
+      </div>
+      <div class="tool-widget__field" data-fields="ratio" style="display:none">
+        <label class="tool-widget__label" for="pct-b" data-i18n="calc.pctWhole">{langText(es, 'calc.pctWhole')}</label>
+        <input id="pct-b" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="400" data-field="b" />
+      </div>
+      <div class="tool-widget__field" data-fields="change" style="display:none">
+        <label class="tool-widget__label" for="pct-from" data-i18n="calc.pctFrom">{langText(es, 'calc.pctFrom')}</label>
+        <input id="pct-from" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="50" data-field="from" />
+      </div>
+      <div class="tool-widget__field" data-fields="change" style="display:none">
+        <label class="tool-widget__label" for="pct-to" data-i18n="calc.pctTo">{langText(es, 'calc.pctTo')}</label>
+        <input id="pct-to" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="65" data-field="to" />
+      </div>
+    </div>
+
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.pctInvalid">{langText(es, 'calc.pctInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.pctInvalid">{langText('en', 'calc.pctInvalid')}</span>
+    </p>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-i18n="calc.pctResult">{langText(es, 'calc.pctResult')}</span>
+      <strong class="tool-widget__conversion-value" data-val="pct">—</strong>
+    </div>
+    <p class="tool-widget__note" data-val="caption">—</p>
+  </div>
+</div>
+
+<script>
+  import { parseDecimal, formatSmart } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="porcentaje"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const segments = root.querySelectorAll('[data-mode]');
+    const fieldGroups = root.querySelectorAll('[data-fields]');
+    const fields = {
+      a: root.querySelector('[data-field="a"]'),
+      y: root.querySelector('[data-field="y"]'),
+      b: root.querySelector('[data-field="b"]'),
+      from: root.querySelector('[data-field="from"]'),
+      to: root.querySelector('[data-field="to"]'),
+    };
+    const val = {
+      pct: root.querySelector('[data-val="pct"]'),
+      caption: root.querySelector('[data-val="caption"]'),
+    };
+    let mode = 'of';
+
+    const D = {
+      es: {
+        of: (pct, Y, res) => `${pct}% de ${Y} = ${res}`,
+        ratio: (A, B, res) => `${A} es el ${res}% de ${B}`,
+        change: (A, B, res, sign) => `de ${A} a ${B}: ${res} ${sign > 0 ? 'incremento' : sign < 0 ? 'reducción' : 'sin variación'}`,
+      },
+      en: {
+        of: (pct, Y, res) => `${pct}% of ${Y} = ${res}`,
+        ratio: (A, B, res) => `${A} is ${res}% of ${B}`,
+        change: (A, B, res, sign) => `from ${A} to ${B}: ${res} ${sign > 0 ? 'increase' : sign < 0 ? 'decrease' : 'no change'}`,
+      },
+    };
+
+    function showFields() {
+      fieldGroups.forEach((fg) => {
+        const modes = fg.dataset.fields.split(' ');
+        fg.style.display = modes.includes(mode) ? '' : 'none';
+      });
+    }
+
+    segments.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        segments.forEach((b) => b.classList.toggle('is-active', b === btn));
+        mode = btn.dataset.mode;
+        showFields();
+        compute();
+      });
+    });
+
+    function compute() {
+      const dict = currentLang() === 'en' ? 'en' : 'es';
+      let pctVal, caption, big;
+      if (mode === 'of') {
+        const pct = parseDecimal(fields.a.value);
+        const Y = parseDecimal(fields.y.value);
+        if (!Y) { error.hidden = false; result.hidden = true; return; }
+        const res = (pct / 100) * Y;
+        big = formatSmart(res);
+        pctVal = formatSmart(pct) + '% de ' + formatSmart(Y);
+        caption = D[dict].of(formatSmart(pct), formatSmart(Y), formatSmart(res));
+      } else if (mode === 'ratio') {
+        const A = parseDecimal(fields.a.value);
+        const B = parseDecimal(fields.b.value);
+        if (!B) { error.hidden = false; result.hidden = true; return; }
+        const res = (A / B) * 100;
+        big = formatSmart(res) + '%';
+        pctVal = A + ' / ' + B;
+        caption = D[dict].ratio(formatSmart(A), formatSmart(B), formatSmart(res, 2));
+      } else {
+        const A = parseDecimal(fields.from.value);
+        const B = parseDecimal(fields.to.value);
+        if (!A) { error.hidden = false; result.hidden = true; return; }
+        const res = ((B - A) / Math.abs(A)) * 100;
+        const sign = B > A ? 1 : B < A ? -1 : 0;
+        big = (sign >= 0 ? '+' : '') + formatSmart(res) + '%';
+        pctVal = formatSmart(A) + ' → ' + formatSmart(B);
+        caption = D[dict].change(formatSmart(A), formatSmart(B), formatSmart(Math.abs(res)), sign);
+      }
+      error.hidden = true;
+      val.pct.textContent = big;
+      val.caption.textContent = caption;
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    for (const f of Object.values(fields)) f.addEventListener('input', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.a.value = '20'; fields.y.value = '150'; fields.b.value = '400';
+      fields.from.value = '50'; fields.to.value = '65';
+      mode = 'of';
+      segments.forEach((b) => b.classList.toggle('is-active', b.dataset.mode === 'of'));
+      showFields(); compute();
+    });
+    showFields();
+    compute();
+  }
+</script>

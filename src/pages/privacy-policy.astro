@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import { langText } from '../lib/i18n';
+const es = 'es';
+---
+<BaseLayout title={langText(es, 'privacy.title')} description={langText(es, 'about.privacy')}>
+  <div class="page-simple container">
+    <Breadcrumbs items={[{ label: langText(es, 'privacy.title') }]} />
+
+    <h1 class="page-title" data-i18n="privacy.title">{langText(es, 'privacy.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">
+        <span data-lang-region="es">{langText(es, 'about.privacy')}</span>
+        <span data-lang-region="en" hidden>{langText('en', 'about.privacy')}</span>
+      </p>
+
+      <h2>1. Datos que recopilamos</h2>
+      <p>
+        No creamos cuentas ni recopilamos datos personales mediante formularios de registro. Las
+        calculadoras funcionan íntegramente en tu navegador: las cifras que introduces nunca se envían
+        a nuestros servidores.
+      </p>
+
+      <h2>2. Cookies y publicidad (Google AdSense)</h2>
+      <p>
+        Mostramos anuncios a través de <strong>Google AdSense</strong>. Google y sus asociados pueden
+        usar cookies (como las cookies de doble clic de Google) para publicar anuncios basados en tus
+        visitas a este sitio y a otros sitios web.
+      </p>
+      <p>
+        Puedes consultar cómo Google utiliza los datos en
+        <a href="https://policies.google.com/technologies/partner-sites" rel="noopener noreferrer" target="_blank">la política de Google sobre socios</a>.
+      </p>
+
+      <h2>3. Cómo desactivar la publicidad personalizada</h2>
+      <p>
+        Puedes desactivar la publicidad personalizada de Google en
+        <a href="https://adssettings.google.com" rel="noopener noreferrer" target="_blank">la configuración de anuncios de Google</a>.
+        También puedes configurar tu navegador para que rechace cookies o advertirte antes de instalarlas.
+      </p>
+
+      <h2>4. Análisis</h2>
+      <p>
+        No utilizamos herramientas de analítica de terceros. No hay cookies de seguimiento propias.
+      </p>
+
+      <h2>5. Almacenamiento local</h2>
+      <p>
+        La preferencia de idioma que elijas se guarda en el almacenamiento local de tu navegador
+        (localStorage), exclusivamente para recordar tu elección en tus próximas visitas. Puedes
+        borrarla en cualquier momento desde los ajustes de tu navegador.
+      </p>
+
+      <h2>6. Tus derechos (RGPD)</h2>
+      <p>
+        Dado que no almacenamos datos personales, no hay información que solicitar, rectificar ni
+        eliminar. Para cualquier pregunta sobre privacidad, escríbenos a
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2>7. Cambios en esta política</h2>
+      <p>
+        Podemos actualizar esta política. Los cambios se publicarán en esta página con su fecha de
+        revisión.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

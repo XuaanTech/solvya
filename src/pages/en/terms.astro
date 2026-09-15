@@ -1,0 +1,36 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+const es = 'en';
+---
+<BaseLayout title={langText(es, 'terms.title')} description={langText(es, 'about.mission')} lang="en">
+  <div class="page-simple container">
+    <Breadcrumbs lang="en" items={[{ label: langText(es, 'terms.title') }]} />
+
+    <h1 class="page-title">{langText(es, 'terms.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">By using this site you accept the following terms of use.</p>
+
+      <h2>1. Acceptance</h2>
+      <p>Using {SITE.name} implies acceptance of these terms. If you do not agree, please do not use the site.</p>
+
+      <h2>2. Use of the site</h2>
+      <p>You may use the tools and articles on this site freely and at no cost, for both personal and professional use. Automated use (bots, scrapers) that overloads the servers is not permitted.</p>
+
+      <h2>3. Intellectual property</h2>
+      <p>Original content on this site (text, design, code) is protected by copyright. You may share articles citing the source. Open-source tools are distributed under their respective licenses.</p>
+
+      <h2>4. Limitation of liability</h2>
+      <p>The tools provide indicative results. See the <a href="/en/disclaimer/">legal disclaimer</a> for more details on liability limitations.</p>
+
+      <h2>5. Changes to terms</h2>
+      <p>We reserve the right to modify these terms at any time. Changes will be published on this page with their revision date.</p>
+
+      <h2>6. Contact</h2>
+      <p>For any questions about these terms, write to us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,62 @@
+---
+import { SITE, I18N } from '../data/site';
+import { langText } from '../lib/i18n';
+import { faqSchema } from '../lib/seo';
+
+interface FAQItem {
+  q: string | { es: string; en: string };
+  a: string | { es: string; en: string };
+}
+
+interface Props {
+  faqs: FAQItem[];
+  lang?: string;
+}
+
+const { faqs, lang = 'es' } = Astro.props;
+
+// Detect if FAQs are bilingual (objects with es/en) or simple strings
+const isBilingual = (val: any) => val && typeof val === 'object' && 'es' in val && 'en' in val;
+
+const schemaItems = faqs.map(f => ({
+  question: isBilingual(f.q) ? (f.q[lang] ?? f.q.es) : f.q,
+  answer: isBilingual(f.a) ? (f.a[lang] ?? f.a.es) : f.a,
+}));
+const schema = faqSchema(schemaItems);
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<section class="faq">
+  <h2 class="faq__title" data-i18n="faq">{langText(lang, 'faq', I18N)}</h2>
+
+  {isBilingual(faqs[0]?.q) ? (
+    // Bilingual FAQs - render two data-lang-region blocks (visible block follows page lang)
+    <>
+      <div data-lang-region="es" {lang === 'en' ? 'hidden' : undefined}>
+        {faqs.map((f) => (
+          <details class="faq__item">
+            <summary class="faq__question">{f.q.es}</summary>
+            <div class="faq__answer">{f.a.es}</div>
+          </details>
+        ))}
+      </div>
+      <div data-lang-region="en" {lang === 'en' ? undefined : 'hidden'}>
+        {faqs.map((f) => (
+          <details class="faq__item">
+            <summary class="faq__question">{f.q.en}</summary>
+            <div class="faq__answer">{f.a.en}</div>
+          </details>
+        ))}
+      </div>
+    </>
+  ) : (
+    // Simple string FAQs
+    <div data-lang-region="es">
+      {faqs.map((f) => (
+        <details class="faq__item">
+          <summary class="faq__question">{f.q}</summary>
+          <div class="faq__answer">{f.a}</div>
+        </details>
+      ))}
+    </div>
+  )}
+</section>

@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FAQSection from '../../components/FAQSection.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import CalculatorCard from '../../components/CalculatorCard.astro';
+import RelatedArticles from '../../components/RelatedArticles.astro';
+import ToolDisclaimer from '../../components/ToolDisclaimer.astro';
+
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+import tools from '../../data/tools.json';
+import categories from '../../data/categories.json';
+import { softwareAppSchema } from '../../lib/seo';
+import { categoryFromPath, readingTimeFromFile, pick, isEnArticlePath } from '../../lib/utils';
+
+import IMCCalculator from '../../components/tools/IMCCalculator.astro';
+import UnitConverter from '../../components/tools/UnitConverter.astro';
+import CurrencyConverter from '../../components/tools/CurrencyConverter.astro';
+import ColorConverter from '../../components/tools/ColorConverter.astro';
+import PasswordGenerator from '../../components/tools/PasswordGenerator.astro';
+import QRGenerator from '../../components/tools/QRGenerator.astro';
+import HashGenerator from '../../components/tools/HashGenerator.astro';
+import BodyFatCalculator from '../../components/tools/BodyFatCalculator.astro';
+import WaterIntakeCalculator from '../../components/tools/WaterIntakeCalculator.astro';
+import HeartRateZonesCalculator from '../../components/tools/HeartRateZonesCalculator.astro';
+import SpeedConverter from '../../components/tools/SpeedConverter.astro';
+import StorageConverter from '../../components/tools/StorageConverter.astro';
+import TimeConverter from '../../components/tools/TimeConverter.astro';
+import UUIDGenerator from '../../components/tools/UUIDGenerator.astro';
+import IVACalculator from '../../components/tools/IVACalculator.astro';
+import CompoundInterestCalculator from '../../components/tools/CompoundInterestCalculator.astro';
+import RomanNumeralsConverter from '../../components/tools/RomanNumeralsConverter.astro';
+import Base64Converter from '../../components/tools/Base64Converter.astro';
+import DateDifferenceCalculator from '../../components/tools/DateDifferenceCalculator.astro';
+import SleepCalculator from '../../components/tools/SleepCalculator.astro';
+import CaloriesBurnedCalculator from '../../components/tools/CaloriesBurnedCalculator.astro';
+import IdealWeightCalculator from '../../components/tools/IdealWeightCalculator.astro';
+import NumbersToLetters from '../../components/tools/NumbersToLetters.astro';
+import BaseConverter from '../../components/tools/BaseConverter.astro';
+import AgeCalculator from '../../components/tools/AgeCalculator.astro';
+import CharacterCounter from '../../components/tools/CharacterCounter.astro';
+import TimestampConverter from '../../components/tools/TimestampConverter.astro';
+import PercentageCalculator from '../../components/tools/PercentageCalculator.astro';
+import TipCalculator from '../../components/tools/TipCalculator.astro';
+import SimpleInterestCalculator from '../../components/tools/SimpleInterestCalculator.astro';
+import RandomNumberGenerator from '../../components/tools/RandomNumberGenerator.astro';
+import BarcodeGenerator from '../../components/tools/BarcodeGenerator.astro';
+import LoremIpsumGenerator from '../../components/tools/LoremIpsumGenerator.astro';
+import LoanCalculator from '../../components/tools/LoanCalculator.astro';
+import JwtGenerator from '../../components/tools/JwtGenerator.astro';
+import JsonFormatter from '../../components/tools/JsonFormatter.astro';
+import RegexTester from '../../components/tools/RegexTester.astro';
+import MacrosCalculator from '../../components/tools/MacrosCalculator.astro';
+import DateFormatConverter from '../../components/tools/DateFormatConverter.astro';
+import InflationCalculator from '../../components/tools/InflationCalculator.astro';
+
+const es = 'es';
+
+const widgetBySlug = {
+  imc: IMCCalculator,
+  unidades: UnitConverter,
+  divisas: CurrencyConverter,
+  color: ColorConverter,
+  contrasenas: PasswordGenerator,
+  qr: QRGenerator,
+  hash: HashGenerator,
+  'grasa-corporal': BodyFatCalculator,
+  agua: WaterIntakeCalculator,
+  'frecuencia-cardiaca': HeartRateZonesCalculator,
+  velocidad: SpeedConverter,
+  almacenamiento: StorageConverter,
+  tiempo: TimeConverter,
+  uuid: UUIDGenerator,
+  iva: IVACalculator,
+  'interes-compuesto': CompoundInterestCalculator,
+  'numeros-romanos': RomanNumeralsConverter,
+  base64: Base64Converter,
+  'diferencia-fechas': DateDifferenceCalculator,
+  sueno: SleepCalculator,
+  'calorias-quemadas': CaloriesBurnedCalculator,
+  'peso-ideal': IdealWeightCalculator,
+  'numeros-en-letras': NumbersToLetters,
+  'bases-numericas': BaseConverter,
+  'calcular-edad': AgeCalculator,
+  'contador-caracteres': CharacterCounter,
+  timestamp: TimestampConverter,
+  porcentaje: PercentageCalculator,
+  propina: TipCalculator,
+  'interes-simple': SimpleInterestCalculator,
+  'numeros-aleatorios': RandomNumberGenerator,
+  'codigo-barras': BarcodeGenerator,
+  'lorem-ipsum': LoremIpsumGenerator,
+  'prestamo-amortizacion': LoanCalculator,
+  'jwt-generator': JwtGenerator,
+  'json-formatter': JsonFormatter,
+  'regex-tester': RegexTester,
+  'macros-calculator': MacrosCalculator,
+  'date-format-converter': DateFormatConverter,
+  'inflation-calculator': InflationCalculator,
+};
+
+export const getStaticPaths = () =>
+  tools.map((t) => ({ params: { slug: t.slug }, props: { toolSlug: t.slug } }));
+
+const { toolSlug } = Astro.props;
+const tool = tools.find((t) => t.slug === toolSlug);
+if (!tool) return Astro.redirect('/404/');
+
+const category = categories.find((c) => c.slug === tool.category);
+const catNameEs = pick(category?.name, es);
+const url = `${SITE.url}/herramienta/${tool.slug}/`;
+const appSchema = softwareAppSchema(tool, es);
+const Widget = widgetBySlug[tool.slug];
+
+const contentModules = import.meta.glob('../../content/**/*.mdx', { eager: true });
+
+const relatedTools = tools
+  .filter((t) => t.category === tool.category && t.slug !== tool.slug)
+  .slice(0, 3);
+
+const relatedArticlePosts = [];
+for (const [filePath, mod] of Object.entries(contentModules)) {
+  if (isEnArticlePath(filePath)) continue;
+  const cat = categoryFromPath(filePath);
+  const slug = String(filePath).split(/[\\/]/).pop()?.replace(/\.mdx$/, '') ?? '';
+  const fm = mod.frontmatter ?? mod.metadata ?? {};
+  if (cat !== tool.category || !fm.title) continue;
+  let readingTime = '';
+  try { readingTime = readingTimeFromFile(mod.file ?? filePath, es); } catch { /* ignore */ }
+  relatedArticlePosts.push({ url: `/${cat}/${slug}/`, data: { ...fm, readingTime, category: pick(fm.categoryName, es) || catNameEs } });
+}
+relatedArticlePosts.sort((a, b) => String(b.data.date ?? '').localeCompare(String(a.data.date ?? '')));
+---
+
+<BaseLayout
+  title={pick(tool.seo?.title, es)}
+  description={pick(tool.seo?.metaDescription, es)}
+  canonicalURL={url}
+  ogType="website"
+  lang="es"
+>
+  <div class="page-simple container">
+    <Breadcrumbs lang="es" items={[
+      { label: catNameEs, href: `/${tool.category}/` },
+      { label: pick(tool.name, es) },
+    ]} />
+
+    <section class="tool-header">
+      <span class="tool-header__icon" aria-hidden="true">{tool.icon}</span>
+      <h1 class="tool-header__title">
+        <span data-lang-region="es">{tool.name.es}</span>
+        <span data-lang-region="en" hidden>{tool.name.en}</span>
+      </h1>
+      <p class="tool-header__desc">
+        <span data-lang-region="es">{tool.shortDescription.es}</span>
+        <span data-lang-region="en" hidden>{tool.shortDescription.en}</span>
+      </p>
+    </section>
+
+    <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />
+
+    <section class="tool-widget-wrap">
+      {Widget ? <Widget /> : <p>Widget no disponible.</p>}
+    </section>
+
+    <AdSlot slot="tool" />
+
+    <ToolDisclaimer type={tool.disclaimer} lang="es" />
+
+    <section class="tool-content prose">
+      <p>
+        <span data-lang-region="es">{tool.description.es} Úsalo las veces que necesites: es totalmente gratuito, no requiere registro y funciona directamente en tu navegador.</span>
+        <span data-lang-region="en" hidden>{tool.description.en} Use it as many times as you need: it is completely free, requires no sign-up and works directly in your browser.</span>
+      </p>
+    </section>
+
+    {tool.faqs.length > 0 && <FAQSection faqs={tool.faqs} lang="es" />}
+
+    {relatedTools.length > 0 && (
+      <section class="section">
+        <h2 class="section__title" data-i18n="moreTools">{langText(es, 'moreTools')}</h2>
+        <div class="tool-grid">
+          {relatedTools.map((rt) => <CalculatorCard tool={rt} lang="es" />)}
+        </div>
+      </section>
+    )}
+
+    {relatedArticlePosts.length > 0 && (
+      <RelatedArticles posts={relatedArticlePosts} lang="es" />
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .tool-header { text-align: center; padding: 2rem 0 1.5rem; }
+  .tool-header__icon { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .tool-header__title { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 700; margin: 0 0 0.5rem; }
+  .tool-header__desc { color: var(--text-muted); max-width: 50ch; margin: 0 auto; line-height: 1.6; }
+  .tool-widget-wrap { margin-bottom: 1.5rem; }
+</style>

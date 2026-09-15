@@ -1,0 +1,307 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+const FLAGS = ['g', 'i', 'm', 's', 'u', 'y'];
+const FLAG_LABELS = {
+  g: { es: 'Global (todas las coincidencias)', en: 'Global (all matches)' },
+  i: { es: 'Insensible a mayúsculas', en: 'Case insensitive' },
+  m: { es: 'Multilínea (^ $)', en: 'Multiline (^ $)' },
+  s: { es: 'DotAll (. coincide \\n)', en: 'DotAll (. matches \\n)' },
+  u: { es: 'Unicode', en: 'Unicode' },
+  y: { es: 'Sticky', en: 'Sticky' }
+};
+const PRESETS = [
+  { key: 'email', pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$', flags: '' },
+  { key: 'url', pattern: '^https?://[^\\s/$.?#].[^\\s]*$', flags: 'i' },
+  { key: 'ipv4', pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', flags: '' },
+  { key: 'date_iso', pattern: '^\\d{4}-\\d{2}-\\d{2}$', flags: '' },
+  { key: 'phone_es', pattern: '^(\\+34|0034)?[6789]\\d{8}$', flags: '' },
+  { key: 'dni', pattern: '^\\d{8}[A-Z]$', flags: 'i' },
+  { key: 'iban_es', pattern: '^ES\\d{22}$', flags: '' },
+  { key: 'hex_color', pattern: '^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$', flags: '' },
+];
+---
+<div class="tool-widget" data-widget="regex">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="rx-pattern" data-i18n="calc.rxPattern">{langText(es, 'calc.rxPattern')}</label>
+        <input id="rx-pattern" class="tool-widget__input" type="text" data-field="pattern" placeholder="^\\d{3}-\\d{2}-\\d{4}$" spellcheck="false" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="rx-flags" data-i18n="calc.rxFlags">{langText(es, 'calc.rxFlags')}</label>
+        <div class="tool-widget__segmented" role="group" aria-label="Flags">
+          {FLAGS.map(f => (
+            <label class="tool-widget__segment">
+              <input type="checkbox" value={f} data-field="flag" />
+              <span>{f}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__field" style="grid-column:1/-1">
+      <label class="tool-widget__label" for="rx-test" data-i18n="calc.rxTestString">{langText(es, 'calc.rxTestString')}</label>
+      <textarea id="rx-test" class="tool-widget__textarea" data-field="testString" rows="6" spellcheck="false" placeholder="Texto a probar contra la expresión regular..."></textarea>
+    </div>
+    <div class="tool-widget__field" style="grid-column:1/-1">
+      <label class="tool-widget__label" data-i18n="calc.rxPresets">{langText(es, 'calc.rxPresets')}</label>
+      <div class="tool-widget__presets" role="group">
+        {PRESETS.map(p => (
+          <button type="button" class="btn btn--ghost btn--sm" data-preset={p.key} data-pattern={p.pattern} data-flags={p.flags}>
+            {langText(es, `calc.rxPreset${p.key.charAt(0).toUpperCase() + p.key.slice(1)}`)}
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.test">{langText(es, 'calc.test')}</button>
+      <button type="button" class="btn btn--ghost" data-explain data-i18n="calc.rxExplain">{langText(es, 'calc.rxExplain')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.rxError">{langText(es, 'calc.rxError')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.rxError">{langText('en', 'calc.rxError')}</span>
+    </p>
+    <div class="tool-widget__result-stats tool-widget__result-stats--grid">
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.rxMatches">{langText(es, 'calc.rxMatches')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="count">0</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.rxGroups">{langText(es, 'calc.rxGroups')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="groups">0</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.rxTime">{langText(es, 'calc.rxTime')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="time">0ms</strong>
+      </div>
+    </div>
+    <div class="tool-widget__details" data-matches hidden>
+      <h4 data-i18n="calc.rxMatchesFound">{langText(es, 'calc.rxMatchesFound')}</h4>
+      <div class="tool-widget__matches-list" data-matches-list></div>
+    </div>
+    <div class="tool-widget__details" data-explanation hidden>
+      <h4 data-i18n="calc.rxExplanation">{langText(es, 'calc.rxExplanation')}</h4>
+      <pre class="tool-widget__explanation-text" data-explanation-text></pre>
+    </div>
+    <div class="tool-widget__field" style="grid-column:1/-1; margin-top:1rem;">
+      <label class="tool-widget__label" data-i18n="calc.rxHighlighted">{langText(es, 'calc.rxHighlighted')}</label>
+      <div class="tool-widget__highlighted" data-highlighted></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+  import { escapeHtml } from '../../lib/format.js';
+
+  const root = document.querySelector('[data-widget="regex"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const matchesDiv = root.querySelector('[data-matches]');
+    const matchesList = root.querySelector('[data-matches-list]');
+    const explanationDiv = root.querySelector('[data-explanation]');
+    const explanationText = root.querySelector('[data-explanation-text]');
+    const highlightedDiv = root.querySelector('[data-highlighted]');
+    const stats = {
+      count: root.querySelector('[data-val="count"]'),
+      groups: root.querySelector('[data-val="groups"]'),
+      time: root.querySelector('[data-val="time"]'),
+    };
+    const fields = {
+      pattern: root.querySelector('[data-field="pattern"]'),
+      testString: root.querySelector('[data-field="testString"]'),
+    };
+    const flagInputs = root.querySelectorAll('[data-field="flag"]');
+
+    const PRESET_PATTERNS = {
+      email: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
+      url: '^https?://[^\\s/$.?#].[^\\s]*$',
+      ipv4: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$',
+      date_iso: '^\\d{4}-\\d{2}-\\d{2}$',
+      phone_es: '^(\\+34|0034)?[6789]\\d{8}$',
+      dni: '^\\d{8}[A-Z]$',
+      iban_es: '^ES\\d{22}$',
+      hex_color: '^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$',
+    };
+    const PRESET_FLAGS = {
+      email: '', url: 'i', ipv4: '', date_iso: '', phone_es: '', dni: 'i', iban_es: '', hex_color: ''
+    };
+
+    function getFlags() {
+      return Array.from(flagInputs).filter(cb => cb.checked).map(cb => cb.value).join('');
+    }
+
+    function setFlags(flags) {
+      flagInputs.forEach(cb => cb.checked = flags.includes(cb.value));
+    }
+
+    function testRegex() {
+      const pattern = fields.pattern.value;
+      const testString = fields.testString.value;
+      const flags = getFlags();
+
+      if (!pattern) {
+        result.hidden = true;
+        return;
+      }
+
+      try {
+        error.hidden = true;
+        const start = performance.now();
+        const regex = new RegExp(pattern, flags);
+        const matches = [...testString.matchAll(regex)];
+        const elapsed = (performance.now() - start).toFixed(2);
+
+        stats.count.textContent = matches.length;
+        stats.groups.textContent = matches.length > 0 ? matches[0].length - 1 : 0;
+        stats.time.textContent = elapsed + 'ms';
+
+        if (matches.length > 0) {
+          matchesDiv.hidden = false;
+          matchesList.innerHTML = matches.map((m, i) => `
+            <div class="tool-widget__match">
+              <strong>Coincidencia ${i + 1}:</strong> <code>${escapeHtml(m[0])}</code>
+              ${m.length > 1 ? '<br><small>Grupos: ' + m.slice(1).map((g, j) => `${j}: ${escapeHtml(g)}`).join(', ') + '</small>' : ''}
+              <br><small>Índice: ${m.index}, Longitud: ${m[0].length}</small>
+            </div>
+          `).join('');
+        } else {
+          matchesDiv.hidden = true;
+        }
+
+        // Highlight matches in test string
+        if (testString) {
+          let highlighted = escapeHtml(testString);
+          const regexGlobal = new RegExp(pattern, flags + 'g');
+          let match;
+          let offset = 0;
+          const matchesArray = [];
+          while ((match = regexGlobal.exec(testString)) !== null) {
+            matchesArray.push({ start: match.index, end: match.index + match[0].length, text: match[0] });
+            if (!flags.includes('g')) break;
+          }
+          // Build highlighted HTML from end to start to preserve indices
+          for (let i = matchesArray.length - 1; i >= 0; i--) {
+            const m = matchesArray[i];
+            const before = highlighted.slice(0, m.start + offset);
+            const matchHtml = '<mark>' + highlighted.slice(m.start + offset, m.end + offset) + '</mark>';
+            const after = highlighted.slice(m.end + offset);
+            highlighted = before + matchHtml + after;
+            offset += 10; // <mark></mark> adds ~10 chars
+          }
+          highlightedDiv.innerHTML = highlighted.replace(/\n/g, '<br>');
+        }
+
+        applyLang(currentLang());
+        result.hidden = false;
+        explanationDiv.hidden = true;
+      } catch (e) {
+        error.textContent = e.message;
+        error.hidden = false;
+        result.hidden = true;
+      }
+    }
+
+    function explainRegex() {
+      const pattern = fields.pattern.value;
+      if (!pattern) return;
+
+      const tokens = [];
+      let i = 0;
+      while (i < pattern.length) {
+        const ch = pattern[i];
+        if (ch === '\\' && i + 1 < pattern.length) {
+          tokens.push({ type: 'escape', char: pattern[i + 1], desc: escapeDesc(pattern[i + 1]) });
+          i += 2;
+        } else if (ch === '[') {
+          let j = i + 1;
+          while (j < pattern.length && pattern[j] !== ']') j++;
+          tokens.push({ type: 'class', char: pattern.slice(i, j + 1), desc: 'Clase de caracteres' });
+          i = j + 1;
+        } else if (ch === '(') {
+          tokens.push({ type: 'group', char: '(', desc: 'Grupo de captura' });
+          i++;
+        } else if (ch === ')') {
+          tokens.push({ type: 'group', char: ')', desc: 'Fin de grupo' });
+          i++;
+        } else if ('*+?'.includes(ch)) {
+          tokens.push({ type: 'quantifier', char: ch, desc: quantDesc(ch) });
+          i++;
+        } else if (ch === '{') {
+          let j = i + 1;
+          while (j < pattern.length && pattern[j] !== '}') j++;
+          tokens.push({ type: 'quantifier', char: pattern.slice(i, j + 1), desc: 'Cuantificador exacto/rango' });
+          i = j + 1;
+        } else if (ch === '^') {
+          tokens.push({ type: 'anchor', char: '^', desc: 'Inicio de línea/string' });
+          i++;
+        } else if (ch === '$') {
+          tokens.push({ type: 'anchor', char: '$', desc: 'Fin de línea/string' });
+          i++;
+        } else if (ch === '.') {
+          tokens.push({ type: 'dot', char: '.', desc: 'Cualquier carácter (salto de línea con flag s)' });
+          i++;
+        } else if (ch === '|') {
+          tokens.push({ type: 'alt', char: '|', desc: 'Alternancia (OR)' });
+          i++;
+        } else {
+          tokens.push({ type: 'literal', char: ch, desc: 'Carácter literal' });
+          i++;
+        }
+      }
+
+      explanationText.textContent = tokens.map(t => `${t.char.padEnd(8)} → ${t.desc}`).join('\n');
+      explanationDiv.hidden = false;
+    }
+
+    function escapeDesc(ch) {
+      const map = {
+        d: 'Dígito (0-9)', D: 'No dígito',
+        w: 'Carácter de palabra', W: 'No carácter de palabra',
+        s: 'Espacio en blanco', S: 'No espacio en blanco',
+        b: 'Límite de palabra', B: 'No límite de palabra',
+        n: 'Salto de línea', t: 'Tabulador', r: 'Retorno de carro',
+      };
+      return map[ch] || `Carácter literal: ${ch}`;
+    }
+
+    function quantDesc(ch) {
+      const map = { '*': '0 o más', '+': '1 o más', '?': '0 o 1 (opcional)' };
+      return map[ch] || '';
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); testRegex(); });
+    ['pattern', 'testString'].forEach(f => fields[f]?.addEventListener('input', testRegex));
+    flagInputs.forEach(cb => cb.addEventListener('change', testRegex));
+
+    root.querySelectorAll('[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        fields.pattern.value = btn.dataset.pattern;
+        setFlags(btn.dataset.flags);
+        testRegex();
+      });
+    });
+
+    root.querySelector('[data-explain]')?.addEventListener('click', explainRegex);
+
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.pattern.value = '';
+      fields.testString.value = '';
+      setFlags('');
+      result.hidden = true;
+      error.hidden = true;
+      matchesDiv.hidden = true;
+      explanationDiv.hidden = true;
+      highlightedDiv.innerHTML = '';
+    });
+
+    testRegex();
+  }
+</script>

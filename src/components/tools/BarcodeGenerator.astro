@@ -1,0 +1,109 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="codigo-barras">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="bc-texto" data-i18n="calc.bcText">{langText(es, 'calc.bcText')}</label>
+      <input id="bc-texto" class="tool-widget__input" type="text" maxlength="40" autocomplete="off" value="HERRAMIENTAS-2026" data-field="texto" />
+      <p class="tool-widget__note">
+        <span data-lang-region="es" data-i18n="calc.bcNote">{langText(es, 'calc.bcNote')}</span>
+        <span data-lang-region="en" hidden data-i18n="calc.bcNote">{langText('en', 'calc.bcNote')}</span>
+      </p>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="button" class="btn btn--primary" data-generate data-i18n="calc.bcGenerate">{langText(es, 'calc.bcGenerate')}</button>
+      <button type="button" class="btn btn--ghost" data-download data-i18n="calc.bcDownload">{langText(es, 'calc.bcDownload')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.bcInvalid">{langText(es, 'calc.bcInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.bcInvalid">{langText('en', 'calc.bcInvalid')}</span>
+    </p>
+    <div class="tool-widget__details tool-widget__details--center">
+      <canvas data-canvas height="100" style="max-width:100%;height:auto;background:#fff"></canvas>
+      <p class="tool-widget__note" data-val="marca">—</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="codigo-barras"]');
+  if (root) {
+    const field = root.querySelector('[data-field="texto"]');
+    const canvas = root.querySelector('[data-canvas]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const marca = root.querySelector('[data-val="marca"]');
+
+    // Code 39 character patterns (43 chars): 1 = bar, 0 = space; last bit always space (interchar gap)
+    const CODE39 = {
+      '0':'0001101000','1':'1001000010','2':'0011000010','3':'1011000000','4':'0001100010','5':'1001100000',
+      '6':'0011100000','7':'0001001010','8':'1001001000','9':'0011001000','A':'1000010010','B':'0010010010',
+      'C':'1010010000','D':'0000110010','E':'1000110000','F':'0010110000','G':'0000011010','H':'1000011000',
+      'I':'0010011000','J':'0000111000','K':'1000000110','L':'0010000110','M':'1010000100','N':'0000100110',
+      'O':'1000100100','P':'0010100100','Q':'0000001110','R':'1000001100','S':'0010001100','T':'0000101100',
+      'U':'1100000010','V':'0110000010','W':'1110000000','X':'0100100010','Y':'1100100000','Z':'0110100000',
+      '-':'0100001010','.':'1100001000',' ':'0110001000','$':'0101010000','/':'0101000100','+':'0100010100','%':'0001010100','*':'0100101000'
+    };
+
+    function encode(text) {
+      const chars = (text + '').toUpperCase();
+      let pattern = '';
+      for (const ch of chars) {
+        if (!CODE39[ch]) return null;
+        pattern += CODE39[ch] + '0'; // inter-character gap
+      }
+      // start & stop asterisks
+      pattern = CODE39['*'] + '0' + pattern + CODE39['*'];
+      return pattern.trim();
+    }
+
+    function drawBarcode(text) {
+      const bits = encode(text);
+      if (!bits) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const narrow = 2, wide = 5.6, module = narrow * 3;
+      const W = bits.length * narrow + 12 * narrow; // margins
+      const H = 100;
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#000';
+      ctx.strokeStyle = '#000';
+      let x = 6 * narrow;
+      for (let i = 0; i < bits.length; i++) {
+        if (bits[i] === '1') {
+          const w = wide;
+          ctx.fillRect(x, 4, w, H - 18);
+          x += w;
+        } else {
+          x += narrow;
+        }
+      }
+      const lang = currentLang() === 'en' ? 'en' : 'es';
+      const label = lang === 'en' ? 'Code 39 · ' : 'Código 39 · ';
+      marca.textContent = label + (text + '').toUpperCase();
+      applyLang(lang);
+      result.hidden = false;
+    }
+
+    root.querySelector('[data-generate]')?.addEventListener('click', () => drawBarcode(field.value));
+    root.querySelector('[data-download]')?.addEventListener('click', () => {
+      if (result.hidden) return;
+      const a = document.createElement('a');
+      a.download = 'codigo-' + (field.value.trim() || 'barras').replace(/[^\w-]+/g, '-') + '.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+    });
+    field.addEventListener('keydown', (e) => { if (e.key === 'Enter') drawBarcode(field.value); });
+    drawBarcode(field.value);
+  }
+</script>

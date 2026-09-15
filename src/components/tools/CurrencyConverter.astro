@@ -1,0 +1,148 @@
+---
+import { langText } from '../../lib/i18n';
+import { BASE, LAST_UPDATED, RATES, CURRENCY_SYMBOLS } from '../../data/exchange-rates.js';
+import { formatDateFull } from '../../lib/format.js';
+const es = 'es';
+const codes = Object.keys(RATES);
+const fechaEs = formatDateFull(new Date(LAST_UPDATED + 'T00:00:00'), 'es');
+const fechaEn = formatDateFull(new Date(LAST_UPDATED + 'T00:00:00'), 'en');
+---
+<div class="tool-widget" data-widget="divisas">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="div-monto" data-i18n="calc.amount">{langText(es, 'calc.amount')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left" data-val="simbolo">€</span>
+          <input id="div-monto" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="100" data-field="monto" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="div-moneda" data-i18n="calc.currency">{langText(es, 'calc.currency')}</label>
+        <div class="tool-widget__control">
+          <select id="div-moneda" class="tool-widget__select" data-field="moneda">
+            {codes.map((c) => (
+              <option value={c} selected={c === BASE} data-i18n={`calc.currencies.${c}`}>
+                {langText(es, `calc.currencies.${c}`)}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="div-desde" data-i18n="calc.from">{langText(es, 'calc.from')}</label>
+        <select id="div-desde" class="tool-widget__select" data-field="desde">
+          {codes.map((c) => (
+            <option value={c} selected={c === BASE} data-i18n={`calc.currencies.${c}`}>
+              {langText(es, `calc.currencies.${c}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="div-hasta" data-i18n="calc.to">{langText(es, 'calc.to')}</label>
+        <select id="div-hasta" class="tool-widget__select" data-field="hasta">
+          {codes.map((c) => (
+            <option value={c} selected={c === 'USD'} data-i18n={`calc.currencies.${c}`}>
+              {langText(es, `calc.currencies.${c}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-swap data-i18n="calc.swap">{langText(es, 'calc.swap')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalidAmount">
+      <span data-lang-region="es">{langText(es, 'calc.invalidAmount')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalidAmount')}</span>
+    </p>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-val="operacion">100 EUR</span>
+      <strong class="tool-widget__conversion-value" data-val="resultado">= 117 USD</strong>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es">1 <strong data-val="fromEs"></strong> = <strong data-val="tasaEs"></strong> <strong data-val="toEs"></strong>. {langText(es, 'calc.rateNote')} Actualizado: {fechaEs}.</span>
+      <span data-lang-region="en" hidden>1 <strong data-val="fromEn"></strong> = <strong data-val="tasaEn"></strong> <strong data-val="toEn"></strong>. {langText('en', 'calc.rateNote')} Updated: {fechaEn}.</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { BASE, RATES, CURRENCY_SYMBOLS } from '../../data/exchange-rates.js';
+  import { parseDecimal, formatEs, formatSmart } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="divisas"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      monto: root.querySelector('[data-field="monto"]'),
+      desde: root.querySelector('[data-field="desde"]'),
+      hasta: root.querySelector('[data-field="hasta"]'),
+    };
+    const val = {
+      simbolo: root.querySelector('[data-val="simbolo"]'),
+      operacion: root.querySelector('[data-val="operacion"]'),
+      resultado: root.querySelector('[data-val="resultado"]'),
+      fromEs: root.querySelector('[data-val="fromEs"]'),
+      fromEn: root.querySelector('[data-val="fromEn"]'),
+      toEs: root.querySelector('[data-val="toEs"]'),
+      toEn: root.querySelector('[data-val="toEn"]'),
+      tasaEs: root.querySelector('[data-val="tasaEs"]'),
+      tasaEn: root.querySelector('[data-val="tasaEn"]'),
+    };
+
+    function convertTo(from, to, amount) {
+      const eur = amount / RATES[from];
+      return eur * RATES[to];
+    }
+
+    function compute() {
+      const monto = parseDecimal(fields.monto.value);
+      const from = fields.desde.value;
+      const to = fields.hasta.value;
+      if (monto <= 0 || !RATES[from] || !RATES[to]) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const res = convertTo(from, to, monto);
+      const tasa = convertTo(from, to, 1);
+      if (!Number.isFinite(res)) { error.hidden = false; result.hidden = true; return; }
+      val.simbolo.textContent = CURRENCY_SYMBOLS[from] || from;
+      val.operacion.textContent = formatEs(monto, 2) + ' ' + from;
+      val.resultado.textContent = '= ' + formatEs(res, 2) + ' ' + to;
+      val.fromEs.textContent = from;
+      val.toEs.textContent = to;
+      val.fromEn.textContent = from;
+      val.toEn.textContent = to;
+      val.tasaEs.textContent = formatSmart(tasa, 4);
+      val.tasaEn.textContent = formatSmart(tasa, 4);
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.monto.addEventListener('input', compute);
+    fields.desde.addEventListener('change', compute);
+    fields.hasta.addEventListener('change', compute);
+    root.querySelector('[data-swap]')?.addEventListener('click', () => {
+      const t = fields.desde.value;
+      fields.desde.value = fields.hasta.value;
+      fields.hasta.value = t;
+      compute();
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.monto.value = fields.monto.defaultValue;
+      fields.desde.value = fields.desde.defaultValue;
+      fields.hasta.value = fields.hasta.defaultValue;
+      compute();
+    });
+    compute();
+  }
+</script>

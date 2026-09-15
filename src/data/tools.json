@@ -1,0 +1,1723 @@
+[
+  {
+    "id": "imc",
+    "slug": "imc",
+    "icon": "⚖️",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": {
+      "es": "Calculadora de IMC",
+      "en": "BMI Calculator"
+    },
+    "shortDescription": {
+      "es": "Calcula tu Índice de Masa Corporal y su clasificación según la OMS.",
+      "en": "Calculate your Body Mass Index and its WHO classification."
+    },
+    "description": {
+      "es": "La calculadora de IMC relaciona tu peso y tu altura para obtener el Índice de Masa Corporal, el indicador de cribado más usado para orientar sobre el peso corporal. Obtén tu valor numérico y su clasificación según los rangos de la Organización Mundial de la Salud, desde bajo peso hasta obesidad, en menos de un segundo.",
+      "en": "The BMI calculator relates your weight and height to get your Body Mass Index, the most widely used screening indicator for body weight. Get your numeric value and its classification according to the World Health Organization ranges, from underweight to obesity, in less than a second."
+    },
+    "seo": {
+      "title": {
+        "es": "Calculadora de IMC Gratis Online",
+        "en": "Free Online BMI Calculator"
+      },
+      "metaDescription": {
+        "es": "Calcula tu IMC al instante. Introduce peso y altura y conoce tu clasificación OMS.",
+        "en": "Calculate your BMI instantly. Enter your weight and height and get your WHO classification."
+      }
+    },
+    "keywords": ["imc", "masa corporal", "peso ideal", "indice masa corporal", "bmi"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué es el IMC?",
+          "en": "What is BMI?"
+        },
+        "a": {
+          "es": "El IMC relaciona peso y altura: peso(kg) / altura(m)². Es un indicador de cribado, no un diagnóstico. No distingue entre masa muscular y grasa.",
+          "en": "BMI relates weight and height: weight(kg) / height(m)². It is a screening indicator, not a diagnosis. It does not distinguish between muscle mass and fat."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué valores son normales?",
+          "en": "What values are normal?"
+        },
+        "a": {
+          "es": "Según la OMS: bajo peso <18.5, normal 18.5-24.9, sobrepeso 25-29.9, obesidad ≥30.",
+          "en": "According to WHO: underweight <18.5, normal 18.5-24.9, overweight 25-29.9, obese ≥30."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Mi IMC puede ser engañoso?",
+          "en": "Can my BMI be misleading?"
+        },
+        "a": {
+          "es": "Sí. Los deportistas con mucha masa muscular pueden tener un IMC alto sin exceso de grasa. También existen diferencias por edad, sexo y etnia.",
+          "en": "Yes. Athletes with high muscle mass can have a high BMI without excess fat. There are also differences by age, sex and ethnicity."
+        }
+      }
+    ]
+  },
+      {
+    "id": "unidades",
+    "slug": "unidades",
+    "icon": "📏",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Conversor de Unidades",
+      "en": "Unit Converter"
+    },
+    "shortDescription": {
+      "es": "Convierte longitud, masa, temperatura y volumen.",
+      "en": "Convert length, mass, temperature and volume."
+    },
+    "description": {
+      "es": "El conversor de unidades te permite pasar de un sistema a otro al instante: metros, kilómetros y pulgadas en longitud; kilos, libras y gramos en masa; grados Celsius, Fahrenheit y Kelvin en temperatura; y litros o galones en volumen. Elige categoría, valor y unidades, y obtén el resultado en tiempo real.",
+      "en": "The unit converter lets you switch between systems instantly: meters, kilometers and inches for length; kilos, pounds and grams for mass; Celsius, Fahrenheit and Kelvin for temperature; and liters or gallons for volume. Pick a category, value and units, and get the result in real time."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversor de Unidades Gratis",
+        "en": "Free Unit Converter"
+      },
+      "metaDescription": {
+        "es": "Convierte metros, kilos, grados Celsius y litros al instante entre sistemas métrico e imperial.",
+        "en": "Convert meters, kilos, Celsius degrees and liters instantly between metric and imperial systems."
+      }
+    },
+    "keywords": ["conversor", "unidades", "metros", "celsius", "peso", "longitud"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cómo convertir Celsius a Fahrenheit?",
+          "en": "How do I convert Celsius to Fahrenheit?"
+        },
+        "a": {
+          "es": "La fórmula es °F = °C × 9/5 + 32. Por ejemplo, 20°C equivalen a 68°F.",
+          "en": "The formula is °F = °C × 9/5 + 32. For example, 20°C equals 68°F."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Cuántos kilos son una libra?",
+          "en": "How many kilos are in a pound?"
+        },
+        "a": {
+          "es": "Una libra equivale exactamente a 0,45359237 kg. Divide el peso en libras entre 2,2046 para obtener kilos.",
+          "en": "One pound is exactly 0.45359237 kg. Divide your weight in pounds by 2.2046 to get kilos."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué es más, un galón o un litro?",
+          "en": "Which is bigger, a gallon or a liter?"
+        },
+        "a": {
+          "es": "El galón estadounidense equivale a 3,785 litros, así que es bastante mayor que el litro.",
+          "en": "The US gallon equals 3.785 liters, so it is considerably larger than the liter."
+        }
+      }
+    ]
+  },
+  {
+    "id": "divisas",
+    "slug": "divisas",
+    "icon": "💱",
+    "category": "conversores",
+    "disclaimer": "finance",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Conversor de Divisas",
+      "en": "Currency Converter"
+    },
+    "shortDescription": {
+      "es": "Convierte EUR, USD, GBP, MXN y más con tasas orientativas.",
+      "en": "Convert EUR, USD, GBP, MXN and more with reference rates."
+    },
+    "description": {
+      "es": "El conversor de divisas te ayuda a estimar cuánto recibirás al cambiar euros, dólares, libras, pesos y más monedas. Utiliza tasas orientativas que se actualizan periódicamente, pensadas para viajes, compras o curiosidad, no para operaciones bancarias reales: para esas, usa siempre el tipo de tu entidad.",
+      "en": "The currency converter helps you estimate how much you will get when exchanging euros, dollars, pounds, pesos and more. It uses reference rates updated periodically, meant for travel, shopping or curiosity — not for real banking operations: for those, always use your bank's rate."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversor de Divisas EUR USD GBP Gratis",
+        "en": "Free EUR USD GBP Currency Converter"
+      },
+      "metaDescription": {
+        "es": "Convierte entre euros, dólares, libras y más monedas con tasas orientativas.",
+        "en": "Convert between euros, dollars, pounds and more with reference rates."
+      }
+    },
+    "keywords": ["divisas", "cambio euro dolar", "conversor monedas", "eur usd"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Las tasas son las reales del mercado?",
+          "en": "Are the rates the real market rates?"
+        },
+        "a": {
+          "es": "Son orientativas y pueden diferir del tipo interbancario o del que aplica tu banco, que añade comisiones y márgenes.",
+          "en": "They are reference rates and may differ from the interbank rate or from the one your bank applies, which adds fees and margins."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Dónde obtengo el mejor cambio?",
+          "en": "Where do I get the best exchange rate?"
+        },
+        "a": {
+          "es": "Compara entre bancos, casas de cambio y servicios online: el 'mejor' tipo varía según comisiones y margen aplicado.",
+          "en": "Compare between banks, exchange offices and online services: the 'best' rate varies depending on fees and applied margins."
+        }
+      }
+    ]
+  },
+  {
+    "id": "color",
+    "slug": "color",
+    "icon": "🎨",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Conversor de Colores",
+      "en": "Color Converter"
+    },
+    "shortDescription": {
+      "es": "Convierte HEX, RGB y HSL con vista previa en vivo.",
+      "en": "Convert HEX, RGB and HSL with a live preview."
+    },
+    "description": {
+      "es": "El conversor de colores traduce entre los tres formatos más usados del desarrollo web —HEX, RGB y HSL— con una vista previa en vivo del color resultante. Ideal para diseñadores y desarrolladores que necesitan mover un color entre herramientas, hojas de estilo o editores gráficos sin cometer errores de conversión.",
+      "en": "The color converter translates between the three most used web development formats — HEX, RGB and HSL — with a live preview of the resulting color. Ideal for designers and developers who need to move a color between tools, stylesheets or graphic editors without conversion mistakes."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversor de Colores HEX RGB HSL Gratis",
+        "en": "Free HEX RGB HSL Color Converter"
+      },
+      "metaDescription": {
+        "es": "Convierte colores entre HEX, RGB y HSL al instante con vista previa en vivo.",
+        "en": "Convert colors between HEX, RGB and HSL instantly with a live preview."
+      }
+    },
+    "keywords": ["colores", "hex rgb", "hsl", "conversor color"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué es el formato HEX?",
+          "en": "What is the HEX format?"
+        },
+        "a": {
+          "es": "Es un código de 6 dígitos hexadecimales que representa los canales rojo, verde y azul. Por ejemplo, #3366CC.",
+          "en": "It is a 6-digit hexadecimal code representing the red, green and blue channels. For example, #3366CC."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué diferencia hay entre RGB y HSL?",
+          "en": "What is the difference between RGB and HSL?"
+        },
+        "a": {
+          "es": "RGB mezcla intensidades de rojo, verde y azul. HSL describe el color de forma más intuitiva: tono, saturación y luminosidad.",
+          "en": "RGB mixes intensities of red, green and blue. HSL describes color more intuitively: hue, saturation and lightness."
+        }
+      }
+    ]
+  },
+  {
+    "id": "password",
+    "slug": "contrasenas",
+    "icon": "🔐",
+    "category": "generadores",
+    "disclaimer": "security",
+    "applicationCategory": "SecurityApplication",
+    "name": {
+      "es": "Generador de Contraseñas",
+      "en": "Password Generator"
+    },
+    "shortDescription": {
+      "es": "Genera contraseñas seguras de 8 a 64 caracteres.",
+      "en": "Generate secure passwords from 8 to 64 characters."
+    },
+    "description": {
+      "es": "El generador de contraseñas crea claves verdaderamente aleatorias usando la Web Crypto API de tu navegador, con la longitud y los juegos de caracteres que elijas: mayúsculas, minúsculas, números y símbolos. Todo se genera en tu dispositivo: tus contraseñas nunca salen de tu ordenador.",
+      "en": "The password generator creates truly random keys using your browser's Web Crypto API, with the length and character sets you choose: uppercase, lowercase, numbers and symbols. Everything is generated on your device: your passwords never leave your computer."
+    },
+    "seo": {
+      "title": {
+        "es": "Generador de Contraseñas Seguras Gratis",
+        "en": "Free Secure Password Generator"
+      },
+      "metaDescription": {
+        "es": "Genera contraseñas fuertes localmente con Web Crypto API. Elige longitud y caracteres.",
+        "en": "Generate strong passwords locally with the Web Crypto API. Choose length and characters."
+      }
+    },
+    "keywords": ["contrasenas", "password", "claves seguras", "generar contrasena"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Las contraseñas se guardan o se envían?",
+          "en": "Are the passwords stored or sent anywhere?"
+        },
+        "a": {
+          "es": "No. Se generan en tu navegador con Web Crypto API y no salen de tu dispositivo. Ni siquiera las vemos nosotros.",
+          "en": "No. They are generated in your browser with the Web Crypto API and never leave your device. We do not even see them."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué longitud es recomendable?",
+          "en": "What length is recommended?"
+        },
+        "a": {
+          "es": "Para cuentas importantes usa al menos 16 caracteres mezclando mayúsculas, minúsculas, números y símbolos.",
+          "en": "For important accounts use at least 16 characters mixing uppercase, lowercase, numbers and symbols."
+        }
+      }
+    ]
+  },
+  {
+    "id": "qr",
+    "slug": "qr",
+    "icon": "📱",
+    "category": "generadores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Generador de Códigos QR",
+      "en": "QR Code Generator"
+    },
+    "shortDescription": {
+      "es": "Genera códigos QR desde cualquier texto o URL.",
+      "en": "Generate QR codes from any text or URL."
+    },
+    "description": {
+      "es": "El generador de códigos QR convierte cualquier texto o enlace en un código QR listo para escanear y descargar en formato SVG. Útil para compartir direcciones web, datos de contacto o instrucciones en menús, carteles y tarjetas. El código se genera en tu navegador, sin subir nada a ningún servidor.",
+      "en": "The QR code generator turns any text or link into a QR code ready to scan and download as SVG. Useful for sharing web addresses, contact details or instructions on menus, posters and cards. The code is generated in your browser, without uploading anything to any server."
+    },
+    "seo": {
+      "title": {
+        "es": "Generador de Códigos QR Gratis",
+        "en": "Free QR Code Generator"
+      },
+      "metaDescription": {
+        "es": "Crea códigos QR al instante y descárgalos como SVG, sin enviar datos a servidores.",
+        "en": "Create QR codes instantly and download them as SVG, without sending data to servers."
+      }
+    },
+    "keywords": ["qr", "codigo qr", "generar qr", "codigo qr gratis"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Los códigos QR expiran?",
+          "en": "Do QR codes expire?"
+        },
+        "a": {
+          "es": "Los códigos QR estáticos no expiran: contienen la información directamente, sin depender de ningún servicio externo.",
+          "en": "Static QR codes do not expire: they contain the information directly, without depending on any external service."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Puedo usar el QR para un pago?",
+          "en": "Can I use the QR code for a payment?"
+        },
+        "a": {
+          "es": "Sí, si generas el código a partir de la información de pago que te indique tu entidad bancaria.",
+          "en": "Yes, if you generate the code from the payment information provided by your bank."
+        }
+      }
+    ]
+  },
+  {
+    "id": "hash",
+    "slug": "hash",
+    "icon": "🔏",
+    "category": "generadores",
+    "disclaimer": "general",
+    "applicationCategory": "SecurityApplication",
+    "name": {
+      "es": "Generador de Hash",
+      "en": "Hash Generator"
+    },
+    "shortDescription": {
+      "es": "Calcula SHA-256 y MD5 localmente en tu navegador.",
+      "en": "Compute SHA-256 and MD5 locally in your browser."
+    },
+    "description": {
+      "es": "El generador de hash calcula la huella digital de cualquier texto con SHA-256 o MD5 directamente en tu navegador. Útil para verificar integridad de datos, comprobar que un archivo no ha sido alterado o trabajar con sistemas que requieren hashes. Tu texto se procesa localmente y no se envía a ningún sitio.",
+      "en": "The hash generator computes the digital fingerprint of any text with SHA-256 or MD5 directly in your browser. Useful to verify data integrity, check that a file has not been altered, or work with systems that require hashes. Your text is processed locally and never sent anywhere."
+    },
+    "seo": {
+      "title": {
+        "es": "Generador de Hash SHA-256 y MD5 Gratis",
+        "en": "Free SHA-256 and MD5 Hash Generator"
+      },
+      "metaDescription": {
+        "es": "Genera el hash SHA-256 o MD5 de cualquier texto, localmente y sin enviar datos.",
+        "en": "Generate the SHA-256 or MD5 hash of any text, locally and without sending data."
+      }
+    },
+    "keywords": ["hash", "sha256", "md5", "hash texto"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué es un hash?",
+          "en": "What is a hash?"
+        },
+        "a": {
+          "es": "Es una huella digital de datos: una cadena de longitud fija generada a partir del contenido. Cualquier cambio en el texto produce un hash completamente distinto.",
+          "en": "It is a data fingerprint: a fixed-length string generated from the content. Any change in the text produces a completely different hash."
+        }
+      },
+      {
+        "q": {
+          "es": "¿El hash se puede revertir?",
+          "en": "Can a hash be reversed?"
+        },
+        "a": {
+          "es": "No a nivel práctico. Los hashes criptográficos son funciones unidireccionales: no puedes recuperar el texto original desde el hash.",
+          "en": "Not in practice. Cryptographic hashes are one-way functions: you cannot recover the original text from the hash."
+        }
+      }
+    ]
+  },
+  {
+    "id": "grasa-corporal",
+    "slug": "grasa-corporal",
+    "icon": "🏋️",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": {
+      "es": "Calculadora de Grasa Corporal",
+      "en": "Body Fat Calculator"
+    },
+    "shortDescription": {
+      "es": "Estima tu porcentaje de grasa corporal con el método US Navy.",
+      "en": "Estimate your body fat percentage with the US Navy method."
+    },
+    "description": {
+      "es": "La calculadora de grasa corporal estima tu porcentaje de grasa usando el método de la Marina de Estados Unidos (US Navy), uno de los más usados por su sencillez: basta una cinta métrica y tus medidas de cuello, cintura y cadera. El resultado se acompaña de una clasificación por rangos (ACSM) según tu sexo. Es una estimación: la técnica de medición condiciona la precisión.",
+      "en": "The body fat calculator estimates your fat percentage using the US Navy method, one of the most widely used for its simplicity: you just need a tape measure and your neck, waist and hip measurements. The result includes an ACSM classification by sex. It is an estimate: measurement technique affects accuracy."
+    },
+    "seo": {
+      "title": {
+        "es": "Calculadora de Grasa Corporal Gratis (Método Navy)",
+        "en": "Free Body Fat Calculator (US Navy Method)"
+      },
+      "metaDescription": {
+        "es": "Calcula tu porcentaje de grasa corporal con el método US Navy. Solo necesitas cuello, cintura, cadera y altura.",
+        "en": "Calculate your body fat percentage with the US Navy method. You only need neck, waist, hips and height."
+      }
+    },
+    "keywords": ["grasa corporal", "porcentaje grasa", "metodo navy", "body fat"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cómo funciona el método US Navy?",
+          "en": "How does the US Navy method work?"
+        },
+        "a": {
+          "es": "Usa medidas de cinta (cuello, cintura y cadera en mujeres) y tu altura en una fórmula con logaritmos que estima el porcentaje de grasa corporal.",
+          "en": "It uses tape measurements (neck, waist and hips for women) and your height in a logarithmic formula that estimates your body fat percentage."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Es preciso medirse con cinta?",
+          "en": "Is tape measuring accurate?"
+        },
+        "a": {
+          "es": "La precisión depende de la técnica: mide piel suelta, sin comprimir, y repite dos o tres veces. Como todo método indirecto, es una estimación orientativa.",
+          "en": "Accuracy depends on technique: measure loose skin, without compressing, and repeat two or three times. Like any indirect method, it is an estimate."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué rangos de grasa son saludables?",
+          "en": "What fat ranges are healthy?"
+        },
+        "a": {
+          "es": "En hombres, deportista 6-13% y normal 18-24%. En mujeres, deportista 14-20% y normal 25-31%. La grasa esencial mínima es ~2-5% (hombres) y ~10-13% (mujeres).",
+          "en": "For men, athlete 6-13% and average 18-24%. For women, athlete 14-20% and average 25-31%. Minimum essential fat is ~2-5% (men) and ~10-13% (women)."
+        }
+      }
+    ]
+  },
+  {
+    "id": "agua",
+    "slug": "agua",
+    "icon": "💧",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": {
+      "es": "Calculadora de Agua Diaria",
+      "en": "Daily Water Intake Calculator"
+    },
+    "shortDescription": {
+      "es": "Cuánta agua beber según tu peso y tu actividad.",
+      "en": "How much water to drink based on your weight and activity."
+    },
+    "description": {
+      "es": "La calculadora de agua diaria estima cuánto líquido necesitas al día para mantenerte hidratado, partiendo de tu peso (~33 ml por kg) y sumando un extra por ejercicio. Es una referencia práctica: las necesidades reales varían con el clima, la alimentación y cada organismo. La sed, el color de la orina y tu actividad física son mejores guías que cualquier número.",
+      "en": "The daily water calculator estimates how much fluid you need each day to stay hydrated, starting from your weight (~33 ml per kg) and adding extra for exercise. It is a practical reference: real needs vary with climate, diet and each body. Thirst, urine color and your physical activity are better guides than any number."
+    },
+    "seo": {
+      "title": {
+        "es": "Calculadora de Agua Diaria: ¿Cuánta Agua Beber?",
+        "en": "Daily Water Intake Calculator: How Much Should You Drink?"
+      },
+      "metaDescription": {
+        "es": "Calcula cuánta agua beber al día según tu peso y ejercicio. Guía de hidratación en litros y vasos.",
+        "en": "Calculate how much water to drink each day based on your weight and exercise. Hydration guide in liters and cups."
+      }
+    },
+    "keywords": ["agua diaria", "cuanta agua beber", "hidratacion", "litros de agua"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cuánta agua hay que beber al día?",
+          "en": "How much water should you drink per day?"
+        },
+        "a": {
+          "es": "Una regla práctica es unos 33 ml por kilo de peso. Añade unos 350 ml por cada 30 minutos de ejercicio. Escucha a tu cuerpo y ajusta con el clima.",
+          "en": "A practical rule is about 33 ml per kilogram of body weight. Add about 350 ml for every 30 minutes of exercise. Listen to your body and adjust for climate."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Es mejor beber frío o a temperatura ambiente?",
+          "en": "Is it better to drink cold or room temperature water?"
+        },
+        "a": {
+          "es": "La temperatura apenas importa para la hidratación. Lo importante es la cantidad y la constancia; bebe como te resulte más cómodo.",
+          "en": "Temperature barely matters for hydration. What matters is quantity and consistency; drink whatever is most comfortable for you."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Puedo beber demasiada agua?",
+          "en": "Can you drink too much water?"
+        },
+        "a": {
+          "es": "Sí, beber cantidades extremas en poco tiempo puede provocar hiponatremia. Mantente en los rangos habituales y consulta a un profesional si tienes dudas o patologías renales.",
+          "en": "Yes, drinking extreme amounts in a short time can cause hyponatremia. Stay within usual ranges and consult a professional if you have doubts or kidney conditions."
+        }
+      }
+    ]
+  },
+  {
+    "id": "frecuencia-cardiaca",
+    "slug": "frecuencia-cardiaca",
+    "icon": "❤️‍🔥",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": {
+      "es": "Calculadora de Zonas de Frecuencia Cardíaca",
+      "en": "Heart Rate Zones Calculator"
+    },
+    "shortDescription": {
+      "es": "Calcula tus zonas de entrenamiento con Karvonen.",
+      "en": "Calculate your training zones with Karvonen."
+    },
+    "description": {
+      "es": "La calculadora de zonas de frecuencia cardíaca estima los 5 rangos de intensidad que guían tu entrenamiento (recuperación, resistencia, aeróbica, umbral y máxima), usando la fórmula de Karvonen sobre tu frecuencia cardíaca de reserva. Basta tu edad y, si la conoces, tu frecuencia cardíaca en reposo. Ideal para runners y ciclistas que quieren entrenar por pulsaciones. Es una estimación: no sustituye una prueba de esfuerzo ni la valoración de un profesional sanitario.",
+      "en": "The heart rate zones calculator estimates the 5 intensity ranges that guide your training (recovery, endurance, aerobic, threshold and max), using Karvonen's formula over your heart rate reserve. You only need your age and, if you know it, your resting heart rate. Great for runners and cyclists training by pulse. It is an estimate: it does not replace an exercise test or a healthcare professional."
+    },
+    "seo": {
+      "title": {
+        "es": "Calculadora de Zonas de Frecuencia Cardíaca (Karvonen)",
+        "en": "Heart Rate Zones Calculator (Karvonen)"
+      },
+      "metaDescription": {
+        "es": "Calcula tus 5 zonas de entrenamiento y tu FC máxima con tu edad y FC en reposo. Fórmula de Karvonen.",
+        "en": "Calculate your 5 training zones and max HR with your age and resting HR. Karvonen formula."
+      }
+    },
+    "keywords": ["frecuencia cardiaca", "zonas de entrenamiento", "karvonen", "fc maxima"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué es la frecuencia cardíaca máxima?",
+          "en": "What is maximum heart rate?"
+        },
+        "a": {
+          "es": "Es la mayor cantidad de latidos por minuto que tu corazón puede alcanzar. La fórmula 220 − edad es una estimación general; solo una prueba de esfuerzo da el valor real.",
+          "en": "It is the highest number of beats per minute your heart can reach. The 220 − age formula is a general estimate; only an exercise test gives the real value."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué es la fórmula de Karvonen?",
+          "en": "What is Karvonen's formula?"
+        },
+        "a": {
+          "es": "Calcula la frecuencia objetivo usando tu reserva cardíaca (FC máxima − FC en reposo). Es más personalizada que usar solo porcentajes de la FC máxima.",
+          "en": "It calculates your target rate using your heart rate reserve (max HR − resting HR). It is more personalized than using only percentages of max HR."
+        }
+      },
+      {
+        "q": {
+          "es": "¿En qué zona debo entrenar?",
+          "en": "Which zone should I train in?"
+        },
+        "a": {
+          "es": "Depende de tu objetivo: las zonas 1-2 construyen base aeróbica, la 3 mejora resistencia, y las 4-5 son para trabajo de intensidad y velocidad.",
+          "en": "It depends on your goal: zones 1-2 build aerobic base, zone 3 improves endurance, and zones 4-5 are for intensity and speed work."
+        }
+      }
+    ]
+  },
+  {
+    "id": "velocidad",
+    "slug": "velocidad",
+    "icon": "🚀",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Conversor de Velocidad",
+      "en": "Speed Converter"
+    },
+    "shortDescription": {
+      "es": "Convierte km/h, mph, m/s y nudos al instante.",
+      "en": "Convert km/h, mph, m/s and knots instantly."
+    },
+    "description": {
+      "es": "El conversor de velocidad traduce entre las unidades más habituales: kilómetros por hora, millas por hora, metros por segundo, nudos (para navegación y aviación), pies por segundo y Mach. Introduce el valor y las unidades, y obtén la equivalencia en tiempo real. Útil para coches, deportes, bolsa de vuelo o simplemente para comparar cifras de distintos países.",
+      "en": "The speed converter translates between the most common units: kilometers per hour, miles per hour, meters per second, knots (for navigation and aviation), feet per second and Mach. Enter the value and units and get the equivalent in real time. Useful for cars, sports, flight bags or simply comparing figures from different countries."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversor de Velocidad: km/h, mph, m/s y Nudos",
+        "en": "Speed Converter: km/h, mph, m/s and Knots"
+      },
+      "metaDescription": {
+        "es": "Convierte kilómetros por hora, millas por hora, metros por segundo y nudos al instante con este conversor gratuito.",
+        "en": "Convert kilometers per hour, miles per hour, meters per second and knots instantly with this free converter."
+      }
+    },
+    "keywords": ["velocidad", "kmh a mph", "conversor de nudos", "ms a kmh"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cómo convertir km/h a mph?",
+          "en": "How do I convert km/h to mph?"
+        },
+        "a": {
+          "es": "Divide entre 1,609: 100 km/h equivalen a 62,1 mph. A la inversa, multiplica por 1,609.",
+          "en": "Divide by 1.609: 100 km/h equals 62.1 mph. To go the other way, multiply by 1.609."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué es un nudo?",
+          "en": "What is a knot?"
+        },
+        "a": {
+          "es": "Es una milla náutica por hora (1.852 km). Aunque se mide en el mar y el aire, un nudo equivale a unos 1,852 km/h.",
+          "en": "It is a nautical mile per hour (1.852 km). Although used at sea and in the air, one knot equals about 1.852 km/h."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué relación hay entre m/s y km/h?",
+          "en": "What is the relation between m/s and km/h?"
+        },
+        "a": {
+          "es": "1 m/s equivale exactamente a 3,6 km/h. 10 m/s son 36 km/h, un buen punto de partida mental para conversiones rápidas.",
+          "en": "1 m/s equals exactly 3.6 km/h. 10 m/s is 36 km/h, a good mental starting point for quick conversions."
+        }
+      }
+    ]
+  },
+  {
+    "id": "almacenamiento",
+    "slug": "almacenamiento",
+    "icon": "💾",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Conversor de Almacenamiento Digital",
+      "en": "Digital Storage Converter"
+    },
+    "shortDescription": {
+      "es": "Convierte GB, MB, TB y unidades binarias (KiB, MiB).",
+      "en": "Convert GB, MB, TB and binary units (KiB, MiB)."
+    },
+    "description": {
+      "es": "El conversor de almacenamiento digital convierte entre bits, bytes y sus múltiplos: kilobytes, megabytes, gigabytes, terabytes y petabytes en sistema decimal, más sus equivalentes binarios (KiB, MiB, GiB). Así sabrás qué significan los '512 GB' de un móvil, cuántos videos caben en una memoria USB o cuánto pesa un archivo en GiB frente a GB.",
+      "en": "The digital storage converter converts between bits, bytes and their multiples: kilobytes, megabytes, gigabytes, terabytes and petabytes in the decimal system, plus their binary equivalents (KiB, MiB, GiB). So you will know what the '512 GB' of a phone means, how many videos fit on a USB stick, or how much a file weighs in GiB vs GB."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversor de Almacenamiento Digital: GB, MB, TB",
+        "en": "Digital Storage Converter: GB, MB, TB"
+      },
+      "metaDescription": {
+        "es": "Convierte gigabytes, megabytes y terabytes entre sistema decimal y binario (KiB, MiB, GiB) al instante.",
+        "en": "Convert gigabytes, megabytes and terabytes between decimal and binary systems (KiB, MiB, GiB) instantly."
+      }
+    },
+    "keywords": ["almacenamiento", "gb a mb", "conversor de bytes", "kb mb gb"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cuántos megabytes tiene un gigabyte?",
+          "en": "How many megabytes are in a gigabyte?"
+        },
+        "a": {
+          "es": "En sistema decimal, 1 GB = 1.000 MB. En sistema binario (usado por algunos sistemas), 1 GiB = 1.024 MiB.",
+          "en": "In the decimal system, 1 GB = 1,000 MB. In the binary system (used by some systems), 1 GiB = 1,024 MiB."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué diferencia hay entre GB y GiB?",
+          "en": "What is the difference between GB and GiB?"
+        },
+        "a": {
+          "es": "GB usa base 1000 (1.000³) y GiB base 1024 (1.024³). Por eso un disco de '500 GB' muestra unos '465 GiB': los sistemas suelen medir en binario.",
+          "en": "GB uses base 1000 (1,000³) and GiB base 1024 (1,024³). That is why a '500 GB' drive shows about '465 GiB': systems often measure in binary."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Cómo calculo cuántos archivos me caben?",
+          "en": "How do I work out how many files fit?"
+        },
+        "a": {
+          "es": "Divide la capacidad total en la misma unidad que el tamaño del archivo. Por ejemplo, 64 GB / 4 GB = 16 archivos de 4 GB.",
+          "en": "Divide the total capacity in the same unit as the file size. For example, 64 GB / 4 GB = 16 files of 4 GB."
+        }
+      }
+    ]
+  },
+  {
+    "id": "tiempo",
+    "slug": "tiempo",
+    "icon": "⏱️",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Conversor de Tiempo",
+      "en": "Time Converter"
+    },
+    "shortDescription": {
+      "es": "Convierte horas, minutos, segundos, días y más.",
+      "en": "Convert hours, minutes, seconds, days and more."
+    },
+    "description": {
+      "es": "El conversor de tiempo pasa de una unidad a otra al instante: milisegundos, segundos, minutos, horas, días, semanas, meses y años. Perfecto para cálculos de duración, planificar rutas y horarios, o convertir '3 años en meses' para un contrato o un proyecto. Los meses y años usan valores medios aproximados (30,44 y 365,25 días).",
+      "en": "The time converter switches between units instantly: milliseconds, seconds, minutes, hours, days, weeks, months and years. Perfect for duration calculations, planning routes and schedules, or converting '3 years into months' for a contract or project. Months and years use approximate average values (30.44 and 365.25 days)."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversor de Tiempo: Horas, Minutos y Segundos",
+        "en": "Time Converter: Hours, Minutes and Seconds"
+      },
+      "metaDescription": {
+        "es": "Convierte horas, minutos, segundos, días, semanas, meses y años al instante. Conversor de tiempo gratuito.",
+        "en": "Convert hours, minutes, seconds, days, weeks, months and years instantly. Free time converter."
+      }
+    },
+    "keywords": ["tiempo", "horas a minutos", "segundos a horas", "conversor de tiempo"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cuántos segundos tiene una hora?",
+          "en": "How many seconds are in an hour?"
+        },
+        "a": {
+          "es": "Una hora tiene 60 minutos y 3.600 segundos. Una semana, 604.800 segundos.",
+          "en": "An hour has 60 minutes and 3,600 seconds. A week has 604,800 seconds."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Cuántos días tiene un mes medio?",
+          "en": "How many days are in an average month?"
+        },
+        "a": {
+          "es": "Un mes medio se aproxima a 30,44 días (365,25 / 12). El año medio se usa con 365,25 días para incluir los bisiestos.",
+          "en": "An average month is about 30.44 days (365.25 / 12). The average year is taken as 365.25 days to include leap years."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Cómo convierto minutos a horas?",
+          "en": "How do I convert minutes to hours?"
+        },
+        "a": {
+          "es": "Divide entre 60: 150 minutos son 2,5 horas. A la inversa, multiplica las horas por 60.",
+          "en": "Divide by 60: 150 minutes is 2.5 hours. To go the other way, multiply the hours by 60."
+        }
+      }
+    ]
+  },
+  {
+    "id": "uuid",
+    "slug": "uuid",
+    "icon": "🆔",
+    "category": "generadores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Generador de UUID",
+      "en": "UUID Generator"
+    },
+    "shortDescription": {
+      "es": "Genera identificadores únicos universales versión 4.",
+      "en": "Generate version 4 universally unique identifiers."
+    },
+    "description": {
+      "es": "El generador de UUID crea identificadores únicos universales versión 4 (aleatorios) directamente en tu navegador con la Web Crypto API. Un UUID permite etiquetar de forma inequívoca bases de datos, sesiones, transacciones o pruebas sin depender de un contador centralizado. Genera desde 1 hasta 10 códigos de una vez y cópialos con un clic. Todo se crea localmente, sin enviar nada a ningún servidor.",
+      "en": "The UUID generator creates version 4 (random) universally unique identifiers directly in your browser with the Web Crypto API. A UUID lets you unambiguously label databases, sessions, transactions or tests without relying on a centralized counter. Generate from 1 to 10 codes at once and copy them with a click. Everything is created locally, without sending anything to any server."
+    },
+    "seo": {
+      "title": {
+        "es": "Generador de UUID v4 Gratis",
+        "en": "Free UUID v4 Generator"
+      },
+      "metaDescription": {
+        "es": "Genera UUID versión 4 aleatorios de forma local con Web Crypto API. Copia varios identificadores de un clic.",
+        "en": "Generate random version 4 UUIDs locally with the Web Crypto API. Copy several identifiers with one click."
+      }
+    },
+    "keywords": ["uuid", "generador uuid", "identificador unico", "uuid v4"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué es un UUID?",
+          "en": "What is a UUID?"
+        },
+        "a": {
+          "es": "Es un identificador de 128 bits en formato hexadecimal (ej. 550e8400-e29b-41d4-a716-446655440000) pensado para ser único sin coordinación central.",
+          "en": "It is a 128-bit identifier in hexadecimal format (e.g. 550e8400-e29b-41d4-a716-446655440000) designed to be unique without central coordination."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué diferencia hay entre UUID v1 y v4?",
+          "en": "What is the difference between UUID v1 and v4?"
+        },
+        "a": {
+          "es": "La v1 usa tiempo y dirección MAC de la máquina; la v4 se genera con números aleatorios. En la práctica, la v4 es la opción más usada y no expone información del ordenador.",
+          "en": "v1 uses time and the machine's MAC address; v4 is generated with random numbers. In practice v4 is the most used option and does not expose computer information."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Pueden repetirse dos UUID?",
+          "en": "Can two UUIDs repeat?"
+        },
+        "a": {
+          "es": "En la práctica no: hay 2¹²² variantes aleatorias. La probabilidad de colisión es tan baja que se considera despreciable en cualquier aplicación real.",
+          "en": "In practice no: there are 2¹²² random variants. The probability of collision is so low it is considered negligible in any real application."
+        }
+      }
+    ]
+  },
+  {
+    "id": "iva",
+    "slug": "iva",
+    "icon": "🧾",
+    "category": "finanzas",
+    "disclaimer": "finance",
+    "applicationCategory": "FinanceApplication",
+    "name": {
+      "es": "Calculadora de IVA",
+      "en": "VAT Calculator"
+    },
+    "shortDescription": {
+      "es": "Añade o quita el IVA (21%, 10%, 4%) a cualquier importe.",
+      "en": "Add or remove VAT (21%, 10%, 4%) from any amount."
+    },
+    "description": {
+      "es": "La calculadora de IVA te permite sumar el IVA a un precio sin impuesto (base imponible) o, a la inversa, extraer el IVA de un precio ya pagado, con los tipos de España (21% general, 10% reducido y 4% superreducido). Útil para presupuestos, facturas, tickets y para saber cuánto del precio final es impuesto.",
+      "en": "The VAT calculator lets you add VAT to a pre-tax price (net amount) or, the other way round, extract VAT from an already paid price, using Spanish rates (21% standard, 10% reduced and 4% super-reduced). Useful for quotes, invoices, receipts and for knowing how much of the final price is tax."
+    },
+    "seo": {
+      "title": {
+        "es": "Calculadora de IVA: Añadir o Quitar (21%, 10%, 4%)",
+        "en": "VAT Calculator: Add or Remove (21%, 10%, 4%)"
+      },
+      "metaDescription": {
+        "es": "Añade o quita el IVA de cualquier importe con los tipos de España. Calcula base, cuota y total al instante.",
+        "en": "Add or remove VAT from any amount with Spanish rates. Calculate net, VAT and total instantly."
+      }
+    },
+    "keywords": ["iva", "calculadora iva", "quitar iva", "anadir iva"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cómo calculo el IVA de un importe?",
+          "en": "How do I calculate VAT on an amount?"
+        },
+        "a": {
+          "es": "Multiplica la base por el tipo: para 21%, base × 0,21 es la cuota de IVA, y base × 1,21 es el total. Para quitar el IVA de un total, divide entre 1,21 (o el tipo correspondiente).",
+          "en": "Multiply the net amount by the rate: for 21%, net × 0.21 is the VAT amount, and net × 1.21 is the total. To remove VAT from a total, divide by 1.21 (or the matching rate)."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué tipos de IVA hay en España?",
+          "en": "What VAT rates are there in Spain?"
+        },
+        "a": {
+          "es": "General 21%, reducido 10% (alimentos, vivienda nueva, restaurantes) y superreducido 4% (productos básicos como pan, leche o libros).",
+          "en": "Standard 21%, reduced 10% (food, new housing, restaurants) and super-reduced 4% (basic products such as bread, milk or books)."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Influye el redondeo en el resultado?",
+          "en": "Does rounding affect the result?"
+        },
+        "a": {
+          "es": "Los importes se redondean a céntimos, como en las facturas reales. Si calculas con más decimales, podrías ver diferencias de 1 céntimo.",
+          "en": "Amounts are rounded to cents, as on real invoices. If you calculate with more decimals you might see 1-cent differences."
+        }
+      }
+    ]
+  },
+  {
+    "id": "interes-compuesto",
+    "slug": "interes-compuesto",
+    "icon": "📈",
+    "category": "finanzas",
+    "disclaimer": "finance",
+    "applicationCategory": "FinanceApplication",
+    "name": {
+      "es": "Calculadora de Interés Compuesto",
+      "en": "Compound Interest Calculator"
+    },
+    "shortDescription": {
+      "es": "Simula el crecimiento de tu ahorro o inversión.",
+      "en": "Simulate the growth of your savings or investment."
+    },
+    "description": {
+      "es": "La calculadora de interés compuesto simula cuánto crecerá tu dinero al reinvertir los intereses, mes a mes: parte de un capital inicial, suma las aportaciones periódicas que quieras y proyecta el resultado final con la composición mensual. Verás la cantidad total, lo que habrás aportado de tu bolsillo y cuánto de ese saldo son intereses. Ideal para ahorro, depósitos e inversiones a largo plazo. Es una proyección orientativa: no contempla impuestos ni comisiones.",
+      "en": "The compound interest calculator simulates how much your money grows by reinvesting the interest, month by month: it starts from an initial capital, adds the periodic contributions you want and projects the final result with monthly compounding. You will see the final amount, how much you contributed from your own pocket and how much of that balance is interest. Great for savings, deposits and long-term investments. It is an indicative projection: it does not consider taxes or fees."
+    },
+    "seo": {
+      "title": {
+        "es": "Calculadora de Interés Compuesto Gratis",
+        "en": "Free Compound Interest Calculator"
+      },
+      "metaDescription": {
+        "es": "Simula el crecimiento de tu ahorro o inversión con interés compuesto. Capital, aportaciones e intereses generados.",
+        "en": "Simulate the growth of your savings or investment with compound interest. Capital, contributions and interest earned."
+      }
+    },
+    "keywords": ["interes compuesto", "calculadora de ahorro", "interes de inversion", "capitalizacion"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué es el interés compuesto?",
+          "en": "What is compound interest?"
+        },
+        "a": {
+          "es": "Es el interés sobre el interés: los rendimientos se reinvierten y pasan a formar parte del capital, acelerando el crecimiento. Einstein lo llamó 'la octava maravilla del mundo'.",
+          "en": "It is interest on interest: returns are reinvested and become part of the capital, accelerating growth. Einstein called it 'the eighth wonder of the world'."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Cuánto aporto habitualmente?",
+          "en": "How much should I usually contribute?"
+        },
+        "a": {
+          "es": "El resultado depende de tu situación. La clave del interés compuesto es el tiempo: incluso aportaciones pequeñas y constantes crecen mucho a largo plazo.",
+          "en": "The result depends on your situation. The key to compound interest is time: even small, steady contributions grow a lot in the long run."
+        }
+      },
+      {
+        "q": {
+          "es": "¿La estimación incluye impuestos y comisiones?",
+          "en": "Does the estimate include taxes and fees?"
+        },
+        "a": {
+          "es": "No. Es una proyección del rendimiento bruto. Impuestos, inflación y comisiones del producto reducirían la cifra final.",
+          "en": "No. It is a projection of gross return. Taxes, inflation and product fees would reduce the final figure."
+        }
+      }
+    ]
+  },
+  {
+    "id": "numeros-romanos",
+    "slug": "numeros-romanos",
+    "icon": "🏛️",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Conversor de Números Romanos",
+      "en": "Roman Numerals Converter"
+    },
+    "shortDescription": {
+      "es": "Convierte números en romanos y viceversa.",
+      "en": "Convert numbers to and from Roman numerals."
+    },
+    "description": {
+      "es": "El conversor de números romanos funciona en los dos sentidos: escribe un número decimal (del 1 al 3999) para ver su representación romana, o teclea un número romano válido para conocer su valor en cifras arábigas. Incluye el desglose símbolo a símbolo para que entiendas cómo se construye cada cifra. Perfecto para estudiar, traducir títulos de películas, siglos o relojes clásicos.",
+      "en": "The Roman numerals converter works both ways: type a decimal number (from 1 to 3999) to see its Roman representation, or enter a valid Roman numeral to get its value in Arabic numerals. It also shows the symbol-by-symbol breakdown so you understand how each figure is built. Great for study, translating movie titles, centuries or classic clock faces."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversor de Números Romanos: Decimal a Romano y Viceversa",
+        "en": "Roman Numerals Converter: Decimal to Roman and Back"
+      },
+      "metaDescription": {
+        "es": "Convierte números decimales a romanos y romanos a decimales al instante, con desglose símbolo a símbolo. Gratis y sin registro.",
+        "en": "Convert decimal numbers to Roman numerals and back instantly, with a symbol-by-symbol breakdown. Free, no sign-up."
+      }
+    },
+    "keywords": ["numeros romanos", "convertir a romanos", "decimal a romano", "romano a decimal"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué números se pueden convertir a romanos?",
+          "en": "What numbers can be converted to Roman numerals?"
+        },
+        "a": {
+          "es": "Con la notación clásica se representan de forma estándar del 1 al 3999. Para números mayores se usan convenciones como la barra superior (vinculum) que multiplica por 1000, que esta herramienta no utiliza.",
+          "en": "With classical notation, the standard range is 1 to 3999. Larger numbers use conventions like the overline (vinculum) that multiplies by 1000, which this tool does not use."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Cómo se lee un número romano como MMXXIV?",
+          "en": "How do you read a Roman numeral like MMXXIV?"
+        },
+        "a": {
+          "es": "Se lee de izquierda a derecha sumando los valores, salvo cuando una letra menor precede a una mayor (como IV o XC), caso en que se resta. Ejemplo: MMXXIV = 1000 + 1000 + 10 + 10 + (5 − 1) = 2024.",
+          "en": "Read it left to right, adding the values; when a smaller letter precedes a larger one (like IV or XC) you subtract. Example: MMXXIV = 1000 + 1000 + 10 + 10 + (5 − 1) = 2024."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Por qué no se escribe 4 como IIII?",
+          "en": "Why isn't 4 written as IIII?"
+        },
+        "a": {
+          "es": "La forma estándar actual es IV (5 − 1). La variante IIII se ve en algunos relojes antiguos por tradición, pero no es la notación normativa.",
+          "en": "The standard form today is IV (5 − 1). The IIII variant appears on some old clocks by tradition, but it is not the normative notation."
+        }
+      }
+    ]
+  },
+  {
+    "id": "base64",
+    "slug": "base64",
+    "icon": "🔏",
+    "category": "generadores",
+    "disclaimer": "general",
+    "applicationCategory": "DeveloperApplication",
+    "name": {
+      "es": "Codificador y Decodificador Base64",
+      "en": "Base64 Encoder and Decoder"
+    },
+    "shortDescription": {
+      "es": "Codifica y decodifica texto en Base64.",
+      "en": "Encode and decode text in Base64."
+    },
+    "description": {
+      "es": "La herramienta Base64 te permite codificar cualquier texto a Base64 (muy usado para transferir datos como texto en APIs, URLs o correo) o decodificar una cadena Base64 a su texto original. El proceso ocurre por completo en tu navegador: tu contenido nunca se envía a ningún servidor. Soporta acentos y emojis gracias a la codificación UTF-8.",
+      "en": "The Base64 tool lets you encode any text to Base64 (widely used to pass data as text in APIs, URLs or email) or decode a Base64 string back to its original text. Everything happens entirely in your browser: your content is never sent to any server. Accents and emojis are supported thanks to UTF-8 encoding."
+    },
+    "seo": {
+      "title": {
+        "es": "Codificador y Decodificador Base64 Online",
+        "en": "Base64 Encoder and Decoder Online"
+      },
+      "metaDescription": {
+        "es": "Codifica texto a Base64 o decodifícalo al instante, con acentos y emojis. Privado: todo ocurre en tu navegador.",
+        "en": "Encode text to Base64 or decode it instantly, with accents and emojis. Private: everything happens in your browser."
+      }
+    },
+    "keywords": ["base64", "codificar base64", "decodificar base64", "base64 online"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Qué es Base64?",
+          "en": "What is Base64?"
+        },
+        "a": {
+          "es": "Es un sistema que representa datos binarios con 64 caracteres seguros (letras, números, + y /), de modo que puedan viajar en textos que solo admiten caracteres imprimibles, como correos, URLs o JSON.",
+          "en": "It is a system that represents binary data with 64 safe characters (letters, digits, + and /), so the data can travel in text that only allows printable characters, such as email, URLs or JSON."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Mis datos se envían a algún servidor?",
+          "en": "Are my data sent to any server?"
+        },
+        "a": {
+          "es": "No. La codificación y decodificación se hacen con JavaScript dentro de tu propio navegador, sin conexión ni envío de datos.",
+          "en": "No. Encoding and decoding are done with JavaScript inside your own browser, with no connection or data sent anywhere."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Por qué algunos caracteres como é o los emojis no se ven bien al decodificar?",
+          "en": "Why do characters like é or emojis not decode correctly?"
+        },
+        "a": {
+          "es": "Base64 puro representa bytes. Con UTF-8, la herramienta conserva esos caracteres correctamente; si la cadena proviene de otra codificación (por ejemplo ISO-8859-1), el texto podría mostrar símbolos raros.",
+          "en": "Raw Base64 represents bytes. With UTF-8, this tool preserves those characters correctly; if the string comes from another encoding (e.g. ISO-8859-1), the text may show odd symbols."
+        }
+      }
+    ]
+  },
+  {
+    "id": "diferencia-fechas",
+    "slug": "diferencia-fechas",
+    "icon": "📅",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": {
+      "es": "Calculadora de Diferencia de Fechas",
+      "en": "Date Difference Calculator"
+    },
+    "shortDescription": {
+      "es": "Calcula los días, meses y años entre dos fechas.",
+      "en": "Calculate the days, months and years between two dates."
+    },
+    "description": {
+      "es": "La calculadora de diferencia de fechas te dice cuánto tiempo ha pasado o pasará entre dos días: en días totales, semanas, meses y años, además de los días laborables (de lunes a viernes). Útil para saber cuántos días faltan para un evento, calcular plazos de entrega, términos de un contrato, vacaciones o aniversarios. Selecciona las fechas o usa el botón 'Hoy' para partir de la fecha actual.",
+      "en": "The date difference calculator tells you how much time has passed or will pass between two days: in total days, weeks, months and years, plus the business days (Monday to Friday). Handy for knowing how many days are left until an event, calculating delivery deadlines, contract terms, holidays or anniversaries. Pick the dates or use the 'Today' button to start from the current date."
+    },
+    "seo": {
+      "title": {
+        "es": "Calculadora de Diferencia de Fechas y Días Laborables",
+        "en": "Date Difference and Business Days Calculator"
+      },
+      "metaDescription": {
+        "es": "Calcula los días, semanas, meses, años y días laborables entre dos fechas al instante. Gratis y sin registro.",
+        "en": "Calculate the days, weeks, months, years and business days between two dates instantly. Free, no sign-up."
+      }
+    },
+    "keywords": ["diferencia de fechas", "dias entre fechas", "calculadora de dias", "dias laborables"],
+    "faqs": [
+      {
+        "q": {
+          "es": "¿Cómo se cuentan los días entre dos fechas?",
+          "en": "How are the days between two dates counted?"
+        },
+        "a": {
+          "es": "Se restan los dos días: del día 1 al día 10 hay 9 días transcurridos (o 10 si cuentas ambos inclusive). Esta herramienta usa días transcurridos, el criterio habitual.",
+          "en": "The two days are subtracted: from day 1 to day 10 there are 9 days elapsed (or 10 counting both). This tool uses elapsed days, the usual criterion."
+        }
+      },
+      {
+        "q": {
+          "es": "¿Qué es un día laborable?",
+          "en": "What is a business day?"
+        },
+        "a": {
+          "es": "Es un día de lunes a viernes, sin contar sábados ni domingos. Las fiestas nacionales o locales no se descuentan automáticamente.",
+          "en": "It is any day from Monday to Friday, not counting Saturdays or Sundays. National or local holidays are not deducted automatically."
+        }
+      },
+      {
+        "q": {
+          "es": "¿La calculadora incluye el día final en el recuento?",
+          "en": "Does the calculator include the final day in the count?"
+        },
+        "a": {
+          "es": "En el desglose, los días laborables se cuentan de forma inclusiva (ambas fechas incluidas). El total de días se muestra como tiempo transcurrido.",
+          "en": "In the breakdown, business days are counted inclusively (both dates included). The total of days is shown as elapsed time."
+        }
+      }
+    ]
+  },
+  {
+    "id": "sueno",
+    "slug": "sueno",
+    "icon": "😴",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": { "es": "Calculadora de Sueño", "en": "Sleep Calculator" },
+    "shortDescription": { "es": "Calcula la hora ideal de acostarte para despertar entre ciclos de sueño completos.", "en": "Find the ideal bedtime to wake up between full sleep cycles." },
+    "description": { "es": "La calculadora de sueño te dice a qué hora acostarte para que, al despertar, hayas completado ciclos de sueño de 90 minutos. Despertar al final de un ciclo reduce la sensación de cansancio y aturdimiento. Introduce tu hora de despertar deseada y tu edad, y obtén varias opciones de hora de acostarse según el número de ciclos que quieras completar.", "en": "The sleep calculator tells you when to go to bed so that you wake up after completing full 90-minute sleep cycles. Waking at the end of a cycle reduces grogginess and tiredness. Enter your desired wake-up time and age to get several bedtime options based on the number of cycles you want to complete." },
+    "seo": {
+      "title": { "es": "Calculadora de Sueño: Hora de Acostarte y Ciclos", "en": "Sleep Calculator: Bedtime and Sleep Cycles" },
+      "metaDescription": { "es": "Descubre a qué hora acostarte para despertar descansado. Calcula tus ciclos de sueño de 90 minutos gratis.", "en": "Find out what time to go to bed to wake up rested. Calculate your 90-minute sleep cycles for free." }
+    },
+    "keywords": ["sueño", "hora de dormir", "ciclos de sueño", "despertar descansado", "sleep calculator", "bedtime"],
+    "faqs": [
+      {
+        "q": { "es": "¿Cuánto dura un ciclo de sueño?", "en": "How long does a sleep cycle last?" },
+        "a": { "es": "Un ciclo completo de sueño dura unos 90 minutos e incluye sueño ligero, profundo y REM. Completar ciclos enteros ayuda a despertar con menos somnolencia.", "en": "A full sleep cycle lasts about 90 minutes and includes light, deep and REM sleep. Completing full cycles helps you wake up with less drowsiness." }
+      },
+      {
+        "q": { "es": "¿Por qué me despierto cansado aunque duerma mucho?", "en": "Why do I wake up tired even after sleeping a lot?" },
+        "a": { "es": "A menudo es porque te despiertas a mitad de un ciclo de sueño. Acostarte para completar ciclos completos, y mantener un horario regular, reduce el aturdimiento matinal.", "en": "Often it is because you wake up mid sleep cycle. Going to bed to complete full cycles, and keeping a regular schedule, reduces morning grogginess." }
+      }
+    ]
+  },
+  {
+    "id": "calorias-quemadas",
+    "slug": "calorias-quemadas",
+    "icon": "🔥",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": { "es": "Calculadora de Calorías Quemadas", "en": "Calories Burned Calculator" },
+    "shortDescription": { "es": "Estima cuántas calorías quemas con tus actividades diarias según tu peso y duración.", "en": "Estimate how many calories you burn during daily activities based on your weight and duration." },
+    "description": { "es": "La calculadora de calorías quemadas usa el método MET (equivalente metabólico) para estimar el gasto energético de actividades como caminar, correr, nadar o montar en bici. Introduce tu peso, elige la actividad y la duración, y obtén una estimación de las calorías quemadas y de tu gasto por minuto.", "en": "The calories burned calculator uses the MET (metabolic equivalent) method to estimate energy expenditure for activities like walking, running, swimming or cycling. Enter your weight, choose the activity and duration, and get an estimate of calories burned and your per-minute spend." },
+    "seo": {
+      "title": { "es": "Calculadora de Calorías Quemadas por Actividad", "en": "Calories Burned Calculator by Activity" },
+      "metaDescription": { "es": "Calcula las calorías quemadas al caminar, correr, nadar o entrenar. Según tu peso y tiempo, gratis y sin registro.", "en": "Calculate calories burned walking, running, swimming or training. Based on your weight and time, free and no sign-up." }
+    },
+    "keywords": ["calorias quemadas", "gasto calorico", "quemar calorias", "caminar", "correr", "deporte", "calories burned"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué es el MET?", "en": "What is MET?" },
+        "a": { "es": "El MET es el equivalente metabólico: cuántas veces tu gasto energético supera al del reposo. Correr tiene un MET de ~9,8 y caminar ligero de ~3,5. A mayor MET, más calorías por minuto.", "en": "MET is the metabolic equivalent: how many times your energy expenditure exceeds resting. Running has a MET of ~9.8 and light walking ~3.5. Higher MET means more calories per minute." }
+      },
+      {
+        "q": { "es": "¿Es exacta la estimación?", "en": "Is the estimate accurate?" },
+        "a": { "es": "Es una aproximación orientativa. El gasto real depende de tu intensidad, tu masa muscular, la temperatura y tu forma física individual.", "en": "It is an indicative approximation. Real expenditure depends on your intensity, muscle mass, temperature and individual fitness." }
+      }
+    ]
+  },
+  {
+    "id": "peso-ideal",
+    "slug": "peso-ideal",
+    "icon": "🎯",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": { "es": "Calculadora de Peso Ideal", "en": "Ideal Weight Calculator" },
+    "shortDescription": { "es": "Calcula tu peso ideal según varios métodos clásicos: Robinson, Miller, Devine y Hamwi.", "en": "Calculate your ideal weight using several classic methods: Robinson, Miller, Devine and Hamwi." },
+    "description": { "es": "La calculadora de peso ideal estima tu peso recomendado combinando las fórmulas más usadas en medicina: Robinson, Miller, Devine y Hamwi. Introduce tu sexo y altura para conocer un rango de referencia de peso saludable. Recuerda que son valores orientativos y que la composición corporal importa más que el número.", "en": "The ideal weight calculator estimates your recommended weight by combining the most common medical formulas: Robinson, Miller, Devine and Hamwi. Enter your sex and height to get a reference range of healthy weight. Remember these are reference values and body composition matters more than the number." },
+    "seo": {
+      "title": { "es": "Calculadora de Peso Ideal por Altura y Sexo", "en": "Ideal Weight Calculator by Height and Sex" },
+      "metaDescription": { "es": "Descubre tu peso ideal según Robinson, Miller, Devine y Hamwi. Introduce altura y sexo, gratis y online.", "en": "Find your ideal weight with Robinson, Miller, Devine and Hamwi. Enter height and sex, free and online." }
+    },
+    "keywords": ["peso ideal", "peso saludable", "peso recomendado", "altura", "hombre", "mujer", "ideal weight"],
+    "faqs": [
+      {
+        "q": { "es": "¿Se puede tener un peso ideal menos indicativo que el IMC?", "en": "Can ideal weight be less indicative than BMI?" },
+        "a": { "es": "Las fórmulas de peso ideal son orientativas y no distinguen músculo de grasa. El IMC y la circunferencia de cintura aportan información complementaria.", "en": "Ideal weight formulas are indicative and do not distinguish muscle from fat. BMI and waist circumference give complementary information." }
+      },
+      {
+        "q": { "es": "¿Por qué las fórmulas dan resultados distintos?", "en": "Why do the formulas give different results?" },
+        "a": { "es": "Cada fórmula se creó con poblaciones y criterios diferentes. Por eso mostramos un rango entre los cuatro métodos en lugar de un único número.", "en": "Each formula was built with different populations and criteria. That is why we show a range across the four methods instead of a single number." }
+      }
+    ]
+  },
+  {
+    "id": "numeros-en-letras",
+    "slug": "numeros-en-letras",
+    "icon": "🔤",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Números a Letras", "en": "Numbers to Words" },
+    "shortDescription": { "es": "Convierte cualquier número a su forma escrita en letras, en español o en inglés.", "en": "Convert any number to its written form in words, in Spanish or English." },
+    "description": { "es": "El conversor de números a letras escribe cualquier cantidad en palabras, con sus decimales en céntimos, ideal para cheques, facturas y documentos formales. Funciona tanto en español como en inglés, desde cero hasta 999.999.999.999,99. Escribe el número y la conversión aparece al instante.", "en": "The numbers to words converter writes any amount in words, with its decimals in cents, ideal for checks, invoices and formal documents. It works in both Spanish and English, from zero to 999,999,999,999.99. Type the number and the conversion appears instantly." },
+    "seo": {
+      "title": { "es": "Convertir Números a Letras Online", "en": "Convert Numbers to Words Online" },
+      "metaDescription": { "es": "Convierte números a letras gratis: 1234 se escribe 'mil doscientos treinta y cuatro'. Ideal para cheques y facturas.", "en": "Convert numbers to words for free: 1234 becomes 'one thousand two hundred thirty-four'. Great for checks and invoices." }
+    },
+    "keywords": ["numeros a letras", "numero en palabras", "convertir numeros", "cheques", "facturas", "numbers to words", "literal"],
+    "faqs": [
+      {
+        "q": { "es": "¿Cómo se escribe 100 en letras?", "en": "How do you write 100 in words?" },
+        "a": { "es": "Se escribe 'cien'. A partir de 101 se usa 'ciento': 101 se escribe 'ciento uno' y 150 'ciento cincuenta'.", "en": "You write 'one hundred'. From 101 onward it uses the same pattern: 101 is 'one hundred one' and 150 'one hundred fifty'." }
+      },
+      {
+        "q": { "es": "¿Cómo se escriben los céntimos?", "en": "How are the cents written?" },
+        "a": { "es": "Los decimales se añaden en céntimos: 1234,5 se escribe 'mil doscientos treinta y cuatro con cincuenta céntimos'.", "en": "The decimals are added in cents: 1,234.5 is 'one thousand two hundred thirty-four and 50/100'." }
+      }
+    ]
+  },
+  {
+    "id": "bases-numericas",
+    "slug": "bases-numericas",
+    "icon": "🔢",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Conversor de Bases Numéricas", "en": "Numeric Base Converter" },
+    "shortDescription": { "es": "Convierte números entre bases: binaria, octal, decimal, hexadecimal y hasta base 36.", "en": "Convert numbers between bases: binary, octal, decimal, hexadecimal and up to base 36." },
+    "description": { "es": "El conversor de bases numéricas transforma un número de una base a otra al instante: binario (2), octal (8), decimal (10), hexadecimal (16) y cualquier base de 2 a 36. Ideal para programadores, estudiantes de informática o curiosos que quieran entender cómo se representan los números.", "en": "The numeric base converter transforms a number from one base to another instantly: binary (2), octal (8), decimal (10), hexadecimal (16) and any base from 2 to 36. Great for programmers, computer science students or the curious who want to understand how numbers are represented." },
+    "seo": {
+      "title": { "es": "Conversor de Bases: Binario, Octal, Decimal y Hexadecimal", "en": "Base Converter: Binary, Octal, Decimal and Hexadecimal" },
+      "metaDescription": { "es": "Convierte números entre bases numéricas al instante: de binario a hexadecimal, de decimal a octal y más. Gratis.", "en": "Convert numbers between numeric bases instantly: binary to hexadecimal, decimal to octal and more. Free." }
+    },
+    "keywords": ["conversor de bases", "binario", "hexadecimal", "octal", "decimal", "base 2", "base 16", "base converter"],
+    "faqs": [
+      {
+        "q": { "es": "¿Cómo convierto binario a hexadecimal?", "en": "How do I convert binary to hexadecimal?" },
+        "a": { "es": "Selecciona binario como base de origen y hexadecimal como destino. Cada 4 dígitos binarios equivalen a 1 dígito hexadecimal.", "en": "Select binary as the source base and hexadecimal as the destination. Every 4 binary digits equal 1 hexadecimal digit." }
+      },
+      {
+        "q": { "es": "¿Qué bases admite el conversor?", "en": "Which bases does the converter support?" },
+        "a": { "es": "Cualquier base entre 2 y 36, usando los dígitos 0-9 y las letras A-Z para los valores de 10 a 35.", "en": "Any base between 2 and 36, using digits 0-9 and letters A-Z for values 10 to 35." }
+      }
+    ]
+  },
+  {
+    "id": "calcular-edad",
+    "slug": "calcular-edad",
+    "icon": "🎂",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Calculadora de Edad", "en": "Age Calculator" },
+    "shortDescription": { "es": "Calcula tu edad exacta en años, meses y días, y cuántos días has vivido.", "en": "Calculate your exact age in years, months and days, and how many days you have lived." },
+    "description": { "es": "La calculadora de edad muestra tu edad exacta en años, meses y días a partir de tu fecha de nacimiento. También calcula meses totales, semanas totales y días totales vividos, y te permite comparar con cualquier fecha de referencia (hitos, documentos, próximos cumpleaños).", "en": "The age calculator shows your exact age in years, months and days from your date of birth. It also calculates total months, total weeks and total days lived, and lets you compare with any reference date (milestones, documents, upcoming birthdays)." },
+    "seo": {
+      "title": { "es": "Calculadora de Edad Exacta por Fecha de Nacimiento", "en": "Exact Age Calculator from Date of Birth" },
+      "metaDescription": { "es": "Calcula tu edad en años, meses, días, semanas y horas. Introduce tu fecha de nacimiento y descúbrelo al instante.", "en": "Calculate your age in years, months, days, weeks and hours. Enter your date of birth to find out instantly." }
+    },
+    "keywords": ["calcular edad", "edad exacta", "cuantos años tengo", "calculadora de edad", "fecha de nacimiento", "age calculator"],
+    "faqs": [
+      {
+        "q": { "es": "¿La edad se calcula por días exactos?", "en": "Is age calculated by exact days?" },
+        "a": { "es": "Sí. Usamos días reales entre el nacimiento y la fecha de referencia, descontando años bisiestos de forma natural.", "en": "Yes. We use the real days between birth and the reference date, naturally accounting for leap years." }
+      },
+      {
+        "q": { "es": "¿Puedo usar una fecha que no sea hoy?", "en": "Can I use a date other than today?" },
+        "a": { "es": "Sí. Deja la fecha de referencia vacía para usar la fecha actual, o elige otra fecha para calcular la edad en un momento concreto.", "en": "Yes. Leave the reference date empty to use the current date, or pick another date to calculate age at a specific moment." }
+      }
+    ]
+  },
+  {
+    "id": "contador-caracteres",
+    "slug": "contador-caracteres",
+    "icon": "✍️",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Contador de Caracteres y Palabras", "en": "Character and Word Counter" },
+    "shortDescription": { "es": "Cuenta caracteres, palabras, letras, números y líneas de cualquier texto al instante.", "en": "Count characters, words, letters, numbers and lines of any text instantly." },
+    "description": { "es": "El contador de caracteres analiza cualquier texto y te muestra en tiempo real el número de caracteres, caracteres sin espacios, palabras, letras, números, signos y líneas. Perfecto para límites de redes sociales, redacciones académicas, descripciones de producto o traducciones.", "en": "The character counter analyzes any text and shows you in real time the number of characters, characters without spaces, words, letters, numbers, punctuation and lines. Perfect for social media limits, academic writing, product descriptions or translations." },
+    "seo": {
+      "title": { "es": "Contador de Caracteres y Palabras Online", "en": "Online Character and Word Counter" },
+      "metaDescription": { "es": "Cuenta caracteres, palabras, letras y líneas en tiempo real. Ideal para redes sociales, textos y tareas. Gratis.", "en": "Count characters, words, letters and lines in real time. Great for social media, texts and assignments. Free." }
+    },
+    "keywords": ["contador de caracteres", "contador de palabras", "caracteres", "palabras", "limite de texto", "word counter", "character counter"],
+    "faqs": [
+      {
+        "q": { "es": "¿Cuenta los espacios como caracteres?", "en": "Does it count spaces as characters?" },
+        "a": { "es": "Sí. Mostramos dos cifras: caracteres totales (incluyendo espacios) y caracteres sin espacios, que son las dos formas más usadas.", "en": "Yes. We show two figures: total characters (including spaces) and characters without spaces, the two most common ways." }
+      },
+      {
+        "q": { "es": "¿Cuenta los caracteres de otros idiomas?", "en": "Does it count characters in other languages?" },
+        "a": { "es": "Sí. Acepta tildes, eñes, emojis y cualquier símbolo Unicode y los cuenta correctamente.", "en": "Yes. It handles accents, tildes, emojis and any Unicode symbol and counts them correctly." }
+      }
+    ]
+  },
+  {
+    "id": "timestamp",
+    "slug": "timestamp",
+    "icon": "⏱️",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Conversor de Timestamp", "en": "Timestamp Converter" },
+    "shortDescription": { "es": "Convierte timestamps Unix a fecha y hora legible y viceversa.", "en": "Convert Unix timestamps to readable dates and times and vice versa." },
+    "description": { "es": "El conversor de timestamp transforma un timestamp Unix (segundos o milisegundos) en fecha y hora legible, y también convierte cualquier fecha y hora en timestamp. Imprescindible para desarrolladores, administradores de bases de datos y análisis de logs.", "en": "The timestamp converter transforms a Unix timestamp (seconds or milliseconds) into a readable date and time, and also converts any date and time into a timestamp. Essential for developers, database administrators and log analysis." },
+    "seo": {
+      "title": { "es": "Conversor de Timestamp Unix a Fecha", "en": "Unix Timestamp to Date Converter" },
+      "metaDescription": { "es": "Convierte timestamp Unix a fecha y hora legible y viceversa. En segundos o milisegundos, gratis y online.", "en": "Convert Unix timestamp to a readable date and time and back. In seconds or milliseconds, free and online." }
+    },
+    "keywords": ["timestamp", "unix time", "epoch", "convertir timestamp", "fecha unix", "timestamp converter", "epoch converter"],
+    "faqs": [
+      {
+        "q": { "es": "¿El timestamp está en segundos o milisegundos?", "en": "Is the timestamp in seconds or milliseconds?" },
+        "a": { "es": "El conversor detecta automáticamente ambos. Los valores de 13 dígitos se interpretan como milisegundos.", "en": "The converter detects both automatically. 13-digit values are interpreted as milliseconds." }
+      },
+      {
+        "q": { "es": "¿Qué zona horaria usa?", "en": "What time zone does it use?" },
+        "a": { "es": "Muestra la fecha y hora local de tu navegador, que es la más útil para la mayoría de los casos.", "en": "It shows the local date and time of your browser, which is the most useful for most cases." }
+      }
+    ]
+  },
+  {
+    "id": "porcentaje",
+    "slug": "porcentaje",
+    "icon": "💯",
+    "category": "finanzas",
+    "disclaimer": "finance",
+    "applicationCategory": "FinanceApplication",
+    "name": { "es": "Calculadora de Porcentajes", "en": "Percentage Calculator" },
+    "shortDescription": { "es": "Calcula el X% de un número, qué porcentaje es A de B y la variación entre dos valores.", "en": "Calculate X% of a number, what percentage A is of B, and the change between two values." },
+    "description": { "es": "La calculadora de porcentajes resuelve de un vistazo las tres operaciones más comunes: cuánto es el X% de Y, qué porcentaje representa un valor respecto a otro y cuál es la variación porcentual entre dos cantidades. Útil para descuentos, estadísticas, cuentas y análisis de datos.", "en": "The percentage calculator solves at a glance the three most common operations: what X% of Y is, what percentage one value represents of another, and the percentage change between two amounts. Useful for discounts, statistics, accounts and data analysis." },
+    "seo": {
+      "title": { "es": "Calculadora de Porcentajes Online", "en": "Online Percentage Calculator" },
+      "metaDescription": { "es": "Calcula el porcentaje de un número, qué % es A de B y la variación entre dos valores. Gratis y al instante.", "en": "Calculate the percentage of a number, what % A is of B and the change between two values. Free and instant." }
+    },
+    "keywords": ["calcular porcentaje", "porcentaje", "tanto por ciento", "descuento", "variacion porcentual", "percentage calculator", "percent"],
+    "faqs": [
+      {
+        "q": { "es": "¿Cómo calculo el 20% de 150?", "en": "How do I calculate 20% of 150?" },
+        "a": { "es": "Multiplica 150 por 0,20: el resultado es 30. En la calculadora elige el primer modo e introduce 20 y 150.", "en": "Multiply 150 by 0.20: the result is 30. In the calculator pick the first mode and enter 20 and 150." }
+      },
+      {
+        "q": { "es": "¿Cómo se calcula la variación porcentual?", "en": "How is percentage change calculated?" },
+        "a": { "es": "Se divide la diferencia entre el valor inicial: (B − A) / A × 100. Un resultado positivo es un incremento y uno negativo una reducción.", "en": "Divide the difference by the starting value: (B − A) / A × 100. A positive result is an increase and a negative one a decrease." }
+      }
+    ]
+  },
+    {
+    "id": "propina",
+    "slug": "propina",
+    "icon": "🍽️",
+    "category": "finanzas",
+    "disclaimer": "general",
+    "applicationCategory": "FinanceApplication",
+    "name": { "es": "Calculadora de Propina", "en": "Tip Calculator" },
+    "shortDescription": { "es": "Calcula la propina, el total con propina y cuánto paga cada persona de la mesa.", "en": "Calculate the tip, the total with tip and how much each person at the table pays." },
+    "description": { "es": "La calculadora de propina te ayuda a repartir la cuenta entre varias personas. Introduce el total, el porcentaje de propina que quieres dejar y cuántas personas sois, y obtén la propina total, el total con propina y cuánto le corresponde pagar a cada uno.", "en": "The tip calculator helps you split the bill among several people. Enter the total, the tip percentage you want to leave and how many people you are, and get the total tip, the total with tip and how much each person has to pay." },
+    "seo": {
+      "title": { "es": "Calculadora de Propina y Reparto de Cuenta", "en": "Tip Calculator and Bill Splitter" },
+      "metaDescription": { "es": "Calcula la propina, el total y cuánto paga cada persona. Introduce el importe y reparte la cuenta fácil. Gratis.", "en": "Calculate the tip, the total and how much each person pays. Enter the amount and split the bill easily. Free." }
+    },
+    "keywords": ["calculadora propina", "propina", "repartir cuenta", "dividir cuenta", "propina por persona", "tip calculator"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué porcentaje de propina es habitual?", "en": "What tip percentage is usual?" },
+        "a": { "es": "Depende del país y del servicio: del 5% al 10% es habitual en muchos países, y en otros se incluye en el precio. Ajusta el porcentaje a tu criterio.", "en": "It depends on the country and the service: 5% to 10% is common in many countries, and in others it is included in the price. Adjust the percentage to your judgment." }
+      },
+      {
+        "q": { "es": "¿Cómo se reparte la cuenta entre personas?", "en": "How is the bill split among people?" },
+        "a": { "es": "Se divide el total con propina entre el número de personas. Si alguien tomó mucho menos, ajusta manualmente su parte.", "en": "The total with tip is divided by the number of people. If someone had much less, adjust their share manually." }
+      }
+    ]
+  },
+  {
+    "id": "interes-simple",
+    "slug": "interes-simple",
+    "icon": "📈",
+    "category": "finanzas",
+    "disclaimer": "finance",
+    "applicationCategory": "FinanceApplication",
+    "name": { "es": "Calculadora de Interés Simple", "en": "Simple Interest Calculator" },
+    "shortDescription": { "es": "Calcula el interés simple y el monto final de una inversión o préstamo.", "en": "Calculate the simple interest and final amount of an investment or loan." },
+    "description": { "es": "La calculadora de interés simple te muestra cuántos intereses genera un capital a un tipo anual durante un periodo de tiempo determinado, así como el monto final. Perfecta para entender préstamos personales o inversiones a corto plazo donde no se reinvierten los intereses.", "en": "The simple interest calculator shows you how much interest a principal generates at an annual rate over a given period, as well as the final amount. Perfect for understanding personal loans or short-term investments where interest is not reinvested." },
+    "seo": {
+      "title": { "es": "Calculadora de Interés Simple: Capital, Tipo y Periodo", "en": "Simple Interest Calculator: Principal, Rate and Term" },
+      "metaDescription": { "es": "Calcula el interés simple y el monto final de tu inversión o préstamo. Introduce capital, tipo y años. Gratis.", "en": "Calculate the simple interest and final amount of your investment or loan. Enter principal, rate and years. Free." }
+    },
+    "keywords": ["interes simple", "calcular interes", "interes de un prestamo", "monto final", "inversion", "simple interest"],
+    "faqs": [
+      {
+        "q": { "es": "¿En qué se diferencia el interés simple del compuesto?", "en": "How does simple interest differ from compound interest?" },
+        "a": { "es": "En el interés simple solo genera intereses el capital inicial. En el compuesto, los intereses se suman al capital y generan intereses nuevos. A largo plazo, el compuesto crece mucho más.", "en": "In simple interest, only the initial principal earns interest. In compound interest, interest is added to the principal and earns new interest. Over the long term, compounding grows much more." }
+      },
+      {
+        "q": { "es": "¿La calculadora usa años naturales?", "en": "Does the calculator use calendar years?" },
+        "a": { "es": "Sí, el periodo se expresa en años completos. Para meses, divide el periodo entre 12.", "en": "Yes, the term is expressed in full years. For months, divide the term by 12." }
+      }
+    ]
+  },
+  {
+    "id": "numeros-aleatorios",
+    "slug": "numeros-aleatorios",
+    "icon": "🎲",
+    "category": "generadores",
+    "disclaimer": "security",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Generador de Números Aleatorios", "en": "Random Number Generator" },
+    "shortDescription": { "es": "Genera números aleatorios dentro de un rango, con opción de no repetir.", "en": "Generate random numbers within a range, with the option of no repeats." },
+    "description": { "es": "El generador de números aleatorios usa la criptografía del navegador (Web Crypto API) para crear números realmente impredecibles dentro del rango que elijas. Indica mínimo, máximo y cantidad, marca 'sin repetir' si lo necesitas, y aptos para sorteos, rifas, juegos o decisiones imparciales.", "en": "The random number generator uses browser cryptography (Web Crypto API) to create truly unpredictable numbers within the range you choose. Set the minimum, maximum and quantity, tick 'no repeats' if needed, ideal for raffles, draws, games or fair decisions." },
+    "seo": {
+      "title": { "es": "Generador de Números Aleatorios Seguro y Gratis", "en": "Secure and Free Random Number Generator" },
+      "metaDescription": { "es": "Genera números aleatorios entre un rango, con o sin repetición. Criptográficamente seguro, gratis y sin registro.", "en": "Generate random numbers within a range, with or without repeats. Cryptographically secure, free and no sign-up." }
+    },
+    "keywords": ["numeros aleatorios", "generador aleatorio", "sorteo", "rifa", "numero al azar", "random number generator", "azar"],
+    "faqs": [
+      {
+        "q": { "es": "¿Los números son realmente aleatorios?", "en": "Are the numbers truly random?" },
+        "a": { "es": "Sí. Se generan con la Web Crypto API del navegador, que usa el generador de aleatoriedad criptográficamente seguro del sistema.", "en": "Yes. They are generated with the browser's Web Crypto API, which uses the system's cryptographically secure random generator." }
+      },
+      {
+        "q": { "es": "¿Puedo generar números sin repetir?", "en": "Can I generate numbers without repeats?" },
+        "a": { "es": "Sí, marca la opción 'Sin repetir'. El rango debe tener suficientes números para la cantidad que pidas.", "en": "Yes, tick the 'No repeats' option. The range must have enough numbers for the quantity you ask." }
+      }
+    ]
+  },
+  {
+    "id": "codigo-barras",
+    "slug": "codigo-barras",
+    "icon": "📊",
+    "category": "generadores",
+    "disclaimer": "security",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Generador de Código de Barras", "en": "Barcode Generator" },
+    "shortDescription": { "es": "Genera códigos de barras Code 39 a partir de cualquier texto, listos para descargar.", "en": "Generate Code 39 barcodes from any text, ready to download." },
+    "description": { "es": "El generador de código de barras crea códigos Code 39, un formato ampliamente compatible, a partir de texto: letras, números y algunos símbolos. El resultado se dibuja al instante en tu navegador y puedes descargarlo como imagen PNG para etiquetas, inventarios o documentos.", "en": "The barcode generator creates Code 39 barcodes, a widely compatible format, from text: letters, numbers and a few symbols. The result is drawn instantly in your browser and you can download it as a PNG image for labels, inventory or documents." },
+    "seo": {
+      "title": { "es": "Generador de Código de Barras Code 39 Gratis", "en": "Free Code 39 Barcode Generator" },
+      "metaDescription": { "es": "Genera códigos de barras Code 39 online a partir de texto y descárgalos en PNG. Ideal para etiquetas e inventarios.", "en": "Generate Code 39 barcodes online from text and download them as PNG. Ideal for labels and inventory." }
+    },
+    "keywords": ["codigo de barras", "generador codigo barras", "code 39", "codigo de barras online", "barcode generator", "etiquetas"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué caracteres admite Code 39?", "en": "What characters does Code 39 support?" },
+        "a": { "es": "Letras A-Z, dígitos 0-9, espacio y los símbolos - . $ / + %. No incluye minúsculas ni vocales acentuadas.", "en": "Letters A-Z, digits 0-9, space and the symbols - . $ / + %. It does not include lowercase or accented letters." }
+      },
+      {
+        "q": { "es": "¿Puedo escanear el código generado?", "en": "Can the generated barcode be scanned?" },
+        "a": { "es": "Sí. Code 39 es un formato estándar que los lectores de código de barras reconocen. Descarga el PNG e imprime con buena resolución.", "en": "Yes. Code 39 is a standard format that barcode scanners recognize. Download the PNG and print at good resolution." }
+      }
+    ]
+  },
+  {
+    "id": "lorem-ipsum",
+    "slug": "lorem-ipsum",
+    "icon": "📝",
+    "category": "generadores",
+    "disclaimer": "security",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Generador de Lorem Ipsum", "en": "Lorem Ipsum Generator" },
+    "shortDescription": { "es": "Genera texto de relleno lorem ipsum clásico para maquetas, plantillas y diseños web.", "en": "Generate classic lorem ipsum filler text for mockups, templates and web designs." },
+    "description": { "es": "El generador de lorem ipsum crea el texto de relleno latino clásico usado en diseño y maquetación. Elige el número de párrafos y palabras, marca 'comenzar con el texto clásico' para iniciar con 'Lorem ipsum dolor sit amet...', y copia el resultado con un clic.", "en": "The lorem ipsum generator creates the classic Latin filler text used in design and typesetting. Choose the number of paragraphs and words, tick 'start with the classic text' to begin with 'Lorem ipsum dolor sit amet...', and copy the result with one click." },
+    "seo": {
+      "title": { "es": "Generador de Lorem Ipsum Clásico Gratis", "en": "Free Classic Lorem Ipsum Generator" },
+      "metaDescription": { "es": "Genera texto de relleno lorem ipsum latino gratis. Elige párrafos y palabras, ideal para maquetar y diseñar.", "en": "Generate free Latin lorem ipsum filler text. Choose paragraphs and words, ideal for mockups and design." }
+    },
+    "keywords": ["lorem ipsum", "texto de relleno", "generador lorem", "texto placeholder", "maqueta", "lorem ipsum generator", "placeholder text"],
+    "faqs": [
+      {
+        "q": { "es": "¿Para qué se usa el lorem ipsum?", "en": "What is lorem ipsum used for?" },
+        "a": { "es": "Para rellenar espacios en maquetas y diseños antes de tener el contenido definitivo, de modo que se aprecie la tipografía y la distribución.", "en": "To fill spaces in mockups and designs before having the final content, so the typography and layout can be appreciated." }
+      },
+      {
+        "q": { "es": "¿El texto generado es en latín?", "en": "Is the generated text in Latin?" },
+        "a": { "es": "Sí, es el texto lorem ipsum clásico en latín (derivado de De finibus bonorum et malorum de Cicerón). No genera texto en español ni inglés.", "en": "Yes, it's the classic Latin lorem ipsum text (derived from Cicero's De finibus bonorum et malorum). It does not generate Spanish or English text." }
+      }
+    ]
+  },
+  {
+    "id": "prestamo-amortizacion",
+    "slug": "prestamo-amortizacion",
+    "icon": "🏦",
+    "category": "finanzas",
+    "disclaimer": "finance",
+    "applicationCategory": "FinanceApplication",
+    "name": { "es": "Calculadora de Préstamo y Amortización", "en": "Loan and Amortization Calculator" },
+    "shortDescription": { "es": "Calcula cuota mensual, tabla de amortización y total a pagar (sistema francés, alemán, americano).", "en": "Calculate monthly payment, amortization schedule and total payable (French, German, American systems)." },
+    "description": { "es": "La calculadora de préstamo te muestra la cuota mensual, los intereses totales y el total a pagar para cualquier préstamo hipotecario, personal o de coche. Soporta los tres sistemas de amortización principales: francés (cuota fija, el más habitual en España), alemán (amortización de capital constante) y americano (solo intereses durante el plazo). Incluye tabla de amortización completa mes a mes con desglose de capital, intereses y saldo pendiente.", "en": "The loan calculator shows the monthly payment, total interest and total payable for any mortgage, personal or car loan. It supports the three main amortization systems: French (fixed payment, most common in Spain), German (constant principal repayment) and American (interest-only during term). Includes a complete month-by-month amortization table with breakdown of principal, interest and outstanding balance." },
+    "seo": {
+      "title": { "es": "Calculadora de Préstamo: Cuota, Amortización y Total", "en": "Loan Calculator: Payment, Amortization and Total" },
+      "metaDescription": { "es": "Calcula la cuota mensual de tu préstamo, tabla de amortización y total a pagar. Sistemas francés, alemán y americano.", "en": "Calculate your loan monthly payment, amortization schedule and total payable. French, German and American systems." }
+    },
+    "keywords": ["calculadora prestamo", "amortizacion", "cuota mensual", "sistema frances", "sistema aleman", "prestamo hipotecario", "loan calculator", "amortization"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué sistema de amortización es el más usado?", "en": "Which amortization system is most used?" },
+        "a": { "es": "En España y gran parte de Europa el sistema francés (cuota fija) es el estándar para hipotecas y préstamos personales.", "en": "In Spain and much of Europe the French system (fixed payment) is the standard for mortgages and personal loans." }
+      },
+      {
+        "q": { "es": "¿Cuál es la diferencia entre sistema francés y alemán?", "en": "What is the difference between French and German systems?" },
+        "a": { "es": "Francés: cuota constante, más intereses al principio. Alemán: amortización de capital constante, cuota decreciente (empieza más alta).", "en": "French: constant payment, more interest at start. German: constant principal repayment, decreasing payment (starts higher)." }
+      },
+      {
+        "q": { "es": "¿El sistema americano amortiza capital?", "en": "Does the American system amortize principal?" },
+        "a": { "es": "No. Solo pagas intereses durante el plazo y devuelves el capital al final en una sola vez. Es raro en préstamos personales.", "en": "No. You only pay interest during the term and repay the principal at the end in a lump sum. Rare in personal loans." }
+      }
+    ]
+  },
+  {
+    "id": "jwt-generator",
+    "slug": "jwt-generator",
+    "icon": "🔐",
+    "category": "generadores",
+    "disclaimer": "security",
+    "applicationCategory": "SecurityApplication",
+    "name": { "es": "Generador de JWT", "en": "JWT Generator" },
+    "shortDescription": { "es": "Genera JSON Web Tokens firmados (HS256, HS384, HS512) para desarrollo y pruebas.", "en": "Generate signed JSON Web Tokens (HS256, HS384, HS512) for development and testing." },
+    "description": { "es": "El generador de JWT crea tokens JSON Web Token firmados con algoritmos HMAC (HS256, HS384, HS512) directamente en tu navegador. Define el header y el payload en JSON, elige el algoritmo y la clave secreta, y obtén el token completo listo para usar en APIs, autenticación o pruebas. También incluye decodificador para inspeccionar cualquier JWT sin validar la firma.", "en": "The JWT generator creates signed JSON Web Tokens with HMAC algorithms (HS256, HS384, HS512) directly in your browser. Define the header and payload in JSON, choose the algorithm and secret key, and get the complete token ready for use in APIs, authentication or testing. Also includes a decoder to inspect any JWT without validating the signature." },
+    "seo": {
+      "title": { "es": "Generador de JWT (JSON Web Token) Online", "en": "Online JWT (JSON Web Token) Generator" },
+      "metaDescription": { "es": "Genera y decodifica JWT firmados con HS256/384/512. Header y payload JSON personalizables. Local y seguro.", "en": "Generate and decode JWTs signed with HS256/384/512. Customizable JSON header and payload. Local and secure." }
+    },
+    "keywords": ["jwt", "json web token", "generador jwt", "hs256", "token", "autenticacion", "jwt generator", "jwt decoder"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué algoritmos soporta?", "en": "Which algorithms are supported?" },
+        "a": { "es": "Actualmente HS256, HS384 y HS512 (HMAC con SHA-2, SHA-384 y SHA-512). Los algoritmos RS* y ES* requieren claves asimétricas y no están implementados en esta versión.", "en": "Currently HS256, HS384 and HS512 (HMAC with SHA-2, SHA-384 and SHA-512). RS* and ES* algorithms require asymmetric keys and are not implemented in this version." }
+      },
+      {
+        "q": { "es": "¿Mi clave secreta sale de mi navegador?", "en": "Does my secret key leave my browser?" },
+        "a": { "es": "No. Todo el proceso de firma y decodificación ocurre localmente en tu dispositivo usando la Web Crypto API. Nada se envía a servidores.", "en": "No. All signing and decoding happens locally on your device using the Web Crypto API. Nothing is sent to any server." }
+      },
+      {
+        "q": { "es": "¿Puedo decodificar un JWT sin la clave?", "en": "Can I decode a JWT without the key?" },
+        "a": { "es": "Sí. El botón 'Decodificar' lee el header y payload (que son Base64URL) sin validar la firma. Útil para depurar tokens.", "en": "Yes. The 'Decode' button reads the header and payload (which are Base64URL) without validating the signature. Useful for debugging tokens." }
+      }
+    ]
+  },
+  {
+    "id": "json-formatter",
+    "slug": "json-formatter",
+    "icon": "🔧",
+    "category": "generadores",
+    "disclaimer": "general",
+    "applicationCategory": "DeveloperApplication",
+    "name": { "es": "Formateador y Minificador JSON", "en": "JSON Formatter and Minifier" },
+    "shortDescription": { "es": "Formatea, minifica, valida y ordena claves de cualquier JSON al instante.", "en": "Format, minify, validate and sort keys of any JSON instantly." },
+    "description": { "es": "El formateador JSON embellece (pretty-print), minifica, valida y ordena alfabéticamente las claves de cualquier JSON. Detecta errores de sintaxis y muestra exactamente dónde está el problema. Útil para depurar APIs, leer respuestas comprimidas, preparar payloads o limpiar archivos de configuración. Todo ocurre en tu navegador, tus datos no salen de tu dispositivo.", "en": "The JSON formatter beautifies (pretty-print), minifies, validates and alphabetically sorts keys of any JSON. It detects syntax errors and shows exactly where the problem is. Useful for debugging APIs, reading compressed responses, preparing payloads or cleaning config files. Everything happens in your browser, your data never leaves your device." },
+    "seo": {
+      "title": { "es": "Formateador JSON: Beautify, Minify, Validar y Ordenar", "en": "JSON Formatter: Beautify, Minify, Validate and Sort" },
+      "metaDescription": { "es": "Formatea, minifica, valida y ordena claves de JSON online. Detecta errores de sintaxis. Privado: todo en tu navegador.", "en": "Format, minify, validate and sort JSON keys online. Detects syntax errors. Private: everything in your browser." }
+    },
+    "keywords": ["json formatter", "json beautify", "json minify", "validar json", "formatear json", "json online", "pretty print json"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué hace 'ordenar claves'?", "en": "What does 'sort keys' do?" },
+        "a": { "es": "Reordena las claves de cada objeto alfabéticamente (A-Z). Útil para comparar dos JSONs que tienen el mismo contenido pero distinto orden.", "en": "It reorders each object's keys alphabetically (A-Z). Useful for comparing two JSONs with the same content but different order." }
+      },
+      {
+        "q": { "es": "¿El JSON se envía a algún servidor?", "en": "Is the JSON sent to any server?" },
+        "a": { "es": "No. El parseo, formateo y validación se hacen con JavaScript nativo en tu navegador. Tu JSON nunca sale de tu ordenador.", "en": "No. Parsing, formatting and validation are done with native JavaScript in your browser. Your JSON never leaves your computer." }
+      },
+      {
+        "q": { "es": "¿Soporta JSON con comentarios o trailing commas?", "en": "Does it support JSON with comments or trailing commas?" },
+        "a": { "es": "No. El estándar JSON estricto (RFC 8259) no permite comentarios ni comas finales. Elimínalos antes de pegar el texto.", "en": "No. The strict JSON standard (RFC 8259) does not allow comments or trailing commas. Remove them before pasting." }
+      }
+    ]
+  },
+  {
+    "id": "regex-tester",
+    "slug": "regex-tester",
+    "icon": "🔍",
+    "category": "generadores",
+    "disclaimer": "general",
+    "applicationCategory": "DeveloperApplication",
+    "name": { "es": "Tester de Expresiones Regulares (Regex)", "en": "Regular Expression Tester (Regex)" },
+    "shortDescription": { "es": "Prueba, depura y entiende tus regex con resaltado de coincidencias, grupos y explicación token a token.", "en": "Test, debug and understand your regex with match highlighting, groups and token-by-token explanation." },
+    "description": { "es": "El tester de expresiones regulares te permite escribir un patrón regex, elegir flags (g, i, m, s, u, y) y probarlo contra un texto en tiempo real. Muestra todas las coincidencias con sus grupos de captura, índices y tiempos de ejecución. Incluye presets comunes (email, URL, IPv4, DNI, IBAN, color hex) y un explicador que desglosa el patrón token a token. Resalta las coincidencias directamente en el texto de prueba.", "en": "The regular expression tester lets you write a regex pattern, choose flags (g, i, m, s, u, y) and test it against text in real time. It shows all matches with their capture groups, indices and execution times. Includes common presets (email, URL, IPv4, DNI, IBAN, hex color) and an explainer that breaks down the pattern token by token. Highlights matches directly in the test text." },
+    "seo": {
+      "title": { "es": "Tester de Expresiones Regulares (Regex) Online", "en": "Online Regular Expression Tester (Regex)" },
+      "metaDescription": { "es": "Prueba y depura regex con flags, grupos, resaltado y explicación token a token. Presets: email, URL, IPv4, DNI, IBAN. Gratis.", "en": "Test and debug regex with flags, groups, highlighting and token-by-token explanation. Presets: email, URL, IPv4, DNI, IBAN. Free." }
+    },
+    "keywords": ["regex", "expresion regular", "regex tester", "probar regex", "patron regex", "regular expression", "regex online", "regex debugger"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué flags están disponibles?", "en": "What flags are available?" },
+        "a": { "es": "g (global), i (insensible a mayúsculas), m (multilínea), s (dotAll), u (unicode), y (sticky). Se pueden combinar.", "en": "g (global), i (case insensitive), m (multiline), s (dotAll), u (unicode), y (sticky). They can be combined." }
+      },
+      {
+        "q": { "es": "¿Cómo funciona el explicador?", "en": "How does the explainer work?" },
+        "a": { "es": "Analiza el patrón carácter a carácter e identifica escapes, clases de caracteres, grupos, cuantificadores, anclas y alternancias, dando una descripción en lenguaje natural de cada parte.", "en": "It analyzes the pattern character by character and identifies escapes, character classes, groups, quantifiers, anchors and alternations, giving a natural language description of each part." }
+      },
+      {
+        "q": { "es": "¿El regex se evalúa en mi navegador?", "en": "Is the regex evaluated in my browser?" },
+        "a": { "es": "Sí. Se usa el motor RegExp nativo de JavaScript. El rendimiento y comportamiento son los mismos que en tu código.", "en": "Yes. The native JavaScript RegExp engine is used. Performance and behavior are the same as in your code." }
+      }
+    ]
+  },
+  {
+    "id": "macros-calculator",
+    "slug": "macros-calculator",
+    "icon": "🥗",
+    "category": "salud",
+    "disclaimer": "health",
+    "applicationCategory": "HealthApplication",
+    "name": { "es": "Calculadora de Macros y Nutrientes", "en": "Macros and Nutrients Calculator" },
+    "shortDescription": { "es": "Calcula tus macros (carbohidratos, proteína, grasa) y calorías objetivo según objetivo, peso y actividad.", "en": "Calculate your macros (carbs, protein, fat) and target calories based on goal, weight and activity." },
+    "description": { "es": "La calculadora de macros combina tu gasto energético (BMR + TDEE con Mifflin-St Jeor) con tu objetivo (mantener, perder o ganar peso) y tu reparto de macronutrientes preferido para darte las calorías y gramos diarios exactos de carbohidratos, proteína y grasa. Incluye presets: equilibrado (40/30/30), alto en proteína (40/40/20), bajo en carbohidratos (20/40/40), keto (5/25/70) y zona (40/30/30). Los porcentajes deben sumar 100%.", "en": "The macros calculator combines your energy expenditure (BMR + TDEE with Mifflin-St Jeor) with your goal (maintain, lose or gain weight) and your preferred macronutrient split to give you exact daily calories and grams of carbs, protein and fat. Includes presets: balanced (40/30/30), high protein (40/40/20), low carb (20/40/40), keto (5/25/70) and zone (40/30/30). Percentages must sum to 100%." },
+    "seo": {
+      "title": { "es": "Calculadora de Macros: Carbohidratos, Proteína y Grasa", "en": "Macros Calculator: Carbs, Protein and Fat" },
+      "metaDescription": { "es": "Calcula tus macros y calorías diarias según objetivo y actividad. Presets: equilibrado, high protein, low carb, keto. Gratis.", "en": "Calculate your daily macros and calories based on goal and activity. Presets: balanced, high protein, low carb, keto. Free." }
+    },
+    "keywords": ["calculadora macros", "macronutrientes", "carbohidratos proteina grasa", "calorias objetivo", "keto macros", "dieta flexibile", "macros calculator", "iifym"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué es el reparto 40/30/30?", "en": "What is the 40/30/30 split?" },
+        "a": { "es": "Significa 40% de calorías de carbohidratos, 30% de proteína y 30% de grasa. Es un reparto equilibrado usado en dieta zona y nutrición deportiva general.", "en": "It means 40% of calories from carbs, 30% from protein and 30% from fat. A balanced split used in zone diet and general sports nutrition." }
+      },
+      {
+        "q": { "es": "¿Por qué los porcentajes deben sumar 100%?", "en": "Why must percentages sum to 100%?" },
+        "a": { "es": "Porque representan la distribución del 100% de tus calorías objetivo entre los tres macronutrientes. Si suman más o menos, el cálculo de gramos sería incorrecto.", "en": "Because they represent the distribution of 100% of your target calories among the three macronutrients. If they sum to more or less, the gram calculation would be wrong." }
+      },
+      {
+        "q": { "es": "¿Es adecuado para keto?", "en": "Is it suitable for keto?" },
+        "a": { "es": "Sí, usa el preset 'Keto (5/25/70)' o ajusta manualmente a ~5% carbohidratos, 20-25% proteína y 70-75% grasa.", "en": "Yes, use the 'Keto (5/25/70)' preset or manually adjust to ~5% carbs, 20-25% protein and 70-75% fat." }
+      }
+    ]
+  },
+  {
+    "id": "date-format-converter",
+    "slug": "date-format-converter",
+    "icon": "📆",
+    "category": "conversores",
+    "disclaimer": "general",
+    "applicationCategory": "UtilitiesApplication",
+    "name": { "es": "Conversor de Formato de Fecha", "en": "Date Format Converter" },
+    "shortDescription": { "es": "Convierte fechas entre formatos: ISO 8601, RFC 2822/3339, Unix, SQL, europeo, US y personalizado.", "en": "Convert dates between formats: ISO 8601, RFC 2822/3339, Unix, SQL, European, US and custom." },
+    "description": { "es": "El conversor de formato de fecha parsea cualquier fecha (ISO, timestamp Unix, formato europeo, US, RFC, SQL, logs) y la reformatea al patrón que elijas usando tokens estándar (yyyy, MM, dd, HH, mm, ss, SSS, xxx, EEE, MMM...). Incluye 12 presets listos para usar y una tabla con la misma fecha en todos los formatos comunes. Ideal para desarrolladores que trabajan con APIs, bases de datos, logs o internacionalización.", "en": "The date format converter parses any date (ISO, Unix timestamp, European, US, RFC, SQL, log formats) and reformats it to your chosen pattern using standard tokens (yyyy, MM, dd, HH, mm, ss, SSS, xxx, EEE, MMM...). Includes 12 ready-to-use presets and a table showing the same date in all common formats. Ideal for developers working with APIs, databases, logs or internationalization." },
+    "seo": {
+      "title": { "es": "Conversor de Formato de Fecha: ISO, Unix, RFC, SQL y más", "en": "Date Format Converter: ISO, Unix, RFC, SQL and more" },
+      "metaDescription": { "es": "Convierte fechas entre ISO 8601, RFC 2822/3339, Unix timestamp, SQL, formato EU/US y personalizado. Tokens estándar. Gratis.", "en": "Convert dates between ISO 8601, RFC 2822/3339, Unix timestamp, SQL, EU/US format and custom. Standard tokens. Free." }
+    },
+    "keywords": ["convertir formato fecha", "iso 8601", "rfc 2822", "rfc 3339", "unix timestamp", "date format converter", "formato fecha", "parsear fecha"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué formatos de entrada acepta?", "en": "What input formats does it accept?" },
+        "a": { "es": "ISO 8601 (2024-01-15T10:30:00Z), timestamps Unix (segundos o ms), dd/MM/yyyy, MM/dd/yyyy, yyyy-MM-dd, yyyy.MM.dd y variantes con hora.", "en": "ISO 8601 (2024-01-15T10:30:00Z), Unix timestamps (seconds or ms), dd/MM/yyyy, MM/dd/yyyy, yyyy-MM-dd, yyyy.MM.dd and variants with time." }
+      },
+      {
+        "q": { "es": "¿Qué zona horaria usa?", "en": "What time zone does it use?" },
+        "a": { "es": "Por defecto usa la zona horaria local de tu navegador. Puedes cambiar a UTC o 'auto' (detecta del string de entrada si trae offset).", "en": "By default it uses your browser's local time zone. You can switch to UTC or 'auto' (detects from input string if it has an offset)." }
+      },
+      {
+        "q": { "es": "¿Puedo crear mi propio formato?", "en": "Can I create my own format?" },
+        "a": { "es": "Sí. Elige 'Personalizado' y escribe tu patrón con tokens: yyyy, MM, dd, HH, mm, ss, SSS, a, xxx, EEE, MMM, MMMM... Haz clic en los tokens de la guía para insertarlos.", "en": "Yes. Choose 'Custom' and write your pattern with tokens: yyyy, MM, dd, HH, mm, ss, SSS, a, xxx, EEE, MMM, MMMM... Click the token guide to insert them." }
+      }
+    ]
+  },
+  {
+    "id": "inflation-calculator",
+    "slug": "inflation-calculator",
+    "icon": "📉",
+    "category": "finanzas",
+    "disclaimer": "finance",
+    "applicationCategory": "FinanceApplication",
+    "name": { "es": "Calculadora de Inflación y Poder Adquisitivo", "en": "Inflation and Purchasing Power Calculator" },
+    "shortDescription": { "es": "Calcula cómo la inflación erosiona el valor del dinero en el tiempo (hacia adelante, atrás o acumulado).", "en": "Calculate how inflation erodes money's value over time (forward, backward or cumulative)." },
+    "description": { "es": "La calculadora de inflación te muestra cuánto valdrá una cantidad futura (modo adelante), cuánto valía una cantidad pasada en dinero de hoy (modo atrás) o el cambio porcentual acumulado (modo acumulado). Incluye presets con tasas medias recientes de España (INE), Eurozona (BCE), EE.UU. (BLS) y Reino Unido (ONS), y desglose año a año con variación y acumulado. También muestra una comparación visual con el índice Big Mac para entender el poder adquisitivo real.", "en": "The inflation calculator shows how much an amount will be worth in the future (forward mode), how much a past amount equals in today's money (backward mode) or the cumulative percentage change (cumulative mode). Includes presets with recent average rates for Spain (INE), Eurozone (ECB), USA (BLS) and UK (ONS), and a year-by-year breakdown with annual and cumulative changes. Also shows a visual comparison with the Big Mac index to understand real purchasing power." },
+    "seo": {
+      "title": { "es": "Calculadora de Inflación: Valor del Dinero en el Tiempo", "en": "Inflation Calculator: Money Value Over Time" },
+      "metaDescription": { "es": "Calcula cómo la inflación reduce el poder adquisitivo. Modos: futuro, pasado, acumulado. Tasas INE, BCE, BLS, ONS. Gratis.", "en": "Calculate how inflation reduces purchasing power. Modes: future, past, cumulative. INE, ECB, BLS, ONS rates. Free." }
+    },
+    "keywords": ["calculadora inflacion", "poder adquisitivo", "valor del dinero", "ine inflacion", "bce inflacion", "inflation calculator", "purchasing power", "cpi"],
+    "faqs": [
+      {
+        "q": { "es": "¿Qué es el modo 'hacia adelante'?", "en": "What is 'forward' mode?" },
+        "a": { "es": "Calcula cuánto costará en el futuro algo que hoy vale X, aplicando la inflación año a año. Ej: 1.000€ hoy con 3% anual en 5 años = 1.159,27€.", "en": "Calculates how much something worth X today will cost in the future, applying inflation year by year. E.g.: €1,000 today with 3% annually in 5 years = €1,159.27." }
+      },
+      {
+        "q": { "es": "¿Qué es el modo 'hacia atrás'?", "en": "What is 'backward' mode?" },
+        "a": { "es": "Calcula cuánto valía en el pasado una cantidad de hoy. Ej: 1.000€ hoy equivalían a 862,61€ hace 5 años con 3% anual.", "en": "Calculates how much a current amount was worth in the past. E.g.: €1,000 today equaled €862.61 five years ago with 3% annually." }
+      },
+      {
+        "q": { "es": "¿De dónde salen las tasas predefinidas?", "en": "Where do the preset rates come from?" },
+        "a": { "es": "Son tasas medias anuales recientes aproximadas: España (INE), Eurozona (BCE), EE.UU. (BLS), Reino Unido (ONS). Para cálculos oficiales usa las series históricas de cada instituto.", "en": "They are approximate recent annual average rates: Spain (INE), Eurozone (ECB), USA (BLS), UK (ONS). For official calculations use each institute's historical series." }
+      }
+    ]
+  }
+]

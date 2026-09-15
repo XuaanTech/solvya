@@ -1,0 +1,118 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+const ACTIVITIES = [
+  { id: 'rest', key: 'cbActRest', met: 1.3 },
+  { id: 'walk-slow', key: 'cbActWalkSlow', met: 3.3 },
+  { id: 'walk-brisk', key: 'cbActWalkBrisk', met: 4.3 },
+  { id: 'run', key: 'cbActRun', met: 9.8 },
+  { id: 'bike', key: 'cbActBike', met: 8.0 },
+  { id: 'swim', key: 'cbActSwim', met: 8.0 },
+  { id: 'strength', key: 'cbActStrength', met: 6.0 },
+  { id: 'soccer', key: 'cbActSoccer', met: 7.0 },
+  { id: 'stairs', key: 'cbActStairs', met: 6.0 },
+  { id: 'aerobics', key: 'cbActAerobics', met: 6.5 },
+];
+---
+<div class="tool-widget" data-widget="calorias">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="cal-peso" data-i18n="calc.cbWeight">{langText(es, 'calc.cbWeight')}</label>
+        <input id="cal-peso" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="70" data-field="peso" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="cal-duracion" data-i18n="calc.cbDuration">{langText(es, 'calc.cbDuration')}</label>
+        <input id="cal-duracion" class="tool-widget__input" type="number" min="1" inputmode="numeric" value="30" data-field="duracion" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="cal-actividad" data-i18n="calc.cbActivity">{langText(es, 'calc.cbActivity')}</label>
+        <select id="cal-actividad" class="tool-widget__select" data-field="actividad">
+          {ACTIVITIES.map((a) => (
+            <option value={a.id} data-i18n={`calc.${a.key}`}>{langText(es, `calc.${a.key}`)}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.cbInvalid">{langText(es, 'calc.cbInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.cbInvalid">{langText('en', 'calc.cbInvalid')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.cbTotal">{langText(es, 'calc.cbTotal')}</span>
+        <strong class="result-stat__value" data-val="total">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.cbPerMin">{langText(es, 'calc.cbPerMin')}</span>
+        <strong class="result-stat__value" data-val="pormin">—</strong>
+      </div>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.cbNote">{langText(es, 'calc.cbNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.cbNote">{langText('en', 'calc.cbNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { parseDecimal, formatSmart } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="calorias"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      peso: root.querySelector('[data-field="peso"]'),
+      duracion: root.querySelector('[data-field="duracion"]'),
+      actividad: root.querySelector('[data-field="actividad"]'),
+    };
+    const val = {
+      total: root.querySelector('[data-val="total"]'),
+      pormin: root.querySelector('[data-val="pormin"]'),
+    };
+    const MET = {
+      rest: 1.3, 'walk-slow': 3.3, 'walk-brisk': 4.3, run: 9.8, bike: 8.0,
+      swim: 8.0, strength: 6.0, soccer: 7.0, stairs: 6.0, aerobics: 6.5,
+    };
+
+    function compute() {
+      const weight = parseDecimal(fields.peso.value);
+      const dur = parseDecimal(fields.duracion.value);
+      const met = MET[fields.actividad.value] || 4.3;
+      if (weight <= 0 || dur <= 0) {
+        error.hidden = false;
+        result.hidden = true;
+        return;
+      }
+      error.hidden = true;
+      const perMin = (met * 3.5 * weight) / 200;
+      const total = perMin * dur;
+      val.pormin.textContent = formatSmart(perMin, 1) + ' kcal';
+      val.total.textContent = formatSmart(total, 0) + ' kcal';
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.peso.addEventListener('input', compute);
+    fields.duracion.addEventListener('input', compute);
+    fields.actividad.addEventListener('change', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.peso.value = '70';
+      fields.duracion.value = '30';
+      fields.actividad.value = 'walk-brisk';
+      compute();
+    });
+    compute();
+  }
+</script>

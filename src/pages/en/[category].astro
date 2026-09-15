@@ -1,0 +1,103 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import CalculatorCard from '../../components/CalculatorCard.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+import { collectionSchema } from '../../lib/seo';
+import { categoryFromPath, readingTimeFromFile, pick } from '../../lib/utils';
+import categories from '../../data/categories.json';
+import tools from '../../data/tools.json';
+
+const EN = 'en';
+
+export const getStaticPaths = () =>
+  categories.map((c) => ({
+    params: { category: c.slug },
+    props: { categorySlug: c.slug },
+  }));
+
+const { categorySlug } = Astro.props;
+const category = categories.find((c) => c.slug === categorySlug);
+if (!category) return Astro.redirect('/404/');
+
+const catTools = tools.filter((t) => t.category === categorySlug);
+const categoryUrl = `${SITE.url}/en/${category.slug}/`;
+
+const contentModules = import.meta.glob('../../content/**/*.mdx', { eager: true });
+
+// English category page: show only articles that have .en.mdx
+const catArticles = [];
+for (const [filePath, mod] of Object.entries(contentModules)) {
+  if (!filePath.endsWith('.en.mdx')) continue;
+  const slug = String(filePath).split(/[\\/]/).pop()?.replace(/\.en\.mdx$/, '') ?? '';
+  const fm = mod.frontmatter ?? mod.metadata ?? {};
+  const cat = categoryFromPath(filePath);
+  if (cat !== categorySlug || !fm.title) continue;
+  const catDef = categories.find((c) => c.slug === cat);
+  let readingTime = '';
+  let readingTimeEn = '';
+  try { readingTime = readingTimeFromFile(mod.file ?? filePath, 'es'); } catch { /* ignore */ }
+  try { readingTimeEn = readingTimeFromFile(mod.file ?? filePath, 'en'); } catch { /* ignore */ }
+  catArticles.push({ url: `/${cat}/${slug}/`, data: { ...fm, readingTime, readingTimeEn, category: catDef?.name ?? { es: fm.categoryName ?? '', en: fm.categoryName ?? '' } } });
+}
+catArticles.sort((a, b) => String(b.data.date ?? '').localeCompare(String(a.data.date ?? '')));
+
+const catSchema = collectionSchema({
+  name: pick(category.name, EN),
+  description: pick(category.desc, EN),
+  url: categoryUrl,
+  lang: EN,
+  items: [
+    ...catTools.map((t) => ({ name: pick(t.name, EN), url: `${SITE.url}/en/herramienta/${t.slug}/` })),
+    ...catArticles.map((a) => ({ name: pick(a.data.titleEn || a.data.title, EN) || pick(a.data.title, EN) || a.url, url: `${SITE.url}/en${a.url}` })),
+  ],
+});
+---
+
+<BaseLayout
+  title={pick(category.seo?.title, EN)}
+  description={pick(category.seo?.metaDescription, EN)}
+  canonicalURL={categoryUrl}
+  lang="en"
+>
+  <div class="page-simple container">
+    <Breadcrumbs lang="en" items={[{ label: { es: pick(category.name, 'es'), en: pick(category.name, 'en') } }]} />
+
+    <section class="category-header">
+      <span class="category-header__icon" aria-hidden="true">{category.icon}</span>
+      <h1 class="category-header__title">{category.name.en}</h1>
+      <p class="category-header__desc">{category.desc.en}</p>
+    </section>
+
+    <script type="application/ld+json" set:html={JSON.stringify(catSchema)} />
+
+    <section class="section">
+      <h2 class="section__title">Tools in {category.name.en}</h2>
+      <div class="tool-grid">
+        {catTools.map((t) => <CalculatorCard tool={t} lang="en" />)}
+      </div>
+    </section>
+
+    <AdSlot slot="tool" />
+
+    {catArticles.length > 0 && (
+      <section class="section">
+        <h2 class="section__title">Articles about {category.name.en}</h2>
+        <div class="article-grid article-grid--columns-3">
+          {catArticles.map((a) => <ArticleCard post={a} lang="en" />)}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .category-header { text-align: center; padding: 2.5rem 0 1rem; }
+  .category-header__icon { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .category-header__title { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 0.5rem; }
+  .category-header__desc { color: var(--text-muted); max-width: 60ch; margin: 0 auto; line-height: 1.6; }
+</style>

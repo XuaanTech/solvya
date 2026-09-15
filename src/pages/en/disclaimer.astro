@@ -1,0 +1,33 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+const es = 'en';
+---
+<BaseLayout title={langText(es, 'disclaimer.title')} description={langText(es, 'disclaimer.text')} lang="en">
+  <div class="page-simple container">
+    <Breadcrumbs lang="en" items={[{ label: langText(es, 'disclaimer.title') }]} />
+
+    <h1 class="page-title">{langText(es, 'disclaimer.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">{langText(es, 'disclaimer.text')}</p>
+
+      <h2>1. Informational use</h2>
+      <p>The calculators, converters, and generators on this site are designed for informational and educational purposes. The results you obtain are estimates that should not be interpreted as professional advice of any kind (medical, financial, legal, or technical).</p>
+
+      <h2>2. No accuracy guarantee</h2>
+      <p>We strive for correct calculations, but we do not guarantee the accuracy, completeness, or currency of the results. Exchange rates, formulas, and standards may change without notice.</p>
+
+      <h2>3. Liability</h2>
+      <p>{SITE.name} is not responsible for decisions you make based on the results of these tools. Always consult a qualified professional before acting.</p>
+
+      <h2>4. Article content</h2>
+      <p>The blog articles have an educational character and do not replace professional advice. Although we review information before publishing, errors or omissions may exist.</p>
+
+      <h2>5. External links</h2>
+      <p>This site may contain links to third-party sites. We have no control over their content and assume no responsibility for their privacy practices.</p>
+    </div>
+  </div>
+</BaseLayout>

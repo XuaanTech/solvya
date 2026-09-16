@@ -51,6 +51,24 @@
   .header__inner { position: relative; }
 }
 
+/* ── Theme Toggle ───────────────────────────────────────────── */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; flex-shrink: 0;
+  background: transparent; border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text-muted); cursor: pointer; transition: .15s;
+}
+.theme-toggle:hover { background: var(--bg-alt); color: var(--text); }
+.theme-toggle__icon { width: 20px; height: 20px; }
+.theme-toggle__icon--moon { display: block; }
+.theme-toggle__icon--sun { display: none; }
+:root[data-theme="dark"] .theme-toggle__icon--moon { display: none; }
+:root[data-theme="dark"] .theme-toggle__icon--sun { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle__icon--moon { display: none; }
+  :root:not([data-theme="light"]) .theme-toggle__icon--sun { display: block; }
+}
+
 /* ── Lang Toggle ────────────────────────────────────────────── */
 .lang-toggle {
   display: flex; border: 1px solid var(--border); border-radius: var(--radius);

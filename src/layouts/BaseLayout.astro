@@ -70,6 +70,16 @@ const orgSchema = organizationSchema(pageLang);
 <!DOCTYPE html>
 <html lang={pageLang} data-lang={pageLang}>
 <head>
+  <script is:inline>
+    // Apply saved theme before first paint (avoids flash of wrong theme)
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
@@ -137,6 +147,15 @@ const orgSchema = organizationSchema(pageLang);
       </a>
 
       <div class="header__actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" data-i18n-aria="ui.theme" aria-label={langText(pageLang, 'ui.theme')} title={langText(pageLang, 'ui.theme')}>
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
         <div class="lang-toggle" role="group" data-i18n-aria="ui.langLabel" aria-label={langText(pageLang, 'ui.langLabel')}>
           <a href={pageLang === 'es' ? currentPath : langToggleHref} class={`lang-toggle__btn ${pageLang === 'es' ? 'lang-toggle__btn--active' : ''}`} aria-pressed={pageLang === 'es'}>
             🇪🇸 <span>ES</span>
@@ -241,6 +260,29 @@ const orgSchema = organizationSchema(pageLang);
     toggle?.addEventListener('click', () => {
       const isOpen = nav?.classList.toggle('header__nav--open') ?? false;
       toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // ── Light / dark theme toggle ──
+    const themeBtn = document.getElementById('theme-toggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    function effectiveDark() {
+      const attr = document.documentElement.getAttribute('data-theme');
+      if (attr === 'dark') return true;
+      if (attr === 'light') return false;
+      return prefersDark.matches;
+    }
+    themeBtn?.setAttribute('aria-pressed', String(effectiveDark()));
+    themeBtn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const dark = effectiveDark();
+      const next = dark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      themeBtn.setAttribute('aria-pressed', String(!dark));
+    });
+    // Keep the icon in sync when the OS theme changes and the user hasn't chosen
+    prefersDark.addEventListener('change', () => {
+      if (!localStorage.getItem('theme')) themeBtn?.setAttribute('aria-pressed', String(effectiveDark()));
     });
   </script>
 

@@ -71,7 +71,7 @@ export const I18N = {
     terms: { title: 'Términos de uso' },
     privacy: { title: 'Política de privacidad' },
     notfound: { title: 'Página no encontrada', text: 'La página que buscas no existe o fue movida.', back: 'Volver al inicio' },
-    ui: { breadcrumbHome: 'Inicio', searchResults: 'Resultados de búsqueda', langLabel: 'Cambiar idioma', langEs: 'Español', langEn: 'Inglés', menuToggle: 'Alternar menú', navLabel: 'Navegación principal' },
+    ui: { breadcrumbHome: 'Inicio', searchResults: 'Resultados de búsqueda', langLabel: 'Cambiar idioma', langEs: 'Español', langEn: 'Inglés', menuToggle: 'Alternar menú', navLabel: 'Navegación principal', theme: 'Cambiar tema claro/oscuro' },
     calc: {
       title: 'Calculadora',
       initial: 'Capital inicial',
@@ -525,7 +525,7 @@ export const I18N = {
     terms: { title: 'Terms of use' },
     privacy: { title: 'Privacy policy' },
     notfound: { title: 'Page not found', text: 'The page you are looking for does not exist or was moved.', back: 'Back to home' },
-    ui: { breadcrumbHome: 'Home', searchResults: 'Search results', langLabel: 'Switch language', langEs: 'Spanish', langEn: 'English', menuToggle: 'Toggle menu', navLabel: 'Main navigation' },
+    ui: { breadcrumbHome: 'Home', searchResults: 'Search results', langLabel: 'Switch language', langEs: 'Spanish', langEn: 'English', menuToggle: 'Toggle menu', navLabel: 'Main navigation', theme: 'Toggle light/dark theme' },
     calc: {
       title: 'Calculator',
       initial: 'Initial capital',

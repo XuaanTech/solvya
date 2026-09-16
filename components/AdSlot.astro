@@ -1,0 +1,46 @@
+---
+import { SITE } from '../data/site';
+
+interface Props {
+  slot?: 'home' | 'tool' | 'articleTop' | 'articleMid' | 'articleBottom';
+  className?: string;
+}
+const { slot = 'tool', className = '' } = Astro.props;
+const slotId = SITE.adSlots[slot] || SITE.adSlots.tool;
+---
+<div class={`ad-slot ${className}`} aria-hidden="false">
+  <p class="ad-slot__label">Publicidad / Advertisement</p>
+  <ins
+    class="adsbygoogle ad-slot__ins"
+    style="display:block"
+    data-ad-client={SITE.adsClient}
+    data-ad-slot={slotId}
+    data-ad-format="auto"
+    data-full-width-responsive="true"
+  ></ins>
+  <script is:inline>
+    (function () {
+      // Only push if AdSense is actually loaded (consent given)
+      var consented = false;
+      try {
+        var c = JSON.parse(localStorage.getItem('solvya-cookie-consent'));
+        consented = c && c.ads;
+      } catch {}
+      if (consented) {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      }
+      // If consent is given later, reload ads
+      window.addEventListener('cookie-consent-change', function (e) {
+        if (e.detail && e.detail.ads && typeof adsbygoogle !== 'undefined') {
+          document.querySelectorAll('.ad-slot ins.adsbygoogle:not([data-cc-loaded])').forEach(function (ins) {
+            try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch {}
+            ins.dataset.ccLoaded = '1';
+          });
+        }
+      });
+    })();
+  </script>
+  <noscript>
+    <p>JavaScript desactivado.</p>
+  </noscript>
+</div>

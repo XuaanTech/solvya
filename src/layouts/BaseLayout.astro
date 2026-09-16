@@ -1,6 +1,7 @@
 ---
 import Logo from '../components/Logo.astro';
 import SearchBar from '../components/SearchBar.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import { SITE } from '../data/site';
 import { langText } from '../lib/i18n';
 import { organizationSchema } from '../lib/seo';
@@ -135,8 +136,17 @@ const orgSchema = organizationSchema(pageLang);
   <!-- Site-wide Organization schema -->
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 
-  <!-- Google AdSense -->
-  <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsClient}`} crossorigin="anonymous"></script>
+  <!-- Cookie consent guard: blocks tracking scripts until user accepts -->
+  <script is:inline>
+    (function () {
+      try {
+        var c = JSON.parse(localStorage.getItem('solvya-cookie-consent'));
+        if (c && (c.analytics || c.ads)) return; // consent exists, scripts load via consent JS
+      } catch (e) {}
+      // Block adsbygoogle if no consent
+      window.adsbygoogle = window.adsbygoogle || { push: function () {} };
+    })();
+  </script>
 </head>
 <body>
   <header class="header">
@@ -241,6 +251,7 @@ const orgSchema = organizationSchema(pageLang);
             <a href={`${base}/about/`} class="footer__link" data-i18n="nav.about">{langText(pageLang, 'nav.about')}</a>
             <a href={`${base}/contact/`} class="footer__link" data-i18n="contact.title">{langText(pageLang, 'contact.title')}</a>
             <a href={`${base}/privacy-policy/`} class="footer__link" data-i18n="privacy.title">{langText(pageLang, 'privacy.title')}</a>
+            <button class="footer__link footer__link--button" data-i18n="cookie.settingsTitle" onclick="window.openCookieSettings && window.openCookieSettings()" style="cursor:pointer">{langText(pageLang, 'cookie.settingsTitle')}</button>
             <a href={`${base}/disclaimer/`} class="footer__link" data-i18n="disclaimer.title">{langText(pageLang, 'disclaimer.title')}</a>
             <a href={`${base}/terms/`} class="footer__link" data-i18n="terms.title">{langText(pageLang, 'terms.title')}</a>
             <a href="/rss.xml" class="footer__link">RSS</a>
@@ -291,6 +302,40 @@ const orgSchema = organizationSchema(pageLang);
     // (widget labels, FAQ regions) without re-detecting language or writing localStorage.
     import { applyLang, currentLang } from '../i18n.js';
     applyLang(currentLang());
+  </script>
+
+  <!-- Cookie Consent Banner -->
+  <CookieConsent lang={pageLang} />
+
+  <!-- Conditionally load Google Analytics & AdSense if consent was previously given -->
+  <script is:inline define:vars={{ GA_ID: SITE.analyticsId, adsClient: SITE.adsClient }}>
+    (function () {
+      try {
+        var c = JSON.parse(localStorage.getItem('solvya-cookie-consent'));
+        if (!c) return;
+        // Load Google Analytics if analytics consent given
+        if (c.analytics) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID, { anonymize_ip: true });
+          var gaScript = document.createElement('script');
+          gaScript.id = 'cc-ga-script';
+          gaScript.async = true;
+          gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(gaScript);
+        }
+        // Load AdSense if ads consent given
+        if (c.ads && !document.querySelector('script[src*="pagead2.googlesyndication.com"]')) {
+          var adScript = document.createElement('script');
+          adScript.async = true;
+          adScript.crossOrigin = 'anonymous';
+          adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + adsClient;
+          document.head.appendChild(adScript);
+        }
+      } catch (e) {}
+    })();
   </script>
 </body>
 </html>

@@ -6,7 +6,7 @@ export const SITE = {
   email: 'xuaninformatica@gmail.com',
   author: 'Equipo Solvya',
   adsClient: 'ca-pub-XXXX', // TODO: reemplazar con tu ID real de Google AdSense
-  analyticsId: 'G-XXXXXXXXXX', // TODO: reemplazar con tu ID real de Google Analytics
+  analyticsId: 'G-T4CFSQL158',
   lang: 'es',
   ogLocale: 'es_ES',
   adSlots: {
@@ -459,6 +459,7 @@ export const I18N = {
       simpleInterest: 'Interés generado',
       simpleFinal: 'Monto final',
       simpleInvalid: 'Introduce un capital, un interés y un periodo válidos.',
+      simpleNote: 'Interés simple, sin capitalización. Resultado orientativo.',
       // Números aleatorios
       randMin: 'Mínimo',
       randMax: 'Máximo',
@@ -485,7 +486,7 @@ export const I18N = {
       liInvalid: 'Introduce entre 1 y 50 párrafos.',
     },
     categories: {
-      salud: { name: 'Salud', desc: 'Calculadoras de IMC, calorías, sueño, ovulación y embarazo. Herramientas para cuidar tu bienestar.' },
+      salud: { name: 'Salud', desc: 'Calculadoras de IMC, calorías, sueño y bienestar. Herramientas para cuidar tu salud.' },
       conversores: { name: 'Conversores', desc: 'Convierte unidades, divisas, colores, números en letras, bases y fechas al instante.' },
       generadores: { name: 'Generadores', desc: 'Genera contraseñas seguras, códigos QR, hashes, números aleatorios y texto de relleno online.' },
       finanzas: { name: 'Finanzas', desc: 'Calculadoras de IVA, interés, hipoteca, porcentaje y propina para organizar tus cuentas.' },
@@ -930,6 +931,7 @@ export const I18N = {
       simpleInterest: 'Interest earned',
       simpleFinal: 'Final amount',
       simpleInvalid: 'Enter a valid principal, interest rate and term.',
+      simpleNote: 'Simple interest, no compounding. Indicative result.',
       // Random numbers
       randMin: 'Minimum',
       randMax: 'Maximum',
@@ -956,7 +958,7 @@ export const I18N = {
       liInvalid: 'Enter between 1 and 50 paragraphs.',
     },
     categories: {
-      salud: { name: 'Health', desc: 'BMI, calories, sleep, ovulation and pregnancy calculators. Tools for your wellbeing.' },
+      salud: { name: 'Health', desc: 'BMI, calories, sleep and wellbeing calculators. Tools for your health.' },
       conversores: { name: 'Converters', desc: 'Convert units, currencies, colors, numbers to words, bases and dates instantly.' },
       generadores: { name: 'Generators', desc: 'Generate secure passwords, QR codes, hashes, random numbers and filler text online.' },
       finanzas: { name: 'Finance', desc: 'VAT, interest, mortgage, percentage and tip calculators to get your accounts in order.' },

@@ -1,0 +1,132 @@
+---
+title: "Generador de JWT (JSON Web Token) Online"
+titleEn: "Online JWT (JSON Web Token) Generator"
+description: "Genera y decodifica JWT firmados con HS256/384/512. Header y payload JSON personalizables. Local y seguro."
+descriptionEn: "Generate and decode JWTs signed with HS256/384/512. Customizable JSON header and payload. Local and secure."
+category: "generadores"
+categoryName: "Generadores"
+tags: ["jwt", "json web token", "generador jwt", "hs256", "token", "autenticacion", "jwt generator", "jwt decoder"]
+date: "2026-09-14"
+author: "Equipo Solvya"
+tool: "jwt-generator"
+faqs:
+  - q:
+      es: "¿Qué algoritmos soporta?"
+      en: "Which algorithms are supported?"
+    a:
+      es: "Actualmente HS256, HS384 y HS512 (HMAC con SHA-2, SHA-384 y SHA-512). Los algoritmos RS* y ES* requieren claves asimétricas y no están implementados en esta versión."
+      en: "Currently HS256, HS384 and HS512 (HMAC with SHA-2, SHA-384 and SHA-512). RS* and ES* algorithms require asymmetric keys and are not implemented in this version."
+  - q:
+      es: "¿Mi clave secreta sale de mi navegador?"
+      en: "Does my secret key leave my browser?"
+    a:
+      es: "No. Todo el proceso de firma y decodificación ocurre localmente en tu dispositivo usando la Web Crypto API. Nada se envía a servidores."
+      en: "No. All signing and decoding happens locally on your device using the Web Crypto API. Nothing is sent to any server."
+  - q:
+      es: "¿Puedo decodificar un JWT sin la clave?"
+      en: "Can I decode a JWT without the key?"
+    a:
+      es: "Sí. El botón 'Decodificar' lee el header y payload (que son Base64URL) sin validar la firma. Útil para depurar tokens."
+      en: "Yes. The 'Decode' button reads the header and payload (which are Base64URL) without validating the signature. Useful for debugging tokens."
+steps:
+  - title:
+      es: "Define el header y el payload"
+      en: "Define header and payload"
+    text:
+      es: "Escribe el header (típicamente {\"alg\": \"HS256\", \"typ\": \"JWT\"}) y el payload con tus claims (sub, exp, iat, roles, etc.) en formato JSON válido."
+      en: "Write the header (typically {\"alg\": \"HS256\", \"typ\": \"JWT\"}) and the payload with your claims (sub, exp, iat, roles, etc.) in valid JSON format."
+  - title:
+      es: "Elige algoritmo y clave secreta"
+      en: "Choose algorithm and secret key"
+    text:
+      es: "Selecciona HS256, HS384 o HS512 e introduce tu clave secreta. La firma se genera en tu navegador con Web Crypto API."
+      en: "Select HS256, HS384 or HS512 and enter your secret key. The signature is generated in your browser using Web Crypto API."
+  - title:
+      es: "Genera o decodifica"
+      en: "Generate or decode"
+    text:
+      es: "Pulsa 'Generar JWT' para obtener el token firmado completo, o pega un JWT existente y pulsa 'Decodificar' para ver header y payload sin validar firma."
+      en: "Click 'Generate JWT' to get the complete signed token, or paste an existing JWT and click 'Decode' to view header and payload without validating the signature."
+---
+
+<article>
+
+## ¿Qué es un JWT (JSON Web Token)?
+
+Un **JWT (JSON Web Token)** es un estándar abierto (RFC 7519) para transmitir información de forma segura entre partes como un objeto JSON. Se usa principalmente para **autenticación y autorización** en APIs y aplicaciones web modernas.
+
+Un JWT consta de **tres partes** separadas por puntos:
+
+```
+xxxxx.yyyyy.zzzzz
+```
+
+| Parte | Contenido | Codificación |
+|-------|-----------|--------------|
+| **Header** | Algoritmo y tipo de token | Base64URL |
+| **Payload** | Claims (datos: usuario, permisos, expiración) | Base64URL |
+| **Signature** | Firma criptográfica del header + payload | Base64URL |
+
+> **Importante**: El header y payload **no están cifrados**, solo codificados en Base64URL. Cualquiera puede leerlos. La **firma** garantiza que el token no ha sido manipulado.
+
+---
+
+## Algoritmos soportados
+
+Esta herramienta implementa **HMAC con SHA-2** (clave simétrica):
+
+| Algoritmo | Función hash | Longitud firma | Uso recomendado |
+|-----------|--------------|----------------|-----------------|
+| **HS256** | SHA-256 | 256 bits (32 bytes) | Estándar general, buena seguridad/rendimiento |
+| **HS384** | SHA-384 | 384 bits (48 bytes) | Mayor seguridad, compatible con más sistemas |
+| **HS512** | SHA-512 | 512 bits (64 bytes) | Máxima seguridad HMAC |
+
+> **Nota**: Los algoritmos **RS256/RS384/RS512** (RSA) y **ES256/ES384/ES512** (ECDSA) usan claves asimétricas (pública/privada) y **no están implementados** en esta versión por requerir gestión de certificados.
+
+---
+
+## Claims comunes en el payload
+
+| Claim | Nombre | Descripción | Ejemplo |
+|-------|--------|-------------|---------|
+| `iss` | Issuer | Quién emite el token | `"mi-app.com"` |
+| `sub` | Subject | Identificador del usuario | `"user_12345"` |
+| `aud` | Audience | Destinatario previsto | `"api.mi-app.com"` |
+| `exp` | Expiration | Timestamp de expiración (segundos Unix) | `1735689600` |
+| `nbf` | Not Before | No válido antes de este timestamp | `1704067200` |
+| `iat` | Issued At | Timestamp de emisión | `1704067200` |
+| `jti` | JWT ID | Identificador único del token | `"a1b2c3d4-e5f6"` |
+| *custom* | — | Datos propios (roles, permisos, etc.) | `"roles": ["admin", "editor"]` |
+
+---
+
+## Seguridad: tu clave nunca sale del navegador
+
+Esta herramienta usa la **Web Crypto API** nativa del navegador (`crypto.subtle`):
+
+- ✅ **Firma local**: La clave secreta y el payload nunca salen de tu dispositivo
+- ✅ **Sin red**: No hay peticiones HTTP, todo ocurre en cliente
+- ✅ **Estándar**: Implementación conforme a RFC 7519 y Web Crypto API
+- ✅ **Auditable**: El código es visible en el inspector del navegador
+
+> **Advertencia**: En producción, **nunca** expongas tu clave secreta en frontend. Los JWT se deben firmar en backend. Esta herramienta es solo para **desarrollo, pruebas y aprendizaje**.
+
+---
+
+## Decodificar sin validar firma
+
+El botón **"Decodificar"** hace:
+1. Separa el JWT en sus 3 partes por `.`
+2. Decodifica Base64URL del header y payload
+3. Muestra el JSON formateado
+4. **NO valida la firma** — útil para inspeccionar tokens de terceros o depurar
+
+---
+
+## Prueba el generador ahora
+
+Genera JWTs firmados para tus APIs, autenticación o pruebas. Totalmente local, gratis y sin registro.
+
+[Genera tu JWT online](/herramienta/jwt-generator/) y decodifica tokens al instante.
+
+</article>

@@ -1,0 +1,140 @@
+---
+title: "Formateador JSON: Beautify, Minify, Validar y Ordenar"
+titleEn: "JSON Formatter: Beautify, Minify, Validate and Sort"
+description: "Formatea, minifica, valida y ordena claves de JSON online. Detecta errores de sintaxis. Privado: todo en tu navegador."
+descriptionEn: "Format, minify, validate and sort JSON keys online. Detects syntax errors. Private: everything in your browser."
+category: "generadores"
+categoryName: "Generadores"
+tags: ["json formatter", "json beautify", "json minify", "validar json", "formatear json", "json online", "pretty print json"]
+date: "2026-09-14"
+author: "Equipo Solvya"
+tool: "json-formatter"
+faqs:
+  - q:
+      es: "¿Qué hace 'ordenar claves'?"
+      en: "What does 'sort keys' do?"
+    a:
+      es: "Reordena las claves de cada objeto alfabéticamente (A-Z). Útil para comparar dos JSONs que tienen el mismo contenido pero distinto orden."
+      en: "It reorders each object's keys alphabetically (A-Z). Useful for comparing two JSONs with the same content but different order."
+  - q:
+      es: "¿El JSON se envía a algún servidor?"
+      en: "Is the JSON sent to any server?"
+    a:
+      es: "No. El parseo, formateo y validación se hacen con JavaScript nativo en tu navegador. Tu JSON nunca sale de tu ordenador."
+      en: "No. Parsing, formatting and validation are done with native JavaScript in your browser. Your JSON never leaves your computer."
+  - q:
+      es: "¿Soporta JSON con comentarios o trailing commas?"
+      en: "Does it support JSON with comments or trailing commas?"
+    a:
+      es: "No. El estándar JSON estricto (RFC 8259) no permite comentarios ni comas finales. Elimínalos antes de pegar el texto."
+      en: "No. The strict JSON standard (RFC 8259) does not allow comments or trailing commas. Remove them before pasting."
+steps:
+  - title:
+      es: "Pega tu JSON"
+      en: "Paste your JSON"
+    text:
+      es: "Copia y pega el JSON en el área de texto. Puede estar minificado, sin formato o con errores."
+      en: "Copy and paste the JSON into the text area. It can be minified, unformatted or have errors."
+  - title:
+      es: "Elige la acción"
+      en: "Choose the action"
+    text:
+      es: "Pulsa 'Formatear' para pretty-print, 'Minificar' para compactar, 'Validar' para solo comprobar sintaxis, u 'Ordenar claves' para ordenar alfabéticamente."
+      en: "Click 'Format' for pretty-print, 'Minify' to compact, 'Validate' to only check syntax, or 'Sort keys' to alphabetically sort keys."
+  - title:
+      es: "Copia o descarga el resultado"
+      en: "Copy or download the result"
+    text:
+      es: "El resultado aparece en el panel inferior. Puedes copiarlo al portapapeles o descargarlo como archivo .json con un clic."
+      en: "The result appears in the bottom panel. You can copy it to clipboard or download it as a .json file with one click."
+---
+
+<article>
+
+## ¿Qué es un formateador JSON?
+
+Un **formateador JSON** (o *JSON formatter*) es una herramienta que transforma datos JSON entre distintas representaciones:
+
+- **Beautify / Pretty-print**: Añade sangría, saltos de línea y espacios para que sea legible por humanos
+- **Minify / Compact**: Elimina todo espacio en blanco innecesario para reducir tamaño (ideal para transmisión)
+- **Validar**: Comprueba que la sintaxis cumple el estándar RFC 8259
+- **Ordenar claves**: Reordena alfabéticamente las claves de cada objeto para comparación determinista
+
+---
+
+## ¿Por qué usar esta herramienta?
+
+| Caso de uso | Acción recomendada |
+|-------------|-------------------|
+| Leer respuesta de API comprimida | **Formatear** |
+| Enviar payload en petición HTTP | **Minificar** |
+| Verificar si un JSON es válido | **Validar** |
+| Comparar dos JSONs en control de versiones | **Ordenar claves** + Formatear |
+| Limpiar archivo de configuración | Formatear + Ordenar claves |
+| Depurar error de parsing | Validar (muestra posición exacta del error) |
+
+---
+
+## Estándar JSON (RFC 8259)
+
+Esta herramienta sigue el **estándar estricto**:
+
+| Característica | Soportado | Notas |
+|----------------|-----------|-------|
+| Objetos `{}` | ✅ | Claves entre comillas dobles |
+| Arrays `[]` | ✅ | |
+| Strings `""` | ✅ | Escape Unicode `\uXXXX` |
+| Números | ✅ | Enteros, decimales, notación científica |
+| Booleanos | ✅ | `true` / `false` |
+| `null` | ✅ | |
+| **Comentarios** | ❌ | `//` o `/* */` no permitidos |
+| **Trailing commas** | ❌ | `{ "a": 1, }` inválido |
+| **Claves sin comillas** | ❌ | `{ a: 1 }` inválido |
+| **Comillas simples** | ❌ | `{ 'a': 1 }` inválido |
+
+> Si tu JSON tiene comentarios o trailing commas, es **JSON5** o una variante, no JSON estándar. Elimínalos antes de usar esta herramienta.
+
+---
+
+## Detección de errores precisa
+
+Cuando el JSON es inválido, la herramienta:
+1. **Intenta parsear** con `JSON.parse()` nativo
+2. **Captura el error** `SyntaxError`
+3. **Extrae la posición** (línea y columna) del mensaje de error
+4. **Resalta la zona** problemática en el editor
+5. **Muestra mensaje legible**: "Expected ',' at line 5, column 12"
+
+Esto ahorra horas de búsqueda manual de comas faltantes, llaves sin cerrar o strings mal escapados.
+
+---
+
+## Privacidad total: zero network
+
+- ✅ **100% cliente**: `JSON.parse()`, `JSON.stringify()` y manipulación de strings en tu navegador
+- ✅ **Sin telemetría**: No hay analytics, tracking ni logs de servidor
+- ✅ **Offline-ready**: Funciona si guardas la página como HTML (Service Worker)
+- ✅ **Sin límite de tamaño**: Solo limitado por la memoria del navegador (~10-50 MB típicos)
+
+---
+
+## Atajos de teclado
+
+| Acción | Windows/Linux | Mac |
+|--------|---------------|-----|
+| Formatear | `Ctrl + Enter` | `Cmd + Enter` |
+| Minificar | `Ctrl + Shift + M` | `Cmd + Shift + M` |
+| Validar | `Ctrl + Shift + V` | `Cmd + Shift + V` |
+| Ordenar claves | `Ctrl + Shift + S` | `Cmd + Shift + S` |
+| Copiar resultado | `Ctrl + Shift + C` | `Cmd + Shift + C` |
+| Limpiar | `Ctrl + Shift + X` | `Cmd + Shift + X` |
+
+---
+
+## Prueba el formateador ahora
+
+Formatea, minifica, valida y ordena tu JSON al instante. Privado, gratis y sin registro.
+
+[Formatea y valida tu JSON](/herramienta/json-formatter/) al instante.
+
+</article>

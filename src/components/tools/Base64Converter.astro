@@ -1,0 +1,122 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="base64">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" id="b64-mode-label" data-i18n="calc.operation">{langText(es, 'calc.operation')}</label>
+      <div class="tool-widget__segmented" role="group" aria-labelledby="b64-mode-label">
+        <button type="button" class="tool-widget__segment is-active" data-mode="encode" data-i18n="calc.b64Encode">{langText(es, 'calc.b64Encode')}</button>
+        <button type="button" class="tool-widget__segment" data-mode="decode" data-i18n="calc.b64Decode">{langText(es, 'calc.b64Decode')}</button>
+      </div>
+    </div>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="b64-input" data-i18n="calc.b64Input">{langText(es, 'calc.b64Input')}</label>
+      <textarea id="b64-input" class="tool-widget__textarea" rows="4" placeholder={langText(es, 'calc.b64PlaceholderInput')} data-i18n-placeholder="calc.b64PlaceholderInput" data-field="input" spellcheck="false">Hola, Solvya 👋</textarea>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-swap data-i18n="calc.b64Swap">{langText(es, 'calc.b64Swap')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.b64Invalid">
+      <span data-lang-region="es">{langText(es, 'calc.b64Invalid')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.b64Invalid')}</span>
+    </p>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="b64-output" data-i18n="calc.b64Output">{langText(es, 'calc.b64Output')}</label>
+      <textarea id="b64-output" class="tool-widget__textarea" rows="4" readonly placeholder={langText(es, 'calc.b64PlaceholderOutput')} data-i18n-placeholder="calc.b64PlaceholderOutput" data-field="output"></textarea>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="button" class="btn btn--ghost btn--sm" data-copy data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+      <span class="tool-widget__copied" data-copied hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.b64Note">{langText(es, 'calc.b64Note')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.b64Note">{langText('en', 'calc.b64Note')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { encodeBase64, decodeBase64 } from '../../lib/base64.js';
+  import { applyLang, currentLang, detectLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="base64"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      input: root.querySelector('[data-field="input"]'),
+      output: root.querySelector('[data-field="output"]'),
+    };
+    const segments = [...root.querySelectorAll('[data-mode]')];
+    let mode = 'encode';
+
+    function setMode(m, swapValues) {
+      mode = m;
+      segments.forEach((s) => s.classList.toggle('is-active', s.dataset.mode === m));
+      if (swapValues) {
+        const t = fields.input.value;
+        fields.input.value = fields.output.value;
+        fields.output.value = t;
+      }
+      compute();
+    }
+
+    function compute() {
+      const lang = currentLang();
+      const raw = fields.input.value;
+      if (mode === 'encode') {
+        error.hidden = true;
+        fields.output.value = encodeBase64(raw);
+      } else {
+        const res = decodeBase64(raw);
+        if (!res.ok) {
+          error.hidden = false;
+          fields.output.value = '';
+        } else {
+          error.hidden = true;
+          fields.output.value = res.value;
+        }
+      }
+      applyLang(lang);
+      result.hidden = false;
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text).catch(() => { /* noop */ });
+      }
+      return Promise.resolve();
+    }
+
+    segments.forEach((s) => s.addEventListener('click', () => { if (s.dataset.mode !== mode) setMode(s.dataset.mode, false); }));
+    root.querySelector('[data-swap]')?.addEventListener('click', () => setMode(mode === 'encode' ? 'decode' : 'encode', true));
+    root.querySelector('[data-copy]')?.addEventListener('click', () => {
+      copyToClipboard(fields.output.value).then(() => {
+        const fb = root.querySelector('[data-copied]');
+        if (fb) { fb.hidden = false; setTimeout(() => { fb.hidden = true; }, 1600); }
+      });
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      setMode('encode', false);
+      fields.input.value = '';
+      fields.output.value = '';
+      error.hidden = true;
+      result.hidden = true;
+    });
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.input.addEventListener('input', () => { if (mode === 'decode') fields.input.value = fields.input.value.replace(/\s+/g, ''); compute(); });
+    // Muestra una muestra acorde al idioma activo
+    if (detectLang() === 'en' && fields.input.value === 'Hola, Solvya 👋') {
+      fields.input.value = 'Hello, Solvya 👋';
+    }
+    compute();
+  }
+</script>

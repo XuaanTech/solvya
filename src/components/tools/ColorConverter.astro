@@ -1,0 +1,141 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="color">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="clr-formato" data-i18n="calc.format">{langText(es, 'calc.format')}</label>
+      <div class="tool-widget__segmented">
+        <button type="button" class="tool-widget__segment is-active" data-format="HEX" data-i18n="calc.hex">HEX</button>
+        <button type="button" class="tool-widget__segment" data-format="RGB" data-i18n="calc.rgb">RGB</button>
+        <button type="button" class="tool-widget__segment" data-format="HSL" data-i18n="calc.hsl">HSL</button>
+      </div>
+    </div>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="clr-valor" data-i18n="calc.color">{langText(es, 'calc.color')}</label>
+      <div class="tool-widget__control">
+        <input id="clr-valor" class="tool-widget__input" type="text" autocomplete="off" spellcheck="false" value="#3498db" data-field="valor" />
+        <label class="tool-widget__adorn tool-widget__adorn--right" for="clr-picker" data-i18n-aria="calc.color">
+          <input id="clr-picker" class="tool-widget__color" type="color" value="#3498db" data-field="picker" />
+        </label>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalidColor">
+      <span data-lang-region="es">{langText(es, 'calc.invalidColor')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalidColor')}</span>
+    </p>
+    <div class="tool-widget__swatch" data-val="swatch" role="img"></div>
+    <div class="tool-widget__codestack">
+      <div class="tool-widget__coderow">
+        <span class="tool-widget__coderow-label">HEX</span>
+        <code class="tool-widget__coderow-code" data-val="hex">#3498db</code>
+        <button type="button" class="btn btn--ghost btn--sm" data-copy="hex" data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+        <span class="tool-widget__copied" data-copied="hex" hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+      </div>
+      <div class="tool-widget__coderow">
+        <span class="tool-widget__coderow-label">RGB</span>
+        <code class="tool-widget__coderow-code" data-val="rgb">rgb(52, 152, 219)</code>
+        <button type="button" class="btn btn--ghost btn--sm" data-copy="rgb" data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+        <span class="tool-widget__copied" data-copied="rgb" hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+      </div>
+      <div class="tool-widget__coderow">
+        <span class="tool-widget__coderow-label">HSL</span>
+        <code class="tool-widget__coderow-code" data-val="hsl">hsl(204, 70%, 53%)</code>
+        <button type="button" class="btn btn--ghost btn--sm" data-copy="hsl" data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+        <span class="tool-widget__copied" data-copied="hsl" hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { parseColor, formatsFromRgb } from '../../lib/color.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="color"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const valor = root.querySelector('[data-field="valor"]');
+    const picker = root.querySelector('[data-field="picker"]');
+    const segments = [...root.querySelectorAll('[data-format]')];
+    const val = {
+      swatch: root.querySelector('[data-val="swatch"]'),
+      hex: root.querySelector('[data-val="hex"]'),
+      rgb: root.querySelector('[data-val="rgb"]'),
+      hsl: root.querySelector('[data-val="hsl"]'),
+    };
+    let formato = 'HEX';
+
+    function setFormato(f) {
+      formato = f;
+      segments.forEach((s) => s.classList.toggle('is-active', s.dataset.format === f));
+    }
+
+    function compute() {
+      const rgb = parseColor(valor.value, formato);
+      if (!rgb) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const fmt = formatsFromRgb(rgb);
+      val.swatch.style.backgroundColor = fmt.hex;
+      val.hex.textContent = fmt.hex;
+      val.rgb.textContent = fmt.rgb;
+      val.hsl.textContent = fmt.hsl;
+      // Sincroniza el texto del valor con el formato activo
+      valor.value = fmt[formato.toLowerCase()];
+      if (formato === 'RGB' || formato === 'HSL') picker.value = fmt.hex;
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+      }
+      return fallbackCopy(text);
+    }
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch { /* noop */ }
+      ta.remove();
+      return Promise.resolve();
+    }
+
+    segments.forEach((s) => s.addEventListener('click', () => { setFormato(s.dataset.format); compute(); }));
+    root.querySelectorAll('[data-copy]').forEach((btn) => btn.addEventListener('click', () => {
+      const key = btn.dataset.copy;
+      copyToClipboard(val[key].textContent).then(() => {
+        const fb = root.querySelector('[data-copied="' + key + '"]');
+        if (fb) { fb.hidden = false; setTimeout(() => { fb.hidden = true; }, 1600); }
+      });
+    }));
+    picker.addEventListener('input', () => {
+      valor.value = picker.value;
+      setFormato('HEX');
+      compute();
+    });
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    valor.addEventListener('input', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      setFormato('HEX');
+      valor.value = '#3498db';
+      picker.value = '#3498db';
+      compute();
+    });
+    compute();
+  }
+</script>

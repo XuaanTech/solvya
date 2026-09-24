@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+const es = 'en';
+---
+<BaseLayout title={langText(es, 'privacy.title')} description={langText(es, 'about.privacy')} lang="en">
+  <div class="page-simple container">
+    <Breadcrumbs lang="en" items={[{ label: langText(es, 'privacy.title') }]} />
+
+    <h1 class="page-title">{langText(es, 'privacy.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">{langText(es, 'about.privacy')}</p>
+
+      <h2>1. Data controller</h2>
+      <p>Solvya is a personal, non-profit project. This site does not actively collect personal data: the tools run entirely in your browser and third-party cookies (Google Analytics, Google AdSense) would only be installed if you give your express consent.</p>
+      <p>Privacy contact: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      <p>If this website acquires a commercial purpose, this section will be updated with the complete identification of the data controller.</p>
+
+      <h2>2. What data we collect and why</h2>
+      <p>Solvya exclusively processes the following data:</p>
+
+      <h3>A) Basic site operation</h3>
+      <p>We do not create user accounts or collect personal data through registration forms. The calculators run entirely in your browser: the figures you enter are never sent to our servers.</p>
+
+      <h3>B) Contact form</h3>
+      <p>The contact form uses the <code>mailto:</code> protocol. When submitted, your email client opens with the message ready to send. Your data (name, email and message) is <strong>not stored or transmitted to our servers</strong>; it is processed exclusively through your own email service.</p>
+
+      <h3>C) Google Analytics (web analytics)</h3>
+      <p>We use Google Analytics to analyse site usage and improve it. This tool is only activated when you give <strong>explicit consent</strong> through the cookie banner. Google Analytics may collect: IP address (anonymised), pages visited, time on site, referral source and device type. Cookies (<code>_ga</code>, <code>_gid</code>, <code>_gat</code>) persist for up to 14 months. See <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">Google's Privacy Policy</a> for details.</p>
+
+      <h3>D) Google AdSense (advertising)</h3>
+      <p>We display ads through Google AdSense. Google and its partners may use cookies (such as <code>_gads</code>, <code>IDE</code>) to serve ads based on your visits to this site and others. AdSense is only activated with your <strong>explicit consent</strong>. See <a href="https://policies.google.com/technologies/partner-sites" rel="noopener noreferrer" target="_blank">Google's partner policy</a> and <a href="https://adssettings.google.com" rel="noopener noreferrer" target="_blank">Google Ads Settings</a> to manage your preferences.</p>
+
+      <h2>3. Cookies and local storage</h2>
+      <p>This site stores three preferences exclusively in your browser (localStorage): language, visual theme (light/dark) and cookie consent choice. This information is never sent to any server.</p>
+      <p>If you accept analytics or advertising cookies, the corresponding Google cookies are installed. You can change or revoke your consent at any time by clicking <strong>Cookie settings</strong> in the footer.</p>
+
+      <h2>4. Legal basis</h2>
+      <p>Data processing is based on:</p>
+      <ul>
+        <li><strong>Explicit consent</strong> (Art. 6(1)(a) GDPR): for Google Analytics and Google AdSense cookies, which are only activated after your express acceptance.</li>
+        <li><strong>Legitimate interest</strong> (Art. 6(1)(f) GDPR): for storing basic preferences (language, theme) necessary for site operation.</li>
+      </ul>
+
+      <h2>5. Retention periods</h2>
+      <p>Your language, theme and consent preferences are kept in your browser until you manually delete them or clear browser data. Google Analytics cookies are automatically deleted after 14 months (or sooner if you revoke consent). Google AdSense cookies have a variable duration depending on cookie type.</p>
+
+      <h2>6. Recipients and international transfers</h2>
+      <p>Google LLC (headquartered in the United States) acts as a data processor for Google Analytics and Google AdSense. Both services may involve the transfer of data to servers outside the European Economic Area. Google is enrolled in the <strong>EU–US Data Privacy Framework</strong> and applies Standard Contractual Clauses approved by the European Commission as adequate safeguards. See <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">Google's Privacy Policy</a> for details on applicable safeguards.</p>
+
+      <h2>7. Your rights (GDPR)</h2>
+      <p>You have the right to <strong>access</strong>, <strong>rectify</strong>, <strong>erase</strong>, <strong>object to</strong> processing and request <strong>restriction</strong> or <strong>portability</strong> of your data. Since calculators process all data locally and we do not store personal data on any server, these rights are exercised primarily over cookie consent.</p>
+      <p>If you believe that the processing of your data does not comply with the law, you have the right to file a complaint with the <a href="https://www.aepd.es" rel="noopener noreferrer" target="_blank">Spanish Data Protection Agency (AEPD)</a>.</p>
+      <p>To exercise any rights or for privacy-related queries, write to us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+      <h2>8. Changes to this policy</h2>
+      <p>We may update this policy. Changes will be published on this page with their revision date. Last revision: 16 September 2026.</p>
+    </div>
+  </div>
+</BaseLayout>

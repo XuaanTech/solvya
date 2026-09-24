@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import { langText } from '../lib/i18n';
+const es = 'es';
+---
+<BaseLayout title={langText(es, 'contact.title')} description={langText(es, 'contact.note')}>
+  <div class="page-simple container">
+    <Breadcrumbs items={[{ label: langText(es, 'contact.title') }]} />
+
+    <h1 class="page-title" data-i18n="contact.title">{langText(es, 'contact.title')}</h1>
+    <p class="lead" data-i18n="contact.note">{langText(es, 'contact.note')}</p>
+
+    <form class="contact-form" action={`mailto:${SITE.email}`} method="post" enctype="text/plain">
+      <div class="contact-form__field">
+        <label class="tool-widget__label" for="c-name" data-i18n="contact.name">{langText(es, 'contact.name')}</label>
+        <input id="c-name" class="tool-widget__input" type="text" name="Nombre" required />
+      </div>
+      <div class="contact-form__field">
+        <label class="tool-widget__label" for="c-email" data-i18n="contact.email">{langText(es, 'contact.email')}</label>
+        <input id="c-email" class="tool-widget__input" type="email" name="Email" required />
+      </div>
+      <div class="contact-form__field">
+        <label class="tool-widget__label" for="c-msg" data-i18n="contact.message">{langText(es, 'contact.message')}</label>
+        <textarea id="c-msg" class="tool-widget__input tool-widget__input--textarea" name="Mensaje" rows="6" required></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary" data-i18n="contact.send">{langText(es, 'contact.send')}</button>
+      <p class="contact-form__note">
+        El correo se abrirá con tu mensaje listo para enviar. No almacenamos ningún dato en este sitio.
+        Consulta nuestra <a href="/privacy-policy/">política de privacidad</a> para saber cómo
+        tratamos tus datos.
+      </p>
+    </form>
+  </div>
+</BaseLayout>

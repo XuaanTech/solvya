@@ -1,0 +1,115 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="timestamp">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ts-stamp" data-i18n="calc.tsTimestamp">{langText(es, 'calc.tsTimestamp')}</label>
+        <input id="ts-stamp" class="tool-widget__input" type="text" inputmode="numeric" autocomplete="off" data-field="stamp" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ts-fecha" data-i18n="calc.tsDate">{langText(es, 'calc.tsDate')}</label>
+        <input id="ts-fecha" class="tool-widget__input" type="datetime-local" data-field="fecha" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="button" class="btn btn--ghost" data-now data-i18n="calc.tsNow">{langText(es, 'calc.tsNow')}</button>
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.tsInvalid">{langText(es, 'calc.tsInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.tsInvalid">{langText('en', 'calc.tsInvalid')}</span>
+    </p>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-i18n="calc.tsResult">{langText(es, 'calc.tsResult')}</span>
+      <strong class="tool-widget__conversion-value" data-val="fecha">—</strong>
+    </div>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-i18n="calc.tsFromDate">{langText(es, 'calc.tsFromDate')}</span>
+      <strong class="tool-widget__conversion-value" data-val="stamp">—</strong>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.tsNote">{langText(es, 'calc.tsNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.tsNote">{langText('en', 'calc.tsNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { parseDecimal, formatSmart } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="timestamp"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      stamp: root.querySelector('[data-field="stamp"]'),
+      fecha: root.querySelector('[data-field="fecha"]'),
+    };
+    const val = {
+      fecha: root.querySelector('[data-val="fecha"]'),
+      stamp: root.querySelector('[data-val="stamp"]'),
+    };
+
+    function localISODate(d) {
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function computeFromStamp() {
+      const raw = fields.stamp.value.trim();
+      if (!raw) return false;
+      let n = Number(raw.replace(/\D/g, ''));
+      if (!Number.isFinite(n) || n <= 0) { return false; }
+      if (n > 1e11) n = Math.round(n / 1000); // ms → sec
+      const d = new Date(n * 1000);
+      if (isNaN(d.getTime())) return false;
+      const lang = currentLang();
+      val.fecha.textContent = d.toLocaleString(lang === 'en' ? 'en-GB' : 'es-ES', { dateStyle: 'medium', timeStyle: 'short' });
+      applyLang(lang);
+      return true;
+    }
+
+    function computeFromDate() {
+      if (!fields.fecha.value) return false;
+      const d = new Date(fields.fecha.value);
+      if (isNaN(d.getTime())) return false;
+      const ts = Math.floor(d.getTime() / 1000);
+      val.stamp.textContent = formatSmart(ts, 0) + ' s (' + localISODate(d) + ')';
+      applyLang(currentLang());
+      return true;
+    }
+
+    function compute() {
+      const ok = computeFromStamp() || computeFromDate();
+      error.hidden = ok;
+      result.hidden = !ok;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.stamp.addEventListener('input', compute);
+    fields.fecha.addEventListener('input', compute);
+    root.querySelector('[data-now]')?.addEventListener('click', () => {
+      const now = new Date();
+      const y = now.getFullYear();
+      const mo = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const h = String(now.getHours()).padStart(2, '0');
+      const mi = String(now.getMinutes()).padStart(2, '0');
+      fields.fecha.value = y + '-' + mo + '-' + d + 'T' + h + ':' + mi;
+      compute();
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.stamp.value = '';
+      fields.fecha.value = '';
+      result.hidden = true;
+    });
+  }
+</script>

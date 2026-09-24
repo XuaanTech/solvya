@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import { langText } from '../lib/i18n';
+const es = 'es';
+---
+<BaseLayout title={langText(es, 'terms.title')} description={langText(es, 'about.mission')}>
+  <div class="page-simple container">
+    <Breadcrumbs items={[{ label: langText(es, 'terms.title') }]} />
+
+    <h1 class="page-title" data-i18n="terms.title">{langText(es, 'terms.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">
+        <span data-lang-region="es">Al usar este sitio aceptas las siguientes condiciones de uso.</span>
+        <span data-lang-region="en" hidden>By using this site you accept the following terms of use.</span>
+      </p>
+
+      <h2>1. Aceptación</h2>
+      <p>
+        El uso de {SITE.name} implica la aceptación de estos términos. Si no estás de acuerdo,
+        por favor no utilices el sitio.
+      </p>
+
+      <h2>2. Uso del sitio</h2>
+      <p>
+        Puedes utilizar las herramientas y artículos de este sitio de forma libre y gratuita,
+        tanto para uso personal como profesional. No está permitido el uso automatizado
+        (bots, scrapers) que sobrecargue los servidores.
+      </p>
+
+      <h2>3. Propiedad intelectual</h2>
+      <p>
+        El contenido original de este sitio (textos, diseño, código) está protegido por derechos de autor.
+        Puedes compartir los artículos citando la fuente. Las herramientas de código abierto se distribuyen
+        bajo sus respectivas licencias.
+      </p>
+
+      <h2>4. Limitación de responsabilidad</h2>
+      <p>Las herramientas proporcionan resultados orientativos. Consulta la sección de <a href="/disclaimer/">aviso legal</a> para más detalles sobre las limitaciones de responsabilidad.</p>
+
+      <h2>5. Cambios en los términos</h2>
+      <p>
+        Nos reservamos el derecho de modificar estos términos en cualquier momento.
+        Los cambios se publicarán en esta página con su fecha de revisión.
+        Última revisión: 16 de septiembre de 2026.
+      </p>
+
+      <h2>6. Contacto</h2>
+      <p>Para cualquier pregunta sobre estos términos, escríbenos a <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+    </div>
+  </div>
+</BaseLayout>

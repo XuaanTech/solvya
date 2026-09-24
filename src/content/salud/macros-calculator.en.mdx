@@ -1,0 +1,122 @@
+---
+lang: en
+title: "Macros Calculator: Carbs, Protein and Fat"
+description: "Calculate your daily macros and calories based on goal and activity. Presets: balanced, high protein, low carb, keto. Free."
+category: "salud"
+date: "2026-09-14"
+author: "Equipo Solvya"
+---
+
+<article>
+
+## What are macronutrients (macros)?
+
+**Macronutrients** are the three nutrients that provide energy (calories) to your body:
+
+| Macro | Calories/g | Main Function | Typical Sources |
+|-------|------------|---------------|-----------------|
+| **Carbohydrates** | 4 kcal/g | Quick energy, brain fuel | Rice, pasta, bread, fruit, vegetables, legumes |
+| **Protein** | 4 kcal/g | Tissue building/repair, enzymes, hormones | Meat, fish, eggs, dairy, tofu, legumes |
+| **Fat** | 9 kcal/g | Dense energy, hormones, vitamin absorption | Olive oil, nuts, avocado, fatty fish |
+
+> **Alcohol** provides 7 kcal/g but is not an essential macronutrient and isn't included in the split.
+
+---
+
+## How this tool calculates your macros
+
+### 1. Basal Metabolic Rate (BMR) — Mifflin-St Jeor
+
+The **Mifflin-St Jeor (1990)** equation is the most validated for general population:
+
+| Sex | Formula |
+|-----|---------|
+| **Male** | `BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(years) + 5` |
+| **Female** | `BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(years) - 161` |
+
+> **Alternative**: Katch-McArdle uses body fat % (more accurate if known), but Mifflin-St Jeor is standard without that data.
+
+### 2. Total Daily Energy Expenditure (TDEE)
+
+```
+TDEE = BMR × Activity Factor
+```
+
+| Level | Factor | Description |
+|-------|--------|-------------|
+| Sedentary | 1.2 | Little/no exercise, desk job |
+| Light | 1.375 | Light exercise 1-3 days/week |
+| Moderate | 1.55 | Moderate exercise 3-5 days/week |
+| Active | 1.725 | Hard exercise 6-7 days/week |
+| Very Active | 1.9 | Training 2×/day, heavy physical job |
+
+### 3. Goal → Target Calories
+
+| Goal | Adjustment on TDEE |
+|------|-------------------|
+| **Maintain** | TDEE (no change) |
+| **Lose weight** | TDEE - 20% (min. -500 kcal) |
+| **Gain weight** | TDEE + 15% (max. +300 kcal) |
+| **Custom** | TDEE + kcal you specify (+/-) |
+
+> **Note**: A 500 kcal/day deficit ≈ 0.5 kg/week theoretical. Reality varies due to metabolic adaptation, NEAT, adherence, etc.
+
+### 4. Split → Grams per macro
+
+```
+g_carbs  = (target_calories × %carbs  / 100) / 4
+g_protein = (target_calories × %protein / 100) / 4
+g_fat    = (target_calories × %fat    / 100) / 9
+```
+
+---
+
+## Included Split Presets
+
+| Preset | Carbs | Protein | Fat | For Whom |
+|--------|-------|---------|-----|----------|
+| **Balanced** | 40% | 30% | 30% | General, maintenance, recomposition |
+| **High Protein** | 40% | 40% | 20% | Fat loss preserving muscle, strength |
+| **Low Carb** | 20% | 40% | 40% | Glycemic control, insulin sensitivity |
+| **Keto** | 5% | 25% | 70% | Strict ketogenic diet (< 50g carbs/day) |
+| **Zone** | 40% | 30% | 30% | Zone Diet (Sears), inflammation control |
+
+> You can **customize** any split. Percentages **must sum to 100%**.
+
+---
+
+## Reference Ranges (ISSN, ACSM, EFSA)
+
+| Population | Protein (g/kg/day) | Carbs (g/kg/day) | Fat (% kcal) |
+|------------|---------------------|------------------|--------------|
+| Sedentary | 0.8 - 1.0 | 3 - 5 | 20 - 35% |
+| Recreational | 1.0 - 1.4 | 5 - 7 | 20 - 35% |
+| Strength/power | 1.6 - 2.4 | 4 - 7 | 20 - 35% |
+| Endurance | 1.2 - 2.0 | 6 - 10 | 20 - 35% |
+| Keto adapted | 1.5 - 2.0 | < 1 (absolute) | 70 - 80% |
+
+> These are **reference ranges**. The calculator gives you a starting point; adjust based on real response (weight, measurements, energy, blood work).
+
+---
+
+## Complete Example
+
+**Male, 30 years, 180 cm, 85 kg, moderate activity, goal lose, preset High Protein (40/40/20)**
+
+1. **BMR** = 10×85 + 6.25×180 - 5×30 + 5 = 850 + 1125 - 150 + 5 = **1,830 kcal**
+2. **TDEE** = 1,830 × 1.55 = **2,837 kcal**
+3. **Goal lose** = 2,837 × 0.8 = **2,269 kcal** (deficit ~568 kcal)
+4. **Macros**:
+   - Carbs: 2,269 × 0.40 / 4 = **227 g**
+   - Protein: 2,269 × 0.40 / 4 = **227 g** (2.67 g/kg — high, good for muscle retention)
+   - Fat: 2,269 × 0.20 / 9 = **50 g**
+
+---
+
+## Try the calculator now
+
+Calculate your exact macros in seconds. Adjust goal, activity and split. Free, no sign-up, 100% in your browser.
+
+[Calculate your macros and calories](/herramienta/macros-calculator/) based on your goal and activity.
+
+</article>

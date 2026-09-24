@@ -1,0 +1,199 @@
+---
+title: "Generador de Hashes y Checksums: MD5, SHA-1, SHA-256, SHA-512, CRC32"
+titleEn: "Hash & Checksum Generator: MD5, SHA-1, SHA-256, SHA-512, CRC32"
+description: "Calcula hashes criptográficos (MD5, SHA-1, SHA-256, SHA-384, SHA-512, RIPEMD-160, BLAKE2b) y checksums (CRC32, CRC32C, Adler-32) de texto o archivos. Compara integridad, verifica descargas, firma datos. 100 % client-side (Web Crypto API / WASM), sin subir archivos."
+descriptionEn: "Calculate cryptographic hashes (MD5, SHA-1, SHA-256, SHA-384, SHA-512, RIPEMD-160, BLAKE2b) and checksums (CRC32, CRC32C, Adler-32) from text or files. Compare integrity, verify downloads, sign data. 100 % client-side (Web Crypto API / WASM), no file uploads."
+category: generadores
+date: 2026-09-13
+faqs:
+  - q:
+      es: "¿Para qué sirve cada algoritmo?"
+      en: "What is each algorithm for?"
+    a:
+      es: "**MD5/SHA-1**: solo verificación de integridad NO criptográfica (rotos para colisiones). **SHA-256/SHA-384/SHA-512**: estándar actual (TLS, Git, blockchain, firmas, certificados). **SHA-3 / BLAKE2b**: modernos, más rápidos/seguros. **RIPEMD-160**: Bitcoin (direcciones P2PKH). **CRC32/CRC32C/Adler-32**: detección de errores de transmisión (ZIP, gzip, SCTP, redes), **no** seguridad."
+      en: "**MD5/SHA-1**: only NON-cryptographic integrity checks (broken for collisions). **SHA-256/SHA-384/SHA-512**: current standard (TLS, Git, blockchain, signatures, certs). **SHA-3 / BLAKE2b**: modern, faster/safer. **RIPEMD-160**: Bitcoin (P2PKH addresses). **CRC32/CRC32C/Adler-32**: transmission error detection (ZIP, gzip, SCTP, networks), **not** security."
+  - q:
+      es: "¿Puedo hashear archivos grandes (GB) sin subirlos?"
+      en: "Can I hash large files (GB) without uploading them?"
+    a:
+      es: "Sí. Usamos **File API + Web Crypto API (SubtleCrypto.digest)** con streaming por chunks (ej. 2 MB). El archivo **nunca sale de tu navegador**. Funciona offline tras la primera carga. Límite práctico: RAM del navegador (probado > 10 GB en escritorio)."
+      en: "Yes. We use **File API + Web Crypto API (SubtleCrypto.digest)** with chunked streaming (e.g. 2 MB). The file **never leaves your browser**. Works offline after first load. Practical limit: browser RAM (tested > 10 GB on desktop)."
+  - q:
+      es: "¿Qué es HMAC y cuándo usarlo?"
+      en: "What is HMAC and when to use it?"
+    a:
+      es: "**HMAC (Hash-based Message Authentication Code)** = hash con clave secreta. Garantiza **integridad + autenticidad** (solo quien tiene la clave puede generar/verificar). Úsalo para: firmar APIs (JWT HS256), validar webhooks (Stripe, GitHub), cookies firmadas, tokens anti-CSRF. Algoritmos: HMAC-SHA-256, HMAC-SHA-512."
+      en: "**HMAC (Hash-based Message Authentication Code)** = hash with secret key. Guarantees **integrity + authenticity** (only key holder can generate/verify). Use for: API signing (JWT HS256), webhook validation (Stripe, GitHub), signed cookies, anti-CSRF tokens. Algorithms: HMAC-SHA-256, HMAC-SHA-512."
+  - q:
+      es: "¿Diferencia entre hash y checksum?"
+      en: "What's the difference between hash and checksum?"
+    a:
+      es: "**Hash criptográfico** (SHA-256, etc.): resistencia a colisiones, preimagen, segunda preimagen. Diseñado para **seguridad** (firmas, certificados, blockchain). **Checksum** (CRC32, Adler-32): detección de errores aleatorios/ruido (bit flips, truncamiento). **No** resiste ataque intencional. Úsalos para: verificación de descargas (ZIP, ISO), integridad de red (SCTP, iSCSI), no para autenticación."
+      en: "**Cryptographic hash** (SHA-256, etc.): collision, preimage, 2nd-preimage resistance. Designed for **security** (signatures, certs, blockchain). **Checksum** (CRC32, Adler-32): detects random errors/noise (bit flips, truncation). **Does not** resist intentional attack. Use for: download verification (ZIP, ISO), network integrity (SCTP, iSCSI), not for authentication."
+  - q:
+      es: "¿Puedo verificar la integridad de una ISO de Linux / firmware?"
+      en: "Can I verify a Linux ISO / firmware integrity?"
+    a:
+      es: "Sí. Descarga el archivo `.sha256` o `.sha256sum` oficial de la distro/vendor. Arrastra la ISO al generador, selecciona SHA-256 y compara el hash. Deben coincidir **exactamente** (mayúsculas/minúsculas da igual en hex)."
+      en: "Yes. Download the official `.sha256` or `.sha256sum` from the distro/vendor. Drag the ISO into the generator, select SHA-256 and compare the hash. They must match **exactly** (hex case-insensitive)."
+steps:
+  - title:
+      es: "Selecciona la entrada: Texto o Archivo"
+      en: "Select input: Text or File"
+    text:
+      es: "Pega texto directamente o arrastra/sube un archivo (múltiples permitidos). Para archivos > 100 MB, el procesamiento por chunks evita bloquear la UI."
+      en: "Paste text directly or drag/upload a file (multiple allowed). For files > 100 MB, chunked processing avoids UI blocking."
+  - title:
+      es: "Elige el/los algoritmo(s)"
+      en: "Choose algorithm(s)"
+    text:
+      es: "Criptográficos: MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA3-256, SHA3-512, BLAKE2b, RIPEMD-160. Checksums: CRC32, CRC32C (Castagnoli), Adler-32. HMAC: añade clave secreta para SHA-256/512."
+      en: "Cryptographic: MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA3-256, SHA3-512, BLAKE2b, RIPEMD-160. Checksums: CRC32, CRC32C (Castagnoli), Adler-32. HMAC: add secret key for SHA-256/512."
+  - title:
+      es: "Copia o exporta resultados"
+      en: "Copy or export results"
+    text:
+      es: "Cada hash se muestra en hex (minúsculas) y base64. Botón copiar individual o 'Copiar todo'. Exporta JSON/CSV con nombre de archivo, algoritmo, hash, tamaño, timestamp."
+      en: "Each hash shown in hex (lowercase) and base64. Individual copy or 'Copy all'. Export JSON/CSV with filename, algorithm, hash, size, timestamp."
+  - title:
+      es: "Compara (opcional)"
+      en: "Compare (optional)"
+    text:
+      es: "Pega el hash esperado (del vendor, `.sha256sum`, release notes). El comparador marca **✅ Coincide** / **❌ Difiere** carácter a carácter."
+      en: "Paste the expected hash (from vendor, `.sha256sum`, release notes). Comparator shows **✅ Match** / **❌ Diff** character by character."
+readingTime: 6
+readingTimeEn: 6
+---
+
+Un **hash** es una "huella digital" de longitud fija que identifica unívocamente un contenido. Nuestro **generador de hashes y checksums** calcula **algoritmos criptográficos y de integridad** sobre **texto o archivos** — **100 % en tu navegador**, **sin subir nada**, **funciona offline**.
+
+## Algoritmos soportados
+
+### Criptográficos (seguridad: firmas, certificados, blockchain, Git, TLS)
+
+| Algoritmo | Longitud | Estado | Uso principal |
+|-----------|----------|--------|---------------|
+| **MD5** | 128 bit (32 hex) | 💥 **Roto** (colisiones 2004) | Solo legado / checksums no seguras |
+| **SHA-1** | 160 bit (40 hex) | 💥 **Roto** (SHAttered 2017) | Solo legado / Git (migración a SHA-256) |
+| **SHA-224** | 224 bit (56 hex) | ✅ Seguro | Certificados, compatibilidad |
+| **SHA-256** | 256 bit (64 hex) | ✅ **Estándar actual** | TLS 1.2/1.3, Bitcoin, Git, firmas, Linux ISOs |
+| **SHA-384** | 384 bit (96 hex) | ✅ Seguro | TLS, certificados de alta seguridad |
+| **SHA-512** | 512 bit (128 hex) | ✅ Seguro | Hashing contraseñas (con salt/iteraciones), firmas |
+| **SHA3-256** | 256 bit | ✅ Moderno (Keccak) | Post-cuántico, nuevos diseños |
+| **SHA3-512** | 512 bit | ✅ Moderno | Post-cuántico |
+| **BLAKE2b** | 512 bit (configurable) | ✅ Moderno, **más rápido que SHA-2** | Aplicaciones de alto rendimiento, Argon2 |
+| **RIPEMD-160** | 160 bit | ✅ Seguro (nichos) | **Bitcoin** (direcciones P2PKH + SHA-256) |
+
+### Checksums / No criptográficos (integridad de transmisión, almacenamiento)
+
+| Algoritmo | Longitud | Uso |
+|-----------|----------|-----|
+| **CRC32** (ISO 3309) | 32 bit (8 hex) | ZIP, PNG, gzip, Ethernet, SATA |
+| **CRC32C** (Castagnoli) | 32 bit | iSCSI, SCTP, Btrfs, ext4, Google Cloud Storage |
+| **Adler-32** | 32 bit | zlib, rsync (rápido, menos robusto que CRC32) |
+
+> **CRC ≠ Hash criptográfico**. CRC detecta **errores aleatorios** (ruido, bit rot). **No** resiste manipulación intencional.
+
+### HMAC (autenticación + integridad con clave secreta)
+
+| Algoritmo | Uso |
+|-----------|-----|
+| **HMAC-SHA-256** | JWT (HS256), webhooks (Stripe, GitHub, Slack), cookies firmadas, API keys |
+| **HMAC-SHA-512** | Alta seguridad, claves largas |
+
+> **HMAC = H(key ⊕ opad, H(key ⊕ ipad, message))**. Solo quien tiene `key` puede generar/verificar.
+
+## Arquitectura: 100 % Client-Side (Web Crypto API)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  NAVEGADOR (tu dispositivo)                                 │
+│  ┌─────────────────┐    ┌───────────────────────────────┐  │
+│  │ File API /      │───▶│ SubtleCrypto.digest()         │  │
+│  │ Text Input      │    │ (SHA-256, SHA-384, SHA-512,   │  │
+│  │                 │    │  SHA-1, MD5, SHA-3, BLAKE2*)  │  │
+│  └─────────────────┘    └───────────────────────────────┘  │
+│         │                        │                           │
+│         │               ┌────────▼────────┐                 │
+│         │               │ WASM (CRC32,    │                 │
+│         │               │  CRC32C,        │                 │
+│         └───────────────▶│  Adler-32,      │                 │
+│                          │  RIPEMD-160)    │                 │
+│                          └─────────────────┘                 │
+│                                    │                         │
+│                                    ▼                         │
+│                          ┌─────────────────┐                │
+│                          │ Hex / Base64    │                │
+│                          │ Output + Copy   │                │
+│                          └─────────────────┘                │
+└─────────────────────────────────────────────────────────────┘
+        ▲                         ▲
+        │                         │
+   CERO RED                  CERO SERVIDOR
+```
+
+- **Web Crypto API (SubtleCrypto)**: nativa, CSPRNG, implementada en C++ del navegador (constante-tiempo, side-channel resistant).
+- **WASM** para algoritmos no nativos (CRC32, CRC32C, Adler-32, RIPEMD-160, BLAKE2b) — compilados de Rust/Go, auditable.
+- **Streaming por chunks** (2–8 MB): `file.stream().pipeThrough(new TransformStream(...))` → `crypto.subtle.digest()` incremental. **Archivos de 10+ GB sin OOM**.
+
+## Casos de uso comunes
+
+| Caso | Algoritmo | Flujo |
+|------|-----------|-------|
+| Verificar ISO Linux / firmware | SHA-256 | Descarga `.sha256sum` oficial → arrastra ISO → compara |
+| Verificar descarga ZIP / release GitHub | SHA-256 / SHA-512 | Release assets → `sha256.txt` → compara |
+| Integridad de backup / archivo local | SHA-256 + CRC32 | Hash criptográfico (seguridad) + CRC (detección bit rot) |
+| Firmar payload API / webhook | HMAC-SHA-256 | Clave secreta compartida → genera HMAC → header `X-Signature` |
+| Verificar webhook Stripe / GitHub | HMAC-SHA-256 | Copia `Stripe-Signature` / `X-Hub-Signature-256` → pega clave → verifica |
+| Dirección Bitcoin (legacy) | SHA-256 + RIPEMD-160 | `RIPEMD160(SHA256(pubkey))` → Base58Check |
+| Git commit ID | SHA-1 (legado) / SHA-256 (nuevo) | `git hash-object` / `git log --format=%H` |
+| Deduplicación de archivos | SHA-256 / BLAKE2b | Hash de cada archivo → mapa hash→paths → detecta duplicados |
+
+## Comparador integrado (evita errores visuales)
+
+Pega el hash de referencia → el comparador resalta:
+
+```
+Generado:  a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e
+Esperado:  A591A6D40BF420404A011733CFB7B190D62C65BF0BCDA32B57B277D9AD9F146E
+            ▲                                              ▲
+         ✅ Coinciden (case-insensitive hex)
+```
+
+## Exportación para auditoría / CI
+
+```json
+[
+  {
+    "file": "ubuntu-24.04-live-server-amd64.iso",
+    "size": 1234567890,
+    "algorithm": "SHA-256",
+    "hash_hex": "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e",
+    "hash_b64": "pZGm1Av0IFAEgRczz7exkNYsbL8LzaM3V7J32a2fFG4=",
+    "timestamp": "2026-09-13T10:15:30.123Z"
+  }
+]
+```
+
+## Privacidad y límites
+
+- **Archivos nunca subidos**: `File` object → `ReadableStream` → `SubtleCrypto.digest()` — todo en memoria del tab.
+- **Offline**: tras primera carga (Service Worker / cache), funciona sin internet.
+- **Límites**: RAM del navegador (Chrome/FF desktop ~ 4–8 GB heap; chunked streaming permite > 10 GB). Móvil: ~1–2 GB.
+- **Sin logs, sin analytics, sin cookies** en la herramienta.
+
+[Calcular hash / checksum ahora](/herramienta/hash/).
+
+## Referencias
+
+- **NIST FIPS 180-4** (SHA-1, SHA-2 family)
+- **NIST FIPS 202** (SHA-3 / Keccak)
+- **RFC 6234** (HMAC)
+- **RFC 7693** (BLAKE2)
+- **ISO 3309 / ISO 13239** (CRC32)
+- **RFC 3720** (CRC32C / Castagnoli)
+- **Bitcoin Protocol** (RIPEMD-160 + SHA-256 → Base58Check)
+
+---
+
+**¿Verificar una descarga o firmar un payload? → [Abrir generador de hashes](/herramienta/hash/) — arrastra tu archivo, elige algoritmo, compara al instante.**

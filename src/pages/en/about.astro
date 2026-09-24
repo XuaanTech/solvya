@@ -1,0 +1,30 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+const es = 'en';
+---
+<BaseLayout title={langText(es, 'about.title')} description={langText(es, 'about.mission')} lang="en">
+  <div class="page-simple container">
+    <Breadcrumbs lang="en" items={[{ label: langText(es, 'about.title') }]} />
+
+    <h1 class="page-title">{langText(es, 'about.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">{langText(es, 'about.mission')}</p>
+
+      <h2>{langText(es, 'about.mission')}</h2>
+      <p>This site is created and maintained by an independent team passionate about the practical utility of online tools. Articles are written with an educational and verifiable approach: examples and figures come from public sources and international standards (WHO, ISO, NIST).</p>
+
+      <h2>Your data is yours</h2>
+      <p>All processing happens in your browser. If you give consent, we use <strong>Google Analytics</strong> (with anonymised IP) to improve the site and <strong>Google AdSense</strong> to display ads. Both are only activated with your explicit approval. See the <a href="/en/privacy-policy/">privacy policy</a> for more detail.</p>
+
+      <h2>{langText(es, 'about.disclaimer')}</h2>
+      <p>{langText(es, 'about.disclaimer')}</p>
+
+      <h2>{langText(es, 'contact.title')}</h2>
+      <p>Questions or suggestions? Write to us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+    </div>
+  </div>
+</BaseLayout>

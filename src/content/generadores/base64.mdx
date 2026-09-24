@@ -1,0 +1,124 @@
+---
+title: "Qué es Base64 y cómo codificar y decodificar textos"
+titleEn: "What is Base64 and How to Encode and Decode Text"
+description: "Base64 explicado: qué es, para qué sirve en APIs, correo y URLs, cómo codificar y decodificar con nuestra herramienta y por qué no es un sistema de cifrado."
+descriptionEn: "Base64 explained: what it is, what it is used for in APIs, email and URLs, how to encode and decode with our tool and why it is not an encryption system."
+category: generadores
+categoryName: Generadores
+tags: [base64, codificar, decodificar, utf-8, codificacion de texto, api]
+date: 2026-09-14
+author: "Equipo Solvya"
+tool: base64
+faqs:
+  - q:
+      es: "¿Qué es Base64 en lenguaje sencillo?"
+      en: "What is Base64 in simple terms?"
+    a:
+      es: "Es un sistema que convierte datos binarios en letras, números y algunos símbolos seguros (+ y /), para poder transmitirlos dentro de texto plano, como correos, JSON o parámetros de URL."
+      en: "It is a system that converts binary data into letters, numbers and some safe symbols (+ and /), so they can be transmitted inside plain text such as email, JSON or URL parameters."
+  - q:
+      es: "¿Base64 es cifrado? ¿Es seguro?"
+      en: "Is Base64 encryption? Is it secure?"
+    a:
+      es: "No. Base64 es una codificación reversible, no cifrado: cualquiera con la cadena codificada puede decodificarla en segundos. Nunca lo uses para contraseñas o datos sensibles."
+      en: "No. Base64 is a reversible encoding, not encryption: anyone with the encoded string can decode it in seconds. Never use it for passwords or sensitive data."
+  - q:
+      es: "¿Qué caracteres especiales soporta la herramienta Base64?"
+      en: "What special characters does the Base64 tool support?"
+    a:
+      es: "Cualquier carácter UTF-8: tildes (á, é, ñ), signos de puntuación, emojis (👋, 🔐) y hasta texto en idiomas como árabe, chino o japonés. La codificación es UTF-8 completa."
+      en: "Any UTF-8 character: accents (á, é, ñ), punctuation, emojis (👋, 🔐) and even text in languages such as Arabic, Chinese or Japanese. The encoding is full UTF-8."
+  - q:
+      es: "¿Por qué una cadena Base64 termina en = o ==?"
+      en: "Why does a Base64 string end with = or = =?"
+    a:
+      es: "Son caracteres de relleno (padding) para que la longitud sea siempre múltiplo de 4. No son parte del contenido original, pero la decodificación los necesita."
+      en: "They are padding characters so the length is always a multiple of 4. They are not part of the original content, but decoding needs them."
+steps:
+  - title:
+      es: "Abre el conversor y escribe tu texto"
+      en: "Open the converter and type your text"
+    text:
+      es: "Escribe o pega el texto que quieras en el campo de entrada. Puede ser cualquier cosa: una frase, un JSON o incluso emojis. Activa el modo 'Codificar'."
+      en: "Type or paste the text you want in the input field. It can be anything: a sentence, JSON or even emojis. Select 'Encode' mode."
+  - title:
+      es: "Obtén la cadena Base64 al instante"
+      en: "Get the Base64 string instantly"
+    text:
+      es: "La herramienta convierte tu texto automáticamente en Base64 usando UTF-8, preservando todos los caracteres. La longitud resultante crece aproximadamente un 33 %."
+      en: "The tool automatically converts your text to Base64 using UTF-8, preserving all characters. The resulting length grows by approximately 33 %."
+  - title:
+      es: "Para decodificar, cambia el modo a 'Decodificar'"
+      en: "To decode, switch to 'Decode' mode"
+    text:
+      es: "Pega la cadena Base64 en el mismo campo y selecciona 'Decodificar'. El texto original aparecerá al instante. Si la cadena no es Base64 válido, se mostrará un error."
+      en: "Paste the Base64 string in the same field and select 'Decode'. The original text appears instantly. If the string is not valid Base64, an error message is shown."
+---
+
+**Base64** es la codificación más utilizada para viajar con datos de texto en entornos que solo aceptan caracteres imprimibles: correos electrónicos, JSON, URLs, atributos HTML y mucho más. Aquí tienes **qué es, para qué sirve, cómo usarla y por qué no es cifrado**.
+
+## ¿Qué es Base64?
+
+Base64 es un sistema que toma **datos binarios** (bytes) y los representa usando **64 caracteres seguros**: las 26 letras mayúsculas, las 26 minúsculas, los 10 dígitos y los símbolos **`+`** y **`/`**, con el carácter **`=`** como relleno (padding).
+
+Cada **3 bytes** de datos originales se convierten en **4 caracteres** de Base64, lo que aumenta el tamaño aproximadamente un **33 %**.
+
+| Bytes originales | Caracteres Base64 |
+|------------------|-------------------|
+| 1 byte | 4 caracteres (con relleno) |
+| 3 bytes | 4 caracteres |
+| 6 bytes | 8 caracteres |
+| 100 bytes | 136 caracteres |
+
+## ¿Para qué se usa Base64?
+
+- **APIs y JSON:** transportar datos binarios (firmas, tokens) en campos de texto.
+- **Correo electrónico (MIME):** adjuntar imágenes y archivos sin romper el protocolo SMTP.
+- **Imágenes inline en HTML y CSS:** las `data:image/png;base64,...` incluyen imágenes directamente en el código.
+- **URLs y parámetros:** transmitir bytes sin necesidad de codificación adicional.
+- **Almacenamiento temporal:** guardar datos binarios en campos de texto plano de bases de datos.
+
+## Base64 **no** es cifrado
+
+> ⚠️ **Base64 es una codificación visible, no un cifrado.** Cualquiera puede decodificarla en segundos, con o sin herramientas.
+
+No lo uses para:
+- ❌ Contraseñas o credenciales
+- ❌ Datos personales sensibles (DNI, números de cuenta)
+- ❌ Autenticación de seguridad
+
+**Para cifrado real** utiliza herramientas como AES, HTTPS/TLS o el Web Crypto API.
+
+## Tabla de caracteres comunes → Base64
+
+| Texto original | Base64 | Notas |
+|----------------|--------|-------|
+| A | QQ== | 1 byte con relleno |
+| Hola | SG9sYQ== | Texto ASCII puro |
+| Hola, Solvya 👋 | SG9sYSwgU29sdnlhIPCfpKE= | Incluye emoji (UTF-8) |
+| ñ | w7E= | Carácter UTF-8 de 2 bytes |
+| { } | eyB9 | Llaves JSON |
+
+## El impacto de UTF-8
+
+Base64 por sí solo solo entiende de bytes. La clave está en **codificar y decodificar como UTF-8**: así se conservan las tildes, eñes, caracteres cirílicos y emojis sin perder información.
+
+Nuestra herramienta usa internamente `TextEncoder` y `TextDecoder` con UTF-8 para que el contenido tropical —como `¡Hola, mundo!` o emojis como `👋` y `🔐`— se conserve fielmente.
+
+## Cómo usar nuestra herramienta
+
+1. **Elige el modo:** "Codificar" (texto → Base64) o "Decodificar" (Base64 → texto).
+2. **Escribe o pega** en el campo de entrada el contenido que quieras convertir.
+3. **Obtén el resultado** al instante en el campo de salida; cópialo con un clic.
+4. Usa el botón **"Invertir"** para cambiar entre codificar y decodificar con un solo clic.
+
+> 🔐 **Todo es local:** tu contenido nunca se envía a ningún servidor.
+
+## Conclusión
+
+- Base64 convierte datos binarios en **texto seguro** que viaja sin problemas por APIs, correos y URLs.
+- **No es cifrado**: no protege información; solo la transporta.
+- El tamaño aumenta un **33 %** respecto al original.
+- Para conservar acentos y emojis, codifica y decodifica siempre con **UTF-8**.
+
+[Codifica y decodifica cualquier texto en Base64 al instante](/herramienta/base64/).

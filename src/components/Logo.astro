@@ -1,0 +1,17 @@
+---
+interface Props {
+  className?: string;
+  size?: number;
+  title?: string;
+}
+const { className = '', size = 44, title = 'Solvya' } = Astro.props;
+---
+<img
+  class={className}
+  src="/favicon.svg"
+  alt={title}
+  width={size}
+  height={size}
+  loading="eager"
+  decoding="async"
+/>

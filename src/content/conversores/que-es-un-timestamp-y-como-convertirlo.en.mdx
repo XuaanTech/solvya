@@ -1,0 +1,65 @@
+---
+lang: en
+title: "What is a Timestamp and How to Convert it to Date and Time"
+description: "Learn what a Unix timestamp is, the difference between seconds and milliseconds, where it is used, and how to convert it to a readable date."
+category: conversores
+date: 2026-09-14
+---
+
+## What does 1694678400 mean?
+
+At first glance it is a meaningless number. But for a computer it means **September 15, 2023, 00:00:00 UTC**. And for a similar-looking value the interpretation can change entirely depending on whether it is expressed in seconds or in milliseconds. Hidden beneath those digits lies the mechanism that lets databases, APIs and browsers understand time.
+
+## What is a timestamp?
+
+A **Unix timestamp** (also called Unix time or epoch) is the number of **seconds elapsed since January 1, 1970, 00:00:00 UTC**. That starting date — the "Unix epoch" — is the universal reference point chosen by the creators of Unix in the 1970s.
+
+Computers use this system because it is efficient: there is no need to store a string like "Sunday, September 14, 2026" or handle month names in different languages. A single integer is enough to store, compare and sort any moment in time.
+
+> **Fun fact**: the timestamp of the Apollo 11 moon landing (July 20, 1969) would be negative, because it happened before the Unix epoch.
+
+## Seconds vs milliseconds
+
+Not every timestamp means the same thing: there are two common variants and mixing them up gives a completely wrong result.
+
+| Format | Digits | Example | Used by |
+| ------ | ------ | ------ | ------ |
+| Seconds | 10 | `1694678400` | Classic — PHP, Python, SQL databases, many APIs |
+| Milliseconds | 13 | `1694678400000` | Modern — JavaScript, Java, some web services |
+
+To tell them apart, just count the digits: **10 digits = seconds**, **13 digits = milliseconds**. And if your tool returns a date in the year 58,000, chances are you fed milliseconds into an input that expected seconds — divide by 1,000 and try again.
+
+> **Tip**: if the timestamp looks too large, divide it by 1,000. If it looks too small and the date comes back in 1970, multiply it by 1,000.
+
+## Reference timestamps table
+
+Here are some well-known dates and their timestamps in seconds for practice:
+
+| Date (00:00:00 UTC) | Timestamp (seconds) |
+| ------------------- | ------------------- |
+| 01/01/2000 | 946684800 |
+| 01/01/2010 | 1262304000 |
+| 01/01/2020 | 1577836800 |
+| 01/01/2024 | 1704067200 |
+| 14/09/2026 | 1789344000 |
+
+To turn any of these values into milliseconds, append three zeros at the end: for example, `1789344000000`.
+
+> **Note**: the values above are calculated at midnight UTC. If you work in a local timezone (e.g. Central European Summer Time, UTC+2), the numeric timestamp stays the same but the readable time will shift by two hours.
+
+## Where is it used?
+
+Timestamps appear in more places than meets the eye:
+
+- **Databases**: `created_at`, `updated_at` columns and event logs stored as integers.
+- **APIs (JSON)**: web service responses often include dates as timestamps to avoid format ambiguity.
+- **Server logs**: each line carries a timestamp for precise chronological debugging.
+- **Cookies and JWTs**: the `exp` (expiry) field determines when a session expires.
+- **Version control (git)**: every commit stores its exact date as a timestamp.
+- **JavaScript**: `Date.now()` returns the **millisecond** count since the epoch — use it in the browser.
+
+> **Developer tip**: in JavaScript remember that `Date.now()` returns milliseconds; if your API expects seconds, divide by 1,000 and round.
+
+## Conclusion
+
+A timestamp is just a number, but it holds the exact date and time of any event since 1970. Understanding the difference between seconds and milliseconds, recognizing the format from the digit count, and knowing where it is used are key skills for debugging APIs, reading logs and building web applications.

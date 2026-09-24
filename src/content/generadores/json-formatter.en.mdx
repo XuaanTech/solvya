@@ -1,0 +1,98 @@
+---
+lang: en
+title: "JSON Formatter: Beautify, Minify, Validate and Sort"
+description: "Format, minify, validate and sort JSON keys online. Detects syntax errors. Private: everything in your browser."
+category: "generadores"
+date: "2026-09-14"
+author: "Equipo Solvya"
+---
+
+<article>
+
+## What is a JSON formatter?
+
+A **JSON formatter** is a tool that transforms JSON data between different representations:
+
+- **Beautify / Pretty-print**: Adds indentation, line breaks and spaces for human readability
+- **Minify / Compact**: Removes all unnecessary whitespace to reduce size (ideal for transmission)
+- **Validate**: Checks that syntax complies with RFC 8259 standard
+- **Sort keys**: Alphabetically reorders each object's keys for deterministic comparison
+
+---
+
+## Why use this tool?
+
+| Use Case | Recommended Action |
+|----------|-------------------|
+| Read compressed API response | **Format** |
+| Send payload in HTTP request | **Minify** |
+| Verify if JSON is valid | **Validate** |
+| Compare two JSONs in version control | **Sort keys** + Format |
+| Clean config file | Format + Sort keys |
+| Debug parsing error | Validate (shows exact error position) |
+
+---
+
+## JSON Standard (RFC 8259)
+
+This tool follows the **strict standard**:
+
+| Feature | Supported | Notes |
+|---------|-----------|-------|
+| Objects `{}` | ✅ | Keys in double quotes |
+| Arrays `[]` | ✅ | |
+| Strings `""` | ✅ | Unicode escape `\uXXXX` |
+| Numbers | ✅ | Integers, decimals, scientific notation |
+| Booleans | ✅ | `true` / `false` |
+| `null` | ✅ | |
+| **Comments** | ❌ | `//` or `/* */` not allowed |
+| **Trailing commas** | ❌ | `{ "a": 1, }` invalid |
+| **Unquoted keys** | ❌ | `{ a: 1 }` invalid |
+| **Single quotes** | ❌ | `{ 'a': 1 }` invalid |
+
+> If your JSON has comments or trailing commas, it's **JSON5** or a variant, not standard JSON. Remove them before using this tool.
+
+---
+
+## Precise Error Detection
+
+When JSON is invalid, the tool:
+1. **Attempts to parse** with native `JSON.parse()`
+2. **Catches the error** `SyntaxError`
+3. **Extracts position** (line and column) from error message
+4. **Highlights the problematic zone** in the editor
+5. **Shows readable message**: "Expected ',' at line 5, column 12"
+
+This saves hours of manual searching for missing commas, unclosed braces or badly escaped strings.
+
+---
+
+## Total Privacy: Zero Network
+
+- ✅ **100% client**: `JSON.parse()`, `JSON.stringify()` and string manipulation in your browser
+- ✅ **No telemetry**: No analytics, tracking or server logs
+- ✅ **Offline-ready**: Works if you save page as HTML (Service Worker)
+- ✅ **No size limit**: Only limited by browser memory (~10-50 MB typical)
+
+---
+
+## Keyboard Shortcuts
+
+| Action | Windows/Linux | Mac |
+|--------|---------------|-----|
+| Format | `Ctrl + Enter` | `Cmd + Enter` |
+| Minify | `Ctrl + Shift + M` | `Cmd + Shift + M` |
+| Validate | `Ctrl + Shift + V` | `Cmd + Shift + V` |
+| Sort keys | `Ctrl + Shift + S` | `Cmd + Shift + S` |
+| Copy result | `Ctrl + Shift + C` | `Cmd + Shift + C` |
+| Clear | `Ctrl + Shift + X` | `Cmd + Shift + X` |
+
+---
+
+## Try the formatter now
+
+Format, minify, validate and sort your JSON instantly. Private, free and no sign-up.
+
+[Format and validate your JSON](/herramienta/json-formatter/) instantly.
+
+</article>

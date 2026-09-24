@@ -1,0 +1,129 @@
+---
+title: "Bases numéricas: binario, octal, decimal y hexadecimal"
+titleEn: "Numeric Bases: Binary, Octal, Decimal and Hexadecimal"
+description: "Descubre qué es una base numérica y cómo funcionan el binario, octal, decimal y hexadecimal. Aprende a convertir entre bases con ejemplos y una tabla de equivalencias."
+descriptionEn: "Discover what a numeric base is and how binary, octal, decimal and hexadecimal work. Learn to convert between bases with examples and an equivalence table."
+category: conversores
+categoryName: Conversores
+tags: [conversor de bases, binario, hexadecimal, octal, decimal, base 2, base 16, programacion]
+date: 2026-09-14
+author: "Equipo Solvya"
+tool: bases-numericas
+faqs:
+  - q:
+      es: "¿Qué es la base numérica de un número?"
+      en: "What is the numeric base of a number?"
+    a:
+      es: "Es la cantidad de dígitos distintos que usa un sistema: el decimal usa 10 dígitos (0-9), el binario usa 2 (0 y 1) y el hexadecimal usa 16 (0-9 y A-F)."
+      en: "It is the number of distinct digits a system uses: decimal uses 10 digits (0-9), binary uses 2 (0 and 1) and hexadecimal uses 16 (0-9 and A-F)."
+  - q:
+      es: "¿Cómo convierto un número decimal a binario?"
+      en: "How do I convert a decimal number to binary?"
+    a:
+      es: "Divide el número entre 2 y anota los restos de atrás hacia adelante: por ejemplo, 13 en binario es 1101."
+      en: "Divide the number by 2 and write down the remainders backwards: for example, 13 in binary is 1101."
+  - q:
+      es: "¿Qué dígito representa la letra A en hexadecimal?"
+      en: "Which digit does the letter A represent in hexadecimal?"
+    a:
+      es: "La letra A equivale al valor 10, B a 11, C a 12, y así sucesivamente hasta F, que equivale a 15."
+      en: "The letter A equals the value 10, B equals 11, C equals 12, and so on up to F, which equals 15."
+steps:
+  - title:
+      es: "Elige la base de origen y la de destino"
+      en: "Choose the source and target bases"
+    text:
+      es: "Selecciona la base del número que escribes (binario, octal, decimal, hexadecimal…) y la base a la que quieres convertirlo."
+      en: "Select the base of the number you type (binary, octal, decimal, hexadecimal…) and the base you want to convert it to."
+  - title:
+      es: "Introduce el número"
+      en: "Enter the number"
+    text:
+      es: "Escribe el valor sin símbolos adicionales, solo con los dígitos válidos de su base: 0 y 1 para binario, 0-9 para decimal, 0-9 y A-F para hexadecimal."
+      en: "Type the value without extra symbols, using only the valid digits of its base: 0 and 1 for binary, 0-9 for decimal, 0-9 and A-F for hexadecimal."
+  - title:
+      es: "Lee el resultado al instante"
+      en: "Read the result instantly"
+    text:
+      es: "La conversión aparece automáticamente en las demás bases para que compares todos los formatos de un vistazo."
+      en: "The conversion appears automatically in the other bases so you can compare all formats at a glance."
+---
+## ¿Por qué son importantes las bases numéricas?
+
+Las **computadoras** no piensan como las personas. Un procesador solo entiende dos estados: hay corriente o no la hay, lo que traducimos como **1 y 0**. Nosotros contamos con diez dedos, por eso usamos el **decimal**, pero un programador necesita leer y escribir números en el idioma de la máquina. Ahí entran las **bases numéricas**: sistemas de numeración que definen cuántos dígitos distintos se usan para representar cantidades.
+
+## ¿Qué es una base numérica?
+
+Una base es el número de **dígitos distintos** que emplea un sistema de numeración. En base decimal (base 10) usamos del 0 al 9; en binario (base 2), solo 0 y 1.
+
+La magia está en la **notación posicional**: el valor de cada dígito cambia según la posición que ocupa. En 352, el 3 vale 300 porque está en el lugar de las centenas (3 × 10²). En binario ocurre igual, pero con potencias de 2: el número 101₂ vale 1 × 2² + 0 × 2¹ + 1 × 2⁰ = **5**.
+
+> **Dato curioso**: elegimos la base 10 por convención humana, no por ley matemática. La civilización babilónica usaba la base 60, y de ahí vienen nuestros 60 minutos de cada hora.
+
+## Las bases más importantes
+
+### Base 2: binario
+
+Es el lenguaje nativo de las computadoras. Cada dígito se llama **bit** y posee solo dos valores posibles, por lo que es ideal para circuitos electrónicos con dos estados. 8 bits forman un **byte**.
+
+### Base 8: octal
+
+Agrupa los dígitos binarios de tres en tres, lo que la hacía muy útil en los primeros sistemas de programación. Hoy se usa menos, pero sigue apareciendo en permisos de archivos Unix (`chmod 755`).
+
+### Base 10: decimal
+
+Es el sistema que usamos todos los días para contar, medir y comprar. Es el más natural para las personas y el que casi todas las herramientas convierten como referencia.
+
+### Base 16: hexadecimal
+
+Es el favorito de los programadores porque comprime 4 bits en un solo dígito. Se usa en **colores web** (#FF0000), **direcciones de memoria**, **HTML** y **lenguajes de bajo nivel**. Necesita 16 dígitos, por eso toma prestadas las letras A-F.
+
+> **Consejo**: el hexadecimal facilita la depuración. Un byte siempre se escribe con dos dígitos hex (0-FF), mucho más corto que sus 8 dígitos binarios.
+
+## Tabla de equivalencias
+
+Esta tabla muestra los mismos valores en las cuatro bases principales:
+
+| Decimal | Binario | Octal | Hexadecimal |
+| ------- | ------- | ----- | ----------- |
+| 0 | 0 | 0 | 0 |
+| 1 | 1 | 1 | 1 |
+| 2 | 10 | 2 | 2 |
+| 3 | 11 | 3 | 3 |
+| 4 | 100 | 4 | 4 |
+| 5 | 101 | 5 | 5 |
+| 6 | 110 | 6 | 6 |
+| 7 | 111 | 7 | 7 |
+| 8 | 1000 | 10 | 8 |
+| 9 | 1001 | 11 | 9 |
+| 10 | 1010 | 12 | A |
+| 11 | 1011 | 13 | B |
+| 12 | 1100 | 14 | C |
+| 13 | 1101 | 15 | D |
+| 14 | 1110 | 16 | E |
+| 15 | 1111 | 17 | F |
+| 16 | 10000 | 20 | 10 |
+| 32 | 100000 | 40 | 20 |
+| 64 | 1000000 | 100 | 40 |
+| 128 | 10000000 | 200 | 80 |
+| 255 | 11111111 | 377 | FF |
+
+Fíjate en que el byte máximo, **255**, es precisamente `11111111` en binario y `FF` en hexadecimal.
+
+## ¿Cómo convertir entre bases?
+
+El método manual clásico para pasar de decimal a otra base es el de las **divisiones sucesivas**: divide el número entre la base y anota el resto, repitiendo hasta llegar a cero; luego lee los restos de abajo hacia arriba.
+
+Para el camino inverso (de cualquier base a decimal), multiplica cada dígito por la base elevada a su posición y suma los resultados.
+
+> **Advertencia**: con números grandes el cálculo manual da mucho que hacer y un error es fácil. Para convertir instantáneamente y sin fallos, es mucho mejor usar [una herramienta de conversión de bases](/herramienta/bases-numericas/).
+
+## Dígitos para bases mayores que 10
+
+Cuando una base supera los 10 dígitos numéricos, se recurre a las **letras del alfabeto** para seguir contando: la **A** vale 10, la **B** 11, y así hasta la **Z**, que vale 35 en la base 36. Ese es el límite superior de la mayoría de conversores, incluido el nuestro, que acepta **cualquier base de 2 a 36**.
+
+## Conclusión
+
+Entender las bases numéricas es imprescindible para programar, administrar servidores o trabajar con colores y binarios. Desde el binario de las máquinas hasta el hexadecimal de los desarrolladores, cada base tiene su utilidad y su notación. Conocerlas te permite entender qué hace realmente tu computadora.
+
+[Convierte entre bases numéricas ahora](/herramienta/bases-numericas/).

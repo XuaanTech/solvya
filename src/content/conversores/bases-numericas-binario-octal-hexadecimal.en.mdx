@@ -1,0 +1,85 @@
+---
+lang: en
+title: "Numeric Bases: Binary, Octal, Decimal and Hexadecimal"
+description: "What a numeric base is and how binary, octal, decimal and hexadecimal work. Convert between bases with examples, an equivalence table and practical tips."
+category: conversores
+date: 2026-09-14
+---
+
+## Why numeric bases matter
+
+**Computers** do not think the way people do. A processor only understands two states: electricity flows or it does not, which we translate as **1 and 0**. We count on ten fingers, so we use **decimal**, but a programmer needs to read and write numbers in the machine's language. That is where **numeric bases** come in: number systems that define how many distinct digits are used to represent quantities.
+
+## What is a numeric base?
+
+A base is the number of **distinct digits** a numbering system uses. Base 10 (decimal) uses 0 to 9; base 2 (binary) uses only 0 and 1.
+
+The key idea is **positional notation**: each digit's value changes with its position. In 352, the 3 is worth 300 because it sits in the hundreds place (3 × 10²). Binary works the same way, but with powers of 2: the number 101₂ equals 1 × 2² + 0 × 2¹ + 1 × 2⁰ = **5**.
+
+> **Fun fact**: base 10 is a human convention, not a mathematical law. The Babylonians used base 60, which is why our hour still has 60 minutes.
+
+## The most important bases
+
+### Base 2: binary
+
+The native language of computers. Each digit is called a **bit** and has only two possible values, ideal for electronic circuits with two states. Eight bits form a **byte**.
+
+### Base 8: octal
+
+Groups binary digits in threes, which made it popular in early computing. Used less today, but it still appears in Unix file permissions (`chmod 755`).
+
+### Base 10: decimal
+
+The system we use every day to count, measure and pay. It is the most natural for humans and the reference format for most converters.
+
+### Base 16: hexadecimal
+
+The programmer's favorite, because it compresses 4 bits into a single digit. It appears in **web colors** (#FF0000), **memory addresses**, **HTML** and **low-level languages**. It needs 16 digits, so it borrows the letters A-F.
+
+> **Tip**: hex makes debugging easier. A byte always fits in two hex digits (0-FF), much shorter than its 8 binary digits.
+
+## Equivalence table
+
+This table shows the same values in the four main bases:
+
+| Decimal | Binary | Octal | Hexadecimal |
+| ------- | ------ | ----- | ----------- |
+| 0 | 0 | 0 | 0 |
+| 1 | 1 | 1 | 1 |
+| 2 | 10 | 2 | 2 |
+| 3 | 11 | 3 | 3 |
+| 4 | 100 | 4 | 4 |
+| 5 | 101 | 5 | 5 |
+| 6 | 110 | 6 | 6 |
+| 7 | 111 | 7 | 7 |
+| 8 | 1000 | 10 | 8 |
+| 9 | 1001 | 11 | 9 |
+| 10 | 1010 | 12 | A |
+| 11 | 1011 | 13 | B |
+| 12 | 1100 | 14 | C |
+| 13 | 1101 | 15 | D |
+| 14 | 1110 | 16 | E |
+| 15 | 1111 | 17 | F |
+| 16 | 10000 | 20 | 10 |
+| 32 | 100000 | 40 | 20 |
+| 64 | 1000000 | 100 | 40 |
+| 128 | 10000000 | 200 | 80 |
+| 255 | 11111111 | 377 | FF |
+
+Notice that the maximum byte, **255**, is exactly `11111111` in binary and `FF` in hexadecimal.
+
+## How to convert between bases
+
+The classic manual method from decimal to any other base uses **successive division**: divide the number by the target base and record the remainder, repeating until you reach zero; then read the remainders from bottom to top.
+
+The reverse direction (any base to decimal) multiplies each digit by the base raised to its position and adds the results together.
+
+> **Warning**: with large numbers, manual conversion is tedious and easy to get wrong. For instant, reliable results, use a base converter tool instead.
+
+## Digits for bases greater than 10
+
+When a base exceeds ten numeric digits, the **alphabet** steps in: **A** equals 10, **B** equals 11, and so on up to **Z**, which equals 35 in base 36. That is the upper limit of most converters, ours included, which accepts **any base from 2 to 36**.
+
+## Conclusion
+
+Understanding numeric bases is essential for programming, administering servers, or working with colors and binaries. From the machine-level binary to the developer-friendly hexadecimal, every base has its purpose and notation. Knowing them helps you understand what your computer is really doing.

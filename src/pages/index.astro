@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import CalculatorCard from '../components/CalculatorCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+import { SITE } from '../data/site';
+import { langText } from '../lib/i18n';
+import { websiteSchema } from '../lib/seo';
+import { readingTimeFromFile, isEnArticlePath } from '../lib/utils';
+import categories from '../data/categories.json';
+import tools from '../data/tools.json';
+
+const es = 'es';
+
+// Carga todos los artículos MDX (eager: ya compilados en build)
+const allArticles = import.meta.glob('../content/**/*.mdx', { eager: true });
+
+const articles = [];
+for (const [filePath, mod] of Object.entries(allArticles)) {
+  if (isEnArticlePath(filePath)) continue;
+  const parts = filePath.split(/[\\/]/);
+  const slug = String(parts[parts.length - 1] || '').replace(/\.mdx$/, '');
+  const category = parts[parts.length - 2] ?? '';
+  const fm = mod.frontmatter ?? mod.metadata ?? {};
+  if (!fm.title) continue;
+  const catDef = categories.find((c) => c.slug === category);
+  let readingTime = '';
+  let readingTimeEn = '';
+  try {
+    readingTime = readingTimeFromFile(mod.file ?? filePath, 'es');
+  } catch { /* sin lectura de tiempo */ }
+  try {
+    readingTimeEn = readingTimeFromFile(mod.file ?? filePath, 'en');
+  } catch { /* ignore */ }
+  articles.push({
+    url: `/${category}/${slug}/`,
+    category,
+    slug,
+    data: { ...fm, readingTime, readingTimeEn, category: catDef?.name ?? { es: fm.categoryName ?? '', en: fm.categoryName ?? '' } },
+  });
+}
+articles.sort((a, b) => String(b.data.date ?? '').localeCompare(String(a.data.date ?? '')));
+
+const featured = articles.filter((a) => a.data.featured).slice(0, 3);
+const latest = articles.slice(0, 8);
+
+const siteSchema = websiteSchema(es);
+---
+<BaseLayout title={SITE.name} description={SITE.description} ogType="website" lang="es">
+  <script type="application/ld+json" set:html={JSON.stringify(siteSchema)} />
+
+  {/* ── Hero ── */}
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero__title">
+        <span data-lang-region="es">
+          {langText(es, 'hero.title')}{' '}
+          <em class="hero__highlight">{langText(es, 'hero.highlight')}</em>
+        </span>
+        <span data-lang-region="en" hidden>
+          {langText('en', 'hero.title')}{' '}
+          <em class="hero__highlight">{langText('en', 'hero.highlight')}</em>
+        </span>
+      </h1>
+      <p class="hero__subtitle">
+        <span data-lang-region="es">{langText(es, 'hero.subtitle')}</span>
+        <span data-lang-region="en" hidden>{langText('en', 'hero.subtitle')}</span>
+      </p>
+      <div class="hero__actions">
+        <a href="#herramientas" class="btn btn--primary" data-i18n="hero.cta">{langText(es, 'hero.cta')}</a>
+        <a href="#articulos" class="btn btn--ghost" data-i18n="hero.ctaBlog">{langText(es, 'hero.ctaBlog')}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Categorías ── */}
+  <section class="section container">
+    <h2 class="section__title" data-i18n="homeCats">{langText(es, 'homeCats')}</h2>
+    <div class="category-grid">
+      {categories.map((cat) => <CategoryCard cat={cat} />)}
+    </div>
+  </section>
+
+  {/* ── Herramientas ── */}
+  <section class="section container" id="herramientas">
+    <h2 class="section__title" data-i18n="homeTools">{langText(es, 'homeTools')}</h2>
+    <p class="section__sub" data-i18n="homeToolsSub">{langText(es, 'homeToolsSub')}</p>
+    <div class="tool-grid">
+      {tools.map((tool) => <CalculatorCard tool={tool} />)}
+    </div>
+  </section>
+
+  <AdSlot slot="home" />
+
+  {/* ── Artículos destacados ── */}
+  {featured.length > 0 && (
+    <section class="section container">
+      <h2 class="section__title" data-i18n="homeFeatured">{langText(es, 'homeFeatured')}</h2>
+      <div class="article-grid article-grid--columns-3">
+        {featured.map((a) => <ArticleCard post={{ url: a.url, data: a.data }} />)}
+      </div>
+    </section>
+  )}
+
+  {/* ── Últimos artículos ── */}
+  <section class="section container" id="articulos">
+    <h2 class="section__title" data-i18n="homeLatest">{langText(es, 'homeLatest')}</h2>
+    <div class="article-grid article-grid--columns-2">
+      {latest.map((a) => <ArticleCard post={{ url: a.url, data: a.data }} />)}
+    </div>
+    <div class="section__more">
+      <a href="/search/" class="btn btn--ghost" data-i18n="homeViewAll">{langText(es, 'homeViewAll')}</a>
+    </div>
+  </section>
+</BaseLayout>

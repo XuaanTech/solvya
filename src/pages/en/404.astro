@@ -1,0 +1,13 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+const es = 'en';
+---
+<BaseLayout title={langText(es, 'notfound.title')} description={langText(es, 'notfound.text')} noindex lang="en">
+  <section class="page-error container">
+    <h1 class="page-title">{langText(es, 'notfound.title')}</h1>
+    <p class="page-error__text">{langText(es, 'notfound.text')}</p>
+    <a href="/en/" class="btn btn--primary">{langText(es, 'notfound.back')}</a>
+  </section>
+</BaseLayout>

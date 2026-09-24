@@ -1,0 +1,11 @@
+---
+import { langText } from '../lib/i18n';
+
+interface Props {
+  lang?: string;
+}
+const { lang = 'es' } = Astro.props;
+---
+<p class="article-disclaimer" role="note" data-i18n="articleDisclaimer">
+  {langText(lang, 'articleDisclaimer')}
+</p>

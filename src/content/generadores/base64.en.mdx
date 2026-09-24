@@ -1,0 +1,75 @@
+---
+lang: en
+title: "What is Base64 and How to Encode and Decode Text"
+description: "Base64 explained: what it is, what it is used for in APIs, email and URLs, how to encode and decode with our tool and why it is not an encryption system."
+category: generadores
+date: 2026-09-14
+---
+
+**Base64** is the most widely used encoding for carrying text-based data through environments that only accept printable characters: email, JSON, URLs, HTML attributes and much more. Here is **what it is, what it is used for, how to use it and why it is not encryption**.
+
+## What is Base64?
+
+Base64 is a system that takes **binary data** (bytes) and represents it using **64 safe characters**: the 26 uppercase letters, the 26 lowercase letters, 10 digits and the symbols **`+`** and **`/`**, with **`=`** as padding.
+
+Every **3 bytes** of original data become **4 Base64 characters**, increasing the size by approximately **33 %**.
+
+| Original bytes | Base64 characters |
+|----------------|-------------------|
+| 1 byte | 4 characters (with padding) |
+| 3 bytes | 4 characters |
+| 6 bytes | 8 characters |
+| 100 bytes | 136 characters |
+
+## What is Base64 used for?
+
+- **APIs and JSON:** carrying binary data (signatures, tokens) in text fields.
+- **Email (MIME):** attaching images and files without breaking the SMTP protocol.
+- **Inline images in HTML and CSS:** `data:image/png;base64,...` embeds images directly in code.
+- **URLs and parameters:** transmitting bytes without extra encoding.
+- **Temporary storage:** saving binary data in plain-text database fields.
+
+## Base64 is **not** encryption
+
+> ⚠️ **Base64 is a visible encoding, not encryption.** Anyone can decode it in seconds, with or without tools.
+
+Do not use it for:
+- ❌ Passwords or credentials
+- ❌ Sensitive personal data (ID numbers, bank accounts)
+- ❌ Security authentication
+
+**For real encryption** use tools like AES, HTTPS/TLS or the Web Crypto API.
+
+## Common characters → Base64 table
+
+| Original text | Base64 | Notes |
+|---------------|--------|-------|
+| A | QQ== | 1 byte with padding |
+| Hola | SG9sYQ== | Plain ASCII text |
+| Hola, Solvya 👋 | SG9sYSwgU29sdnlhIPCfpKE= | Includes emoji (UTF-8) |
+| ñ | w7E= | 2-byte UTF-8 character |
+| { } | eyB9 | JSON braces |
+
+## The role of UTF-8
+
+Base64 by itself only deals with bytes. The key is **encoding and decoding as UTF-8**: that way accents, eñes, Cyrillic characters and emojis are preserved without data loss.
+
+Our tool internally uses `TextEncoder` and `TextDecoder` with UTF-8 so that content like `¡Hola, mundo!` or emojis such as `👋` and `🔐` are faithfully retained.
+
+## How to use the tool
+
+1. **Choose the mode:** "Encode" (text → Base64) or "Decode" (Base64 → text).
+2. **Type or paste** the content you want to convert in the input field.
+3. **Get the result** instantly in the output field; copy it with one click.
+4. Use the **"Swap"** button to switch between encode and decode with a single click.
+
+> 🔐 **Everything is local:** your content is never sent to any server.
+
+## Conclusion
+
+- Base64 converts binary data into **safe text** that travels without issues through APIs, email and URLs.
+- **It is not encryption**: it does not protect information; it only transports it.
+- The size increases by approximately **33 %** over the original.
+- To preserve accents and emojis, always encode and decode using **UTF-8**.
+
+[Encode and decode any text in Base64 instantly](/herramienta/base64/).

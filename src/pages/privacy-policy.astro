@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import { langText } from '../lib/i18n';
+const es = 'es';
+---
+<BaseLayout title={langText(es, 'privacy.title')} description={langText(es, 'about.privacy')}>
+  <div class="page-simple container">
+    <Breadcrumbs items={[{ label: langText(es, 'privacy.title') }]} />
+
+    <h1 class="page-title" data-i18n="privacy.title">{langText(es, 'privacy.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">
+        <span data-lang-region="es">{langText(es, 'about.privacy')}</span>
+        <span data-lang-region="en" hidden>{langText('en', 'about.privacy')}</span>
+      </p>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <p>Solvya es un proyecto personal y sin ánimo de lucro. Actualmente este sitio no recopila datos personales de forma activa: las herramientas funcionan íntegramente en tu navegador y solo se instalarían cookies de terceros (Google Analytics, Google AdSense) si dieras tu consentimiento expreso.</p>
+      <p>Contacto de privacidad: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      <p>Si esta web pasara a tener finalidad comercial, esta sección se actualizará con la identificación completa del responsable del tratamiento.</p>
+
+      <h2>2. Qué datos tratamos y para qué</h2>
+      <p>Solvya trata exclusivamente los siguientes datos:</p>
+
+      <h3>A) Funcionamiento del sitio</h3>
+      <p>No creamos cuentas de usuario ni recopilamos datos personales mediante formularios de registro. Las calculadoras funcionan íntegramente en tu navegador: las cifras que introduces nunca se envían a nuestros servidores.</p>
+
+      <h3>B) Formulario de contacto</h3>
+      <p>El formulario de contacto utiliza el protocolo <code>mailto:</code>. Al enviarlo, se abre tu cliente de correo electrónico con el mensaje listo para enviar. Los datos (nombre, email y mensaje) <strong>no se almacenan ni transmiten a nuestros servidores</strong>; se procesan únicamente a través de tu propio servicio de correo.</p>
+
+      <h3>C) Google Analytics (analítica web)</h3>
+      <p>Utilizamos Google Analytics para analizar el uso de la web y mejorarla. Esta herramienta solo se activa si das tu <strong>consentimiento explícito</strong> a través del banner de cookies. Google Analytics puede recopilar: dirección IP (anonimizada), páginas visitadas, tiempo de permanencia, origen de la visita y tipo de dispositivo. Se instalan cookies (<code>_ga</code>, <code>_gid</code>, <code>_gat</code>) con una duración máxima de 14 meses. Consulta la <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">política de privacidad de Google</a> para más información.</p>
+
+      <h3>D) Google AdSense (publicidad)</h3>
+      <p>Mostramos anuncios a través de Google AdSense. Google y sus asociados pueden usar cookies (como <code>_gads</code>, <code>IDE</code>) para publicar anuncios basados en tus visitas a este sitio y a otros sitios web. AdSense solo se activa con tu <strong>consentimiento explícito</strong>. Consulta <a href="https://policies.google.com/technologies/partner-sites" rel="noopener noreferrer" target="_blank">la política de Google sobre socios</a> y <a href="https://adssettings.google.com" rel="noopener noreferrer" target="_blank">la configuración de anuncios de Google</a> para gestionar tus preferencias.</p>
+
+      <h2>3. Cookies y almacenamiento local</h2>
+      <p>Este sitio almacena exclusivamente en tu navegador (localStorage) tres preferencias: idioma, tema visual (claro/oscuro) y elección de consentimiento de cookies. Esta información no se envía a ningún servidor.</p>
+      <p>Si aceptas las cookies de análisis o publicidad, se instalan las cookies correspondientes de Google. Puedes cambiar o revocar tu consentimiento en cualquier momento haciendo clic en <strong>Ajustes de cookies</strong> en el pie de página.</p>
+
+      <h2>4. Base jurídica</h2>
+      <p>El tratamiento de datos se fundamenta en:</p>
+      <ul>
+        <li><strong>Consentimiento explícito</strong> (art. 6.1.a RGPD): para las cookies de Google Analytics y Google AdSense, que solo se activan tras tu aceptación expresa.</li>
+        <li><strong>Legítimo interés</strong> (art. 6.1.f RGPD): para el almacenamiento de preferencias básicas (idioma, tema visual) necesarias para el funcionamiento del sitio.</li>
+      </ul>
+
+      <h2>5. Plazos de conservación</h2>
+      <p>Tus preferencias de idioma, tema y consentimiento se mantienen en tu navegador hasta que las eliminas manualmente o borras los datos del navegador. Las cookies de Google Analytics se eliminan automáticamente a los 14 meses (o antes si revocas el consentimiento). Las cookies de Google AdSense tienen una duración variable según el tipo de cookie.</p>
+
+      <h2>6. Destinatarios y transferencias internacionales</h2>
+      <p>Google LLC (con domicilio en Estados Unidos) actúa como encargado del tratamiento para Google Analytics y Google AdSense. Ambos servicios pueden implicar la transferencia de datos a servidores ubicados fuera del Espacio Económico Europeo. Google ha adherido al <strong>Marco de Privacidad de Datos UE–EE. UU.</strong> y aplica Cláusulas Contractuales Tipo aprobadas por la Comisión Europea como salvaguardas adecuadas. Consulta la <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">política de privacidad de Google</a> para más detalles sobre las garantías aplicables.</p>
+
+      <h2>7. Tus derechos (RGPD)</h2>
+      <p>Tienes derecho a <strong>acceder</strong>, <strong>rectificar</strong>, <strong>suprimir</strong>, <strong>oponerte</strong> al tratamiento y solicitar la <strong>limitación</strong> o <strong>portabilidad</strong> de tus datos. Dado que las calculadoras procesan todos los datos localmente y no almacenamos datos personales en servidores, estos derechos se ejercen principalmente sobre el consentimiento de cookies.</p>
+      <p>Si consideras que el tratamiento de tus datos no se ajusta a la normativa, tienes derecho a presentar una reclamación ante la <a href="https://www.aepd.es" rel="noopener noreferrer" target="_blank">Agencia Española de Protección de Datos (AEPD)</a>.</p>
+      <p>Para ejercer cualquier derecho o realizar consultas sobre privacidad, escríbenos a <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+      <h2>8. Cambios en esta política</h2>
+      <p>Podemos actualizar esta política. Los cambios se publicarán en esta página con su fecha de revisión. Última revisión: 16 de septiembre de 2026.</p>
+    </div>
+  </div>
+</BaseLayout>

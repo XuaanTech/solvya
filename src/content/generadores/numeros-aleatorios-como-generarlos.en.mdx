@@ -1,0 +1,65 @@
+---
+lang: en
+title: "How to Generate Secure and True Random Numbers"
+description: "Learn how to generate secure random numbers with the Web Crypto API. Discover the difference between pseudo and cryptographic randomness and when each matters."
+category: generadores
+date: 2026-09-14
+---
+
+When you are organizing a raffle, building a game, or running a scientific study, you need numbers that are **truly unpredictable**. Guessing by hand is not enough — the integrity of the result depends entirely on how the numbers are generated. A weak generator can ruin a lottery, compromise a password, or invalidate a statistical experiment.
+
+The good news is your browser already has everything you need to produce high-quality random numbers. No extra software, no account sign-ups, and no data leaves your device.
+
+## What Is a Truly Random Number?
+
+Not all "random" numbers are created equal. There are two major categories worth understanding:
+
+- **Pseudo-random (PRNG)**: Deterministic algorithms that produce sequences that *look* random. They start from a seed value, and if you know that seed, you can predict the entire sequence. JavaScript's `Math.random()` falls into this category. It works fine for casual games, but not for anything requiring security or genuine unpredictability.
+
+- **Cryptographic (CSPRNG)**: Generators that gather **entropy from the operating system** — hardware noise, high-resolution timestamps, network events — and transform it into unpredictable numbers. No matter how much analysis you perform, no pattern emerges. These are suitable for **official raffles**, **security tokens**, and **scientific sampling**.
+
+> **Key insight**: If the outcome has real consequences — a prize, a password, a research finding — always use a cryptographic generator.
+
+## How Does the Web Crypto API Work?
+
+The **Web Crypto API** is a browser standard supported by all modern browsers (Chrome, Firefox, Safari, Edge). Its primary purpose is to provide secure cryptographic operations, and one of its most useful tools is `crypto.getRandomValues()`.
+
+Here is what happens under the hood:
+
+1. The browser collects **entropy** from the operating system: mouse movements, process timestamps, hardware interrupts, network data.
+2. This entropy feeds a **cryptographically secure pseudo-random number generator** (CSPRNG).
+3. `crypto.getRandomValues()` extracts numbers from that generator and returns them in whatever data type you request (integers, floats, typed arrays).
+
+The critical point: **everything happens in your browser**. Data is never sent to a server, which guarantees complete **privacy**. No registration, no trace, no external dependency.
+
+> The Web Crypto API is the same engine banks and security companies use to generate keys and tokens.
+
+## What Is a Random Number Generator Used For?
+
+The applications are more varied than you might think:
+
+- **Raffles and lotteries**: Select winners fairly and transparently, with no possibility of manipulation.
+- **Scientific sampling**: Choose participants or samples at random from a population for statistical studies.
+- **Games and entertainment**: Virtual dice, random cards, random events in video games.
+- **Security tokens**: Generate temporary codes for authentication, ephemeral passwords, and session values.
+- **A/B testing**: Assign users to experiment variants in a balanced way.
+- **Statistical simulations**: Monte Carlo methods, risk modeling, sensitivity analysis.
+
+## Without Repetition vs. With Repetition
+
+These two modes determine how the generator behaves:
+
+| Feature | Without repetition | With repetition |
+|---|---|---|
+| **Uniqueness** | Every number is unique | A number may appear multiple times |
+| **Limit** | Maximum = full range | No limit per number |
+| **Typical use** | Raffles, draws, sampling | Dice, simulations, games |
+| **Example** | Picking 5 winners from 100 | Rolling a die 10 times |
+
+**When to use without repetition**: When you need every result to be distinct. If you draw 5 numbers from a pool of 100, you do not want the same number winning twice.
+
+**When to use with repetition**: When each event is independent. A die does not "remember" the previous roll — every toss has the same probability.
+
+## Conclusion
+
+Generating high-quality random numbers no longer requires external tools or specialized knowledge. Your browser integrates the **Web Crypto API**, a security standard that guarantees real unpredictability. Whether it is a raffle among friends, a statistical study, or the creation of secure tokens, trusting a cryptographic generator is the right call.

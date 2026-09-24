@@ -1,0 +1,137 @@
+---
+title: "Cómo calcular la diferencia entre dos fechas (días, semanas, meses y laborables)"
+titleEn: "How to Calculate the Difference Between Two Dates (Days, Weeks, Months and Business Days)"
+description: "Calcula cuántos días hay entre dos fechas, cómo contar días laborables, cuándo es útil (plazos, vacaciones, proyectos) y cómo usar nuestra herramienta de forma sencilla."
+descriptionEn: "Calculate how many days are between two dates, how to count business days, when it is useful (deadlines, vacations, projects) and how to use our tool."
+category: conversores
+categoryName: Conversores
+tags: [diferencia de fechas, calcular dias, dias laborables, plazos, calendario]
+date: 2026-09-14
+author: "Equipo Solvya"
+tool: diferencia-fechas
+faqs:
+  - q:
+      es: "¿Se cuentan ambos días o solo uno en la diferencia?"
+      en: "Are both days counted or just one in the difference?"
+    a:
+      es: "La herramienta muestra días transcurridos: del 1 de enero al 2 de enero hay 1 día de diferencia. Los días laborables sí se cuentan de forma inclusiva, es decir, ambas fechas están incluidas."
+      en: "The tool shows elapsed days: from January 1 to January 2 there is 1 day of difference. Business days are counted inclusively, meaning both dates are included."
+  - q:
+      es: "¿Cómo se calculan los días laborables?"
+      en: "How are business days calculated?"
+    a:
+      es: "Se cuentan solo los días de lunes a viernes. Sábados, domingos y festivos no se descuentan a menos que se indique. Para plazos legales, verifica si tu país descuenta festivos nacionales y locales."
+      en: "Only Monday through Friday are counted. Saturdays, Sundays and public holidays are not deducted unless specified. For legal deadlines, check whether your country deducts national and local holidays."
+  - q:
+      es: "¿Por qué puedo obtener más días laborables que días naturales si selecciono mal las fechas?"
+      en: "Why might I get more business days than calendar days if I pick the dates wrong?"
+    a:
+      es: "No es posible: los días laborables siempre son iguales o menores que los días naturales. Si ves un resultado extraño, comprueba que la fecha de inicio es anterior o igual a la final."
+      en: "That is not possible: business days are always equal to or fewer than calendar days. If you see a strange result, check that the start date is before or equal to the end date."
+  - q:
+      es: "¿La herramienta tiene en cuenta los festivos?"
+      en: "Does the tool take public holidays into account?"
+    a:
+      es: "No. Los festivos varían según el país, la región y el año. Solo cuenta lunes a viernes. Para plazos con festivos, suma o resta manualmente los días festivos relevantes."
+      en: "No. Holidays vary by country, region and year. It only counts Monday to Friday. For deadlines with holidays, manually add or subtract the relevant public holidays."
+steps:
+  - title:
+      es: "Selecciona la fecha de inicio y la fecha de fin"
+      en: "Select the start date and the end date"
+    text:
+      es: "Haz clic en cada campo de fecha y elige el día en el calendario. Si quieres empezar desde hoy, pulsa el botón 'Hoy' para rellenar la fecha de inicio con la fecha actual."
+      en: "Click each date field and pick the day on the calendar. If you want to start from today, press the 'Today' button to fill the start date with the current date."
+  - title:
+      es: "Pulsa 'Calcular'"
+      en: "Press 'Calculate'"
+    text:
+      es: "Se muestra al instante: días totales transcurridos, años-meses-días, semanas y días laborables. Si la fecha de inicio es posterior a la fin, la herramienta las ordena automáticamente."
+      en: "It instantly displays: total elapsed days, years-months-days, weeks and business days. If the start date is after the end date, the tool reorders them automatically."
+  - title:
+      es: "Utiliza el resultado según tu necesidad"
+      en: "Use the result according to your needs"
+    text:
+      es: "Para plazos contractuales usa días naturales; para planificación de proyectos, revisa los días laborables y añade manualmente los festivos de tu región."
+      en: "For contractual deadlines use calendar days; for project planning, check the business days and manually add the public holidays of your region."
+---
+
+**Calcular la diferencia entre dos fechas** es algo que todos necesitamos en algún momento: saber cuántos días faltan para un evento, cuánto tiempo ha pasado desde un hito o cumplir con un plazo contractual. Aquí tienes **cómo hacerlo**, las diferentes formas de contar y cómo usar nuestra herramienta de forma sencilla.
+
+## Días naturales vs días laborables
+
+| Tipo de día | Qué cuenta | Ejemplo (1 enero → 10 enero) |
+|-------------|------------|-------------------------------|
+| **Días naturales** | Todos los días del calendario | 9 días |
+| **Días laborables** | Solo lunes a viernes | 6 días (ambos inclusive) |
+
+La diferencia depende de **para qué** necesites el cálculo:
+
+- **Días naturales**: plazos contractuales, tiempos de embarazo, días de vacaciones, periodos de prueba.
+- **Días laborables**: fechas de entrega en proyectos, plazos judiciales, calendarios laborales.
+
+## La confusión más frecuente: ¿ambos días incluidos?
+
+> Del **1 de marzo** al **3 de marzo** hay **2 días de diferencia** (transcurridos) pero **3 días si cuentas ambos inclusive**.
+
+Nuestra herramienta usa el criterio habitual de **días transcurridos** para el total, y **inclusivo** para los días laborables, el más habitual en planificación de proyectos.
+
+| Desde | Hasta | Días transcurridos | Días laborables (inclusive) |
+|-------|-------|--------------------|------------------------------|
+| 1 mar | 3 mar | 2 | 3 (lun, mar, mié) |
+| 1 mar | 7 mar | 6 | 5 (lun–vie) |
+| 1 mar | 8 mar | 7 | 5 (lun–vie; sáb y dom excluidos) |
+| 2 mar (lun) | 6 mar (vie) | 4 | 5 |
+
+## Para qué sirve calcular la diferencia de fechas
+
+- **Proyectos**: calcular plazos de entrega, sprints y hitos.
+- **Educación**: días de clase restantes hasta exams, periodos de estudio.
+- **Embarazo**: semanas de gestación, fecha probable de parto (280 días ≈ 40 semanas).
+- **Vacaciones**: días de descanso restantes, planificación de viajes.
+- **Contratos**: plazos de entrega, periodos de prueba, vencimientos legales.
+- **Fitness**: días desde un inicio de rutina, seguimiento de retos.
+- **Aniversarios y eventos**: días para o desde una fecha significativa.
+
+## Tabla de referencia rápida
+
+| Periodo | Días naturales aproximados |
+|---------|----------------------------|
+| 1 semana | 7 |
+| 2 semanas | 14 |
+| 1 mes | 28–31 |
+| 3 meses (trimestre) | 89–92 |
+| 6 meses (bimestre) | 181–184 |
+| 1 año | 365 (366 bisiesto) |
+| 40 semanas (embarazo) | 280 |
+
+## Cálculo mental aproximado
+
+Para estimar sin herramienta:
+
+- **Semanas** = días totales ÷ 7 (aprox. 4 semanas y 2 días por mes).
+- **Meses** ≈ días totales ÷ 30.
+- **Días laborables** ≈ días naturales × 5/7 (≈ 71 %).
+
+Ejemplo rápido: un plazo de 30 días naturales ≈ **21 días laborables** (sin contar festivos).
+
+## Cómo usar nuestra herramienta
+
+1. Selecciona la **fecha de inicio** (o pulsa "Hoy" para empezar desde la fecha actual).
+2. Selecciona la **fecha de fin**.
+3. Pulsa **"Calcular"** y obtendrás al instante: días totales, años-meses-días, semanas y días laborables.
+4. Pulsa **"Restablecer"** para volver a los valores predeterminados.
+
+> 💡 Si la fecha de inicio es posterior a la fin, la herramienta las intercambia automáticamente para siempre dar un resultado positivo.
+
+## Diferencia con plazos legales (días incluidos)
+
+En muchos contextos legales (plazos de respuesta, prescripciones) se cuentan **ambos días inclusive**, es decir, se suma 1 al resultado de días transcurridos. Verifica siempre el criterio legal de tu jurisdicción.
+
+## Conclusión
+
+- **Días naturales**: todos los días del calendario (útil para plazos generales).
+- **Días laborables**: lunes a viernes, ambos inclusive (útil para proyectos y contratos).
+- Festivos: la herramienta **no los descuenta**; añádelos manualmente si es necesario.
+- Para plazos legales, confirma si se cuenta ambos días inclusive.
+
+[Calcula la diferencia entre dos fechas al instante](/herramienta/diferencia-fechas/).

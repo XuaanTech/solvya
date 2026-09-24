@@ -1,0 +1,87 @@
+---
+lang: en
+title: "Date Format Converter: ISO, Unix, RFC, SQL and more"
+description: "Convert dates between ISO 8601, RFC 2822/3339, Unix timestamp, SQL, EU/US format and custom. Standard tokens. Free."
+category: conversores
+date: 2026-09-14
+---
+
+## Why does the same date look so different?
+
+`2026-09-14`, `09/14/2026`, `14/09/2026`, `1789344000`, `2026-09-14T10:30:00Z` — they are all the same moment, but each system speaks its own dialect. Browsers expect ISO 8601, databases store Unix timestamps, APIs return RFC 3339, and users type whatever feels natural. Converting between them manually is a source of bugs.
+
+## Main date formats
+
+| Format | Example | Where it's used |
+| ------ | ------- | --------------- |
+| **ISO 8601** | `2026-09-14T10:30:00Z` | JSON APIs, HTML `<time>`, modern JavaScript |
+| **RFC 3339** | `2026-09-14T10:30:00+00:00` | Internet standards, email, Atom/RSS feeds |
+| **RFC 2822** | `Mon, 14 Sep 2026 10:30:00 +0000` | Email headers, HTTP headers |
+| **Unix timestamp (s)** | `1789389000` | Databases, logs, PHP, Python, legacy APIs |
+| **Unix timestamp (ms)** | `1789389000000` | JavaScript (`Date.now()`), Java, modern web APIs |
+| **SQL DATE** | `2026-09-14` | MySQL, PostgreSQL, SQLite `DATE` columns |
+| **SQL DATETIME** | `2026-09-14 10:30:00` | MySQL `DATETIME`, SQL Server |
+| **EU (dd/MM/yyyy)** | `14/09/2026` | Europe, Latin America, user input |
+| **US (MM/dd/yyyy)** | `09/14/2026` | United States, user input |
+| **Custom** | `Sep 14, 2026 10:30 AM` | Reports, UI, localized display |
+
+## Time zones: the silent trap
+
+A timestamp **without a zone is ambiguous**. `2026-09-14 10:30:00` could be in Madrid, New York or UTC. Always:
+
+1. **Store in UTC** (ISO with `Z` or `+00:00`, or Unix timestamp).
+2. **Convert to local time only for display**.
+3. **Use IANA zones** (`Europe/Madrid`, `America/New_York`) instead of fixed offsets when possible, to handle DST automatically.
+
+## Token cheat sheet for custom formats
+
+| Token | Meaning | Example |
+| ----- | ------- | ------- |
+| `yyyy` | Year (4 digits) | `2026` |
+| `yy` | Year (2 digits) | `26` |
+| `MM` | Month (01–12) | `09` |
+| `MMM` | Month abbreviated | `Sep` |
+| `MMMM` | Month full | `September` |
+| `dd` | Day (01–31) | `14` |
+| `HH` | Hour 24h (00–23) | `10` |
+| `hh` | Hour 12h (01–12) | `10` |
+| `mm` | Minutes (00–59) | `30` |
+| `ss` | Seconds (00–59) | `00` |
+| `SSS` | Milliseconds (000–999) | `000` |
+| `a` | AM/PM | `AM` |
+| `xxx` | Offset ±HH:mm | `+00:00` |
+| `ZZ` | Offset ±HHmm | `+0000` |
+| `X` | Unix seconds | `1789389000` |
+| `x` | Unix milliseconds | `1789389000000` |
+
+## Common conversion pitfalls
+
+1. **Mixing seconds vs milliseconds** — 10-digit vs 13-digit timestamps. Divide/multiply by 1,000.
+2. **Assuming local time = UTC** — Always specify the zone or use `Z`/`+00:00`.
+3. **Day/month ambiguity** — `04/05/2026` is April 5 (US) or 4 May (EU). Use ISO for interchange.
+4. **Forgetting DST** — Fixed offsets (`+02:00`) break in summer/winter. Use `Europe/Madrid`.
+5. **Parsing without validation** — Invalid dates (`2026-02-30`) may silently roll over or throw depending on the library.
+
+## Your online date format converter
+
+The [Date Format Converter](/herramienta/date-format-converter/) lets you:
+
+- Paste any supported format and instantly see all others.
+- Switch between **UTC**, **local** and **auto-detect** time zones.
+- Build **custom output patterns** by clicking tokens from the guide.
+- Copy results with one click — no manual reformatting.
+
+## Quick reference: ISO 8601 variants
+
+| Variant | Example | Notes |
+| ------- | ------- | ----- |
+| Date only | `2026-09-14` | `YYYY-MM-DD` |
+| Date + time (UTC) | `2026-09-14T10:30:00Z` | `Z` = UTC |
+| Date + time (offset) | `2026-09-14T10:30:00+02:00` | Explicit offset |
+| Date + time (local) | `2026-09-14T10:30:00` | No zone = **local** (avoid for storage) |
+| Week date | `2026-W37-1` | ISO week (Mon=1) |
+| Ordinal date | `2026-257` | Day of year |
+
+## Conclusion
+
+Date formats are a translation layer, not a storage format. **Store as UTC timestamps (seconds or ms) or ISO 8601 with `Z`**, convert on input/output, and use a reliable tool to avoid off-by-one-day or off-by-zone errors. The converter above handles the heavy lifting so you don't have to memorize every dialect.

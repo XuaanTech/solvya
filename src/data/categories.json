@@ -1,0 +1,90 @@
+[
+  {
+    "slug": "salud",
+    "icon": "❤️",
+    "name": {
+      "es": "Salud",
+      "en": "Health"
+    },
+    "desc": {
+      "es": "Calculadoras de IMC, calorías, ovulación y embarazo. Herramientas para cuidar tu bienestar.",
+      "en": "BMI, calories, ovulation and pregnancy calculators. Tools to take care of your wellbeing."
+    },
+    "seo": {
+      "title": {
+        "es": "Herramientas de Salud y Calculadoras Gratis",
+        "en": "Free Health Tools and Calculators"
+      },
+      "metaDescription": {
+        "es": "Calculadoras de IMC, calorías, ovulación y fecha de parto. Herramientas sanitarias gratuitas online.",
+        "en": "BMI, calories, ovulation and due date calculators. Free online health tools."
+      }
+    }
+  },
+  {
+    "slug": "conversores",
+    "icon": "🔄",
+    "name": {
+      "es": "Conversores",
+      "en": "Converters"
+    },
+    "desc": {
+      "es": "Convierte unidades de medida, divisas y colores de un formato a otro al instante.",
+      "en": "Convert measurement units, currencies and colors from one format to another instantly."
+    },
+    "seo": {
+      "title": {
+        "es": "Conversores Online Gratis: Unidades, Divisas y Colores",
+        "en": "Free Online Converters: Units, Currency and Color"
+      },
+      "metaDescription": {
+        "es": "Conversor de unidades de medida, divisas (EUR, USD, GBP) y colores HEX RGB HSL. Herramientas gratuitas.",
+        "en": "Convert measurement units, currencies (EUR, USD, GBP) and HEX RGB HSL colors. Free tools."
+      }
+    }
+  },
+  {
+    "slug": "generadores",
+    "icon": "⚙️",
+    "name": {
+      "es": "Generadores",
+      "en": "Generators"
+    },
+    "desc": {
+      "es": "Genera contraseñas seguras, códigos QR y hashes criptográficos online.",
+      "en": "Generate secure passwords, QR codes and cryptographic hashes online."
+    },
+    "seo": {
+      "title": {
+        "es": "Generadores Online Gratis: Contraseñas, QR y Hash",
+        "en": "Free Online Generators: Passwords, QR and Hash"
+      },
+      "metaDescription": {
+        "es": "Generador de contraseñas seguras, códigos QR y hash SHA-256/MD5. Todo local, gratis y sin registro.",
+        "en": "Generate secure passwords, QR codes and SHA-256/MD5 hashes. All local, free and no sign-up."
+      }
+    }
+  },
+  {
+    "slug": "finanzas",
+    "icon": "💰",
+    "name": {
+      "es": "Finanzas",
+      "en": "Finance"
+    },
+    "desc": {
+      "es": "Calculadoras de IVA, interés compuesto y más para organizar tus cuentas.",
+      "en": "VAT, compound interest and more calculators to get your accounts in order."
+    },
+    "seo": {
+      "title": {
+        "es": "Herramientas Financieras y Calculadoras Gratis",
+        "en": "Free Finance Tools and Calculators"
+      },
+      "metaDescription": {
+        "es": "Calculadora de IVA e interés compuesto online. Herramientas financieras gratuitas con resultados orientativos.",
+        "en": "Online VAT and compound interest calculator. Free financial tools with indicative results."
+      }
+    }
+  }
+]

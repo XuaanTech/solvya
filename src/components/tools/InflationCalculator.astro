@@ -1,0 +1,269 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+const PRESETS = [
+  { key: 'spain', label: { es: 'España (INE)', en: 'Spain (INE)' }, rate: 3.2, source: 'INE' },
+  { key: 'eu', label: { es: 'Eurozona (BCE)', en: 'Eurozone (ECB)' }, rate: 2.8, source: 'ECB' },
+  { key: 'usa', label: { es: 'EE.UU. (BLS)', en: 'USA (BLS)' }, rate: 3.1, source: 'BLS' },
+  { key: 'uk', label: { es: 'Reino Unido (ONS)', en: 'UK (ONS)' }, rate: 4.0, source: 'ONS' },
+  { key: 'custom', label: { es: 'Personalizado', en: 'Custom' }, rate: 0, source: '' },
+];
+---
+<div class="tool-widget" data-widget="inflation">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="inf-amount" data-i18n="calc.infAmount">{langText(es, 'calc.infAmount')}</label>
+        <input id="inf-amount" class="tool-widget__input" type="number" step="0.01" min="0" value="1000" data-field="amount" required />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="inf-start" data-i18n="calc.infStartYear">{langText(es, 'calc.infStartYear')}</label>
+        <input id="inf-start" class="tool-widget__input" type="number" step="1" min="1900" max="2100" value="2020" data-field="startYear" required />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="inf-end" data-i18n="calc.infEndYear">{langText(es, 'calc.infEndYear')}</label>
+        <input id="inf-end" class="tool-widget__input" type="number" step="1" min="1900" max="2100" value="2024" data-field="endYear" required />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="inf-rate" data-i18n="calc.infRate">{langText(es, 'calc.infRate')}</label>
+        <input id="inf-rate" class="tool-widget__input" type="number" step="0.01" min="0" max="1000" value="3.2" data-field="rate" required />
+      </div>
+      <div class="tool-widget__field" style="grid-column:1/-1">
+        <label class="tool-widget__label" for="inf-preset" data-i18n="calc.infPreset">{langText(es, 'calc.infPreset')}</label>
+        <select id="inf-preset" class="tool-widget__select" data-field="preset">
+          {PRESETS.map(p => (
+            <option value={p.key} data-rate={p.rate} data-source={p.source} data-i18n={`calc.infPreset${p.key.charAt(0).toUpperCase() + p.key.slice(1)}`}>
+              {langText(es, `calc.infPreset${p.key.charAt(0).toUpperCase() + p.key.slice(1)}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="tool-widget__field" style="grid-column:1/-1">
+        <label class="tool-widget__label" for="inf-mode" data-i18n="calc.infMode">{langText(es, 'calc.infMode')}</label>
+        <div class="tool-widget__segmented" role="group" aria-label="Modo">
+          <label class="tool-widget__segment">
+            <input type="radio" name="mode" value="forward" data-field="mode" checked />
+            <span data-i18n="calc.infModeForward">{langText(es, 'calc.infModeForward')}</span>
+          </label>
+          <label class="tool-widget__segment">
+            <input type="radio" name="mode" value="backward" data-field="mode" />
+            <span data-i18n="calc.infModeBackward">{langText(es, 'calc.infModeBackward')}</span>
+          </label>
+          <label class="tool-widget__segment">
+            <input type="radio" name="mode" value="cumulative" data-field="mode" />
+            <span data-i18n="calc.infModeCumulative">{langText(es, 'calc.infModeCumulative')}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.infError">{langText(es, 'calc.infError')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.infError">{langText('en', 'calc.infError')}</span>
+    </p>
+    <div class="tool-widget__result-stats tool-widget__result-stats--grid">
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.infResult">{langText(es, 'calc.infResult')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="result">—</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.infCumulativeChange">{langText(es, 'calc.infCumulativeChange')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="cumulative">—</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.infPurchasingPower">{langText(es, 'calc.infPurchasingPower')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="power">—</strong>
+      </div>
+    </div>
+    <div class="tool-widget__details" data-yearly hidden>
+      <h4 data-i18n="calc.infYearlyBreakdown">{langText(es, 'calc.infYearlyBreakdown')}</h4>
+      <div class="tool-widget__table-wrapper">
+        <table class="tool-widget__table">
+          <thead>
+            <tr>
+              <th data-i18n="calc.infYear">{langText(es, 'calc.infYear')}</th>
+              <th data-i18n="calc.infValue">{langText(es, 'calc.infValue')}</th>
+              <th data-i18n="calc.infYearChange">{langText(es, 'calc.infYearChange')}</th>
+              <th data-i18n="calc.infCumulativePct">{langText(es, 'calc.infCumulativePct')}</th>
+            </tr>
+          </thead>
+          <tbody data-yearly-body></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tool-widget__details" data-comparison hidden>
+      <h4 data-i18n="calc.infComparison">{langText(es, 'calc.infComparison')}</h4>
+      <p class="tool-widget__note" data-comparison-text></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { formatSmart, formatEur } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="inflation"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const yearlyDiv = root.querySelector('[data-yearly]');
+    const yearlyBody = root.querySelector('[data-yearly-body]');
+    const comparisonDiv = root.querySelector('[data-comparison]');
+    const comparisonText = root.querySelector('[data-comparison-text]');
+    const fields = {
+      amount: root.querySelector('[data-field="amount"]'),
+      startYear: root.querySelector('[data-field="startYear"]'),
+      endYear: root.querySelector('[data-field="endYear"]'),
+      rate: root.querySelector('[data-field="rate"]'),
+      preset: root.querySelector('[data-field="preset"]'),
+      mode: root.querySelector('[data-field="mode"]'),
+    };
+    const val = {
+      result: root.querySelector('[data-val="result"]'),
+      cumulative: root.querySelector('[data-val="cumulative"]'),
+      power: root.querySelector('[data-val="power"]'),
+    };
+
+    function compute() {
+      const amount = parseFloat(fields.amount.value);
+      const startYear = parseInt(fields.startYear.value, 10);
+      const endYear = parseInt(fields.endYear.value, 10);
+      const rate = parseFloat(fields.rate.value);
+      const mode = document.querySelector('[data-field="mode"]:checked')?.value || 'forward';
+
+      if (!amount || !startYear || !endYear || !rate) {
+        result.hidden = true;
+        return;
+      }
+
+      if (startYear >= endYear) {
+        error.textContent = 'El año inicial debe ser anterior al final';
+        error.hidden = false;
+        result.hidden = true;
+        return;
+      }
+
+      error.hidden = true;
+
+      const years = endYear - startYear;
+      const r = rate / 100;
+      let resultValue, cumulativePct, powerPct;
+      const yearlyData = [];
+
+      if (mode === 'forward') {
+        // Future value with inflation
+        resultValue = amount * Math.pow(1 + r, years);
+        cumulativePct = (Math.pow(1 + r, years) - 1) * 100;
+        powerPct = (1 / Math.pow(1 + r, years)) * 100;
+
+        let val = amount;
+        for (let y = startYear + 1; y <= endYear; y++) {
+          const yearChange = val * r;
+          val += yearChange;
+          yearlyData.push({
+            year: y,
+            value: val,
+            yearChange: yearChange,
+            cumulative: ((val / amount) - 1) * 100
+          });
+        }
+      } else if (mode === 'backward') {
+        // Past value (what amount in startYear equals today)
+        resultValue = amount / Math.pow(1 + r, years);
+        cumulativePct = (1 - 1 / Math.pow(1 + r, years)) * 100;
+        powerPct = Math.pow(1 + r, years) * 100;
+
+        let val = amount;
+        for (let y = endYear - 1; y >= startYear; y--) {
+          const yearChange = val * r / (1 + r);
+          val -= yearChange;
+          yearlyData.push({
+            year: y,
+            value: val,
+            yearChange: -yearChange,
+            cumulative: (1 - val / amount) * 100
+          });
+        }
+        yearlyData.reverse();
+      } else {
+        // Cumulative inflation only
+        cumulativePct = (Math.pow(1 + r, years) - 1) * 100;
+        resultValue = amount * (1 + cumulativePct / 100);
+        powerPct = (1 / (1 + cumulativePct / 100)) * 100;
+
+        let val = amount;
+        for (let y = startYear + 1; y <= endYear; y++) {
+          const yearChange = val * r;
+          val += yearChange;
+          yearlyData.push({
+            year: y,
+            value: val,
+            yearChange: yearChange,
+            cumulative: ((val / amount) - 1) * 100
+          });
+        }
+      }
+
+      val.result.textContent = formatEur(resultValue);
+      val.cumulative.textContent = cumulativePct.toFixed(2) + '%';
+      val.power.textContent = powerPct.toFixed(2) + '%';
+
+      yearlyBody.innerHTML = yearlyData.map(d => `
+        <tr>
+          <td>${d.year}</td>
+          <td>${formatEur(d.value)}</td>
+          <td>${d.yearChange >= 0 ? '+' : ''}${formatSmart(d.yearChange)}</td>
+          <td>${d.cumulative >= 0 ? '+' : ''}${d.cumulative.toFixed(2)}%</td>
+        </tr>
+      `).join('');
+
+      // Comparison text
+      const bigMac = 5.50; // approximate Big Mac price in EUR
+      const bigMacsThen = amount / bigMac;
+      const bigMacsNow = resultValue / bigMac;
+      comparisonText.innerHTML = `
+        <span data-lang-region="es">Con <strong>${formatEur(amount)}</strong> podías comprar ~${bigMacsThen.toFixed(1)} Big Macs en ${startYear}. En ${endYear} equivalen a ~${bigMacsNow.toFixed(1)} Big Macs.</span>
+        <span data-lang-region="en" hidden>With <strong>${formatEur(amount)}</strong> you could buy ~${bigMacsThen.toFixed(1)} Big Macs in ${startYear}. In ${endYear} that equals ~${bigMacsNow.toFixed(1)} Big Macs.</span>
+      `;
+
+      yearlyDiv.hidden = false;
+      comparisonDiv.hidden = false;
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    ['amount', 'startYear', 'endYear', 'rate'].forEach(f => fields[f]?.addEventListener('input', compute));
+
+    fields.preset.addEventListener('change', () => {
+      const opt = fields.preset.options[fields.preset.selectedIndex];
+      if (opt.dataset.rate && opt.value !== 'custom') {
+        fields.rate.value = opt.dataset.rate;
+      }
+      compute();
+    });
+
+    root.querySelectorAll('[data-field="mode"]').forEach(radio => {
+      radio.addEventListener('change', compute);
+    });
+
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.amount.value = '1000';
+      fields.startYear.value = '2020';
+      fields.endYear.value = '2024';
+      fields.rate.value = '3.2';
+      fields.preset.value = 'spain';
+      document.querySelector('[data-field="mode"][value="forward"]').checked = true;
+      compute();
+    });
+
+    compute();
+  }
+</script>

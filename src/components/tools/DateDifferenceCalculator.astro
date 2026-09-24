@@ -1,0 +1,123 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="fechas">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="fechas-inicio" data-i18n="calc.dateStart">{langText(es, 'calc.dateStart')}</label>
+        <input id="fechas-inicio" class="tool-widget__input" type="date" data-field="inicio" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="fechas-fin" data-i18n="calc.dateEnd">{langText(es, 'calc.dateEnd')}</label>
+        <input id="fechas-fin" class="tool-widget__input" type="date" data-field="fin" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-today data-i18n="calc.dateToday">{langText(es, 'calc.dateToday')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.dateInvalid">
+      <span data-lang-region="es">{langText(es, 'calc.dateInvalid')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.dateInvalid')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.dateDays">{langText(es, 'calc.dateDays')}</span>
+        <strong class="result-stat__value" data-val="dias">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.dateYearsMonthsDays">{langText(es, 'calc.dateYearsMonthsDays')}</span>
+        <strong class="result-stat__value" data-val="ymd">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.dateWorkdays">{langText(es, 'calc.dateWorkdays')}</span>
+        <strong class="result-stat__value" data-val="laborables">—</strong>
+      </div>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es">Equivale a <strong data-val="semanas">0</strong> semanas completas.</span>
+      <span data-lang-region="en" hidden>That is <strong data-val="semanas">0</strong> full weeks.</span>
+    </p>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.dateNote">{langText(es, 'calc.dateNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.dateNote">{langText('en', 'calc.dateNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { parseISODate, dateBreakdown } from '../../lib/dates.js';
+  import { formatSmart, todayLocal } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="fechas"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      inicio: root.querySelector('[data-field="inicio"]'),
+      fin: root.querySelector('[data-field="fin"]'),
+    };
+    const val = {
+      dias: root.querySelector('[data-val="dias"]'),
+      ymd: root.querySelector('[data-val="ymd"]'),
+      laborables: root.querySelector('[data-val="laborables"]'),
+    };
+
+    function toLocalISO(d) {
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function unitWord(lang, kind, n) {
+      if (lang === 'en') {
+        return kind === 'y' ? (n === 1 ? 'yr' : 'yrs') : kind === 'm' ? (n === 1 ? 'mo' : 'mos') : (n === 1 ? 'day' : 'days');
+      }
+      return kind === 'y' ? (n === 1 ? 'año' : 'años') : kind === 'm' ? (n === 1 ? 'mes' : 'meses') : (n === 1 ? 'día' : 'días');
+    }
+
+    function compute() {
+      const lang = currentLang();
+      const a = parseISODate(fields.inicio.value);
+      const b = parseISODate(fields.fin.value);
+      if (!a || !b) { error.hidden = false; result.hidden = true; return; }
+      const [ea, eb] = a <= b ? [a, b] : [b, a];
+      const bd = dateBreakdown(ea, eb);
+      error.hidden = true;
+      val.dias.textContent = formatSmart(bd.totalDays, 0);
+      val.ymd.textContent = bd.years + ' ' + unitWord(lang, 'y', bd.years) + ' · ' + bd.months + ' ' + unitWord(lang, 'm', bd.months) + ' · ' + bd.days + ' ' + unitWord(lang, 'd', bd.days);
+      val.laborables.textContent = formatSmart(bd.workdays, 0);
+      root.querySelectorAll('[data-val="semanas"]').forEach((el) => { el.textContent = formatSmart(bd.weeks, 0); });
+      applyLang(lang);
+      result.hidden = false;
+    }
+
+    function initDates() {
+      const today = todayLocal();
+      fields.inicio.value = today;
+      const t = new Date();
+      t.setDate(t.getDate() + 7);
+      fields.fin.value = toLocalISO(t);
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.inicio.addEventListener('change', compute);
+    fields.fin.addEventListener('change', compute);
+    root.querySelector('[data-today]')?.addEventListener('click', () => {
+      fields.inicio.value = todayLocal();
+      compute();
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      initDates();
+      compute();
+    });
+    initDates();
+    compute();
+  }
+</script>

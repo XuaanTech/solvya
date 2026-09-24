@@ -1,0 +1,159 @@
+---
+title: "Tester de Expresiones Regulares (Regex) Online"
+titleEn: "Online Regular Expression Tester (Regex)"
+description: "Prueba y depura regex con flags, grupos, resaltado y explicación token a token. Presets: email, URL, IPv4, DNI, IBAN. Gratis."
+descriptionEn: "Test and debug regex with flags, groups, highlighting and token-by-token explanation. Presets: email, URL, IPv4, DNI, IBAN. Free."
+category: "generadores"
+categoryName: "Generadores"
+tags: ["regex", "expresion regular", "regex tester", "probar regex", "patron regex", "regular expression", "regex online", "regex debugger"]
+date: "2026-09-14"
+author: "Equipo Solvya"
+tool: "regex-tester"
+faqs:
+  - q:
+      es: "¿Qué flags están disponibles?"
+      en: "What flags are available?"
+    a:
+      es: "g (global), i (insensible a mayúsculas), m (multilínea), s (dotAll), u (unicode), y (sticky). Se pueden combinar."
+      en: "g (global), i (case insensitive), m (multiline), s (dotAll), u (unicode), y (sticky). They can be combined."
+  - q:
+      es: "¿Cómo funciona el explicador?"
+      en: "How does the explainer work?"
+    a:
+      es: "Analiza el patrón carácter a carácter e identifica escapes, clases de caracteres, grupos, cuantificadores, anclas y alternancias, dando una descripción en lenguaje natural de cada parte."
+      en: "It analyzes the pattern character by character and identifies escapes, character classes, groups, quantifiers, anchors and alternations, giving a natural language description of each part."
+  - q:
+      es: "¿El regex se evalúa en mi navegador?"
+      en: "Is the regex evaluated in my browser?"
+    a:
+      es: "Sí. Se usa el motor RegExp nativo de JavaScript. El rendimiento y comportamiento son los mismos que en tu código."
+      en: "Yes. The native JavaScript RegExp engine is used. Performance and behavior are the same as in your code."
+steps:
+  - title:
+      es: "Escribe tu patrón regex"
+      en: "Write your regex pattern"
+    text:
+      es: "Introduce la expresión regular en el campo superior. Puedes usar presets (email, URL, DNI, etc.) como punto de partida."
+      en: "Enter the regular expression in the top field. You can use presets (email, URL, DNI, etc.) as a starting point."
+  - title:
+      es: "Selecciona los flags"
+      en: "Select flags"
+    text:
+      es: "Marca g (global), i (case-insensitive), m (multiline), s (dotAll), u (unicode), y (sticky) según necesites."
+      en: "Check g (global), i (case-insensitive), m (multiline), s (dotAll), u (unicode), y (sticky) as needed."
+  - title:
+      es: "Pega el texto de prueba"
+      en: "Paste test text"
+    text:
+      es: "Escribe o pega el texto contra el que probar el regex. Las coincidencias se resaltan en tiempo real con sus grupos de captura."
+      en: "Type or paste the text to test against the regex. Matches are highlighted in real time with their capture groups."
+---
+
+<article>
+
+## ¿Qué es un tester de expresiones regulares?
+
+Un **tester de regex** (expresiones regulares) es una herramienta interactiva para **escribir, probar y depurar** patrones de búsqueda de texto. Te permite:
+
+- Ver **coincidencias en tiempo real** mientras escribes
+- Inspeccionar **grupos de captura** y sus valores
+- Entender **qué hace cada token** del patrón
+- Probar contra **múltiples casos de prueba** a la vez
+- Detectar **errores de sintaxis** antes de usar el regex en producción
+
+---
+
+## Anatomía de una expresión regular
+
+```
+         /  ^  [a-z]  +  \.  (com|org)  $  /  g i m
+         |  |   |    |  |     |      |  |  | | |
+         |  |   |    |  |     |      |  |  | | └─ flags
+         |  |   |    |  |     |      |  |  | └──── sticky (y)
+         |  |   |    |  |     |      |  |  └────── unicode (u)
+         |  |   |    |  |     |      |  └───────── dotAll (s)
+         |  |   |    |  |     |      └──────────── multiline (m)
+         |  |   |    |  |     |      └───────────── case-insensitive (i)
+         |  |   |    |  |     └──────────────────── global (g)
+         |  |   |    |  |     └───────────────────── grupo captura: "com" u "org"
+         |  |   |    |  └──────────────────────────── carácter literal "."
+         |  |   |    └──────────────────────────────── cuantificador: 1 o más
+         |  |   └───────────────────────────────────── clase: letras minúsculas
+         |  └────────────────────────────────────────── ancla: inicio de string
+         └───────────────────────────────────────────── delimitadores (no parte del patrón)
+```
+
+---
+
+## Flags disponibles en JavaScript
+
+| Flag | Nombre | Efecto |
+|------|--------|--------|
+| `g` | Global | Encuentra **todas** las coincidencias, no solo la primera |
+| `i` | Case-insensitive | Ignora mayúsculas/minúsculas |
+| `m` | Multiline | `^` y `$` coinciden con inicio/fin de **línea**, no solo de string |
+| `s` | dotAll | `.` coincide también con **salto de línea** (`\n`, `\r`) |
+| `u` | Unicode | Trata el patrón como código Unicode (necesario para `\p{...}`, emojis, etc.) |
+| `y` | Sticky | Busca solo desde la posición `lastIndex` (rendimiento en parsing) |
+
+> **Combinación común**: `gim` (global, case-insensitive, multiline) para búsquedas generales.
+
+---
+
+## Presets incluidos
+
+| Preset | Patrón | Qué valida |
+|--------|--------|------------|
+| **Email** | `^[^\s@]+@[^\s@]+\.[^\s@]+$` | Formato básico email (RFC 5322 simplificado) |
+| **URL** | `^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$` | URLs HTTP/HTTPS |
+| **IPv4** | `^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$` | Direcciones IPv4 |
+| **DNI/NIE (ES)** | `^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$` / `^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$` | Documentos españoles |
+| **IBAN (ES)** | `^ES[0-9]{22}$` | IBAN español (formato, no valida dígitos de control) |
+| **Color Hex** | `^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$` | #RGB, #RRGGBB, #RRGGBBAA |
+| **Fecha ISO** | `^\d{4}-\d{2}-\d{2}$` | YYYY-MM-DD (formato, no valida días reales) |
+| **Teléfono (ES)** | `^(\+34|0034)?[679]\d{8}$` | Móviles y fijos españoles |
+
+---
+
+## El explicador token a token
+
+El explicador descompone tu patrón y describe cada elemento:
+
+| Tipo | Ejemplo | Explicación generada |
+|------|---------|---------------------|
+| **Ancla** | `^` | "Inicio de string (o línea con flag m)" |
+| **Ancla** | `$` | "Fin de string (o línea con flag m)" |
+| **Clase** | `[a-z]` | "Clase de caracteres: cualquier letra minúscula a-z" |
+| **Clase negada** | `[^0-9]` | "Clase negada: cualquier carácter EXCEPTO dígitos" |
+| **Escape** | `\d` | "Atajo: dígito (equivalente a [0-9])" |
+| **Escape** | `\.` | "Carácter literal: punto" |
+| **Cuantificador** | `+` | "Cuantificador: 1 o más veces (codicioso)" |
+| **Cuantificador** | `*?` | "Cuantificador: 0 o más veces (no codicioso / perezoso)" |
+| **Grupo captura** | `(abc)` | "Grupo de captura #1: coincide con 'abc' literal" |
+| **Grupo no captura** | `(?:abc)` | "Grupo sin captura: agrupa sin guardar en \$1" |
+| **Alternancia** | `a\|b` | "Alternancia: coincide con 'a' O 'b'" |
+| **Lookahead** | `(?=abc)` | "Lookahead positivo: afirma que sigue 'abc' sin consumir" |
+| **Lookbehind** | `(?<=abc)` | "Lookbehind positivo: afirma que precede 'abc' sin consumir" |
+| **Propiedad Unicode** | `\p{L}` | "Propiedad Unicode: cualquier letra en cualquier idioma" |
+
+---
+
+## Atajos de teclado
+
+| Acción | Windows/Linux | Mac |
+|--------|---------------|-----|
+| Ejecutar test | `Ctrl + Enter` | `Cmd + Enter` |
+| Limpiar | `Ctrl + Shift + X` | `Cmd + Shift + X` |
+| Copiar regex | `Ctrl + Shift + C` | `Cmd + Shift + C` |
+| Siguiente preset | `Ctrl + →` | `Cmd + →` |
+| Preset anterior | `Ctrl + ←` | `Cmd + ←` |
+
+---
+
+## Prueba el tester ahora
+
+Escribe tu regex, elige flags, pega el texto y ve las coincidencias al instante con explicación detallada.
+
+[Prueba tu regex online](/herramienta/regex-tester/) con resaltado y explicación token a token.
+
+</article>

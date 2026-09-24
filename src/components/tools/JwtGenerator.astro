@@ -1,0 +1,211 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+const ALGOS = ['HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512'];
+---
+<div class="tool-widget" data-widget="jwt">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field" style="grid-column:1/-1">
+      <label class="tool-widget__label" for="jwt-header" data-i18n="calc.jwtHeader">{langText(es, 'calc.jwtHeader')}</label>
+      <textarea id="jwt-header" class="tool-widget__textarea" data-field="header" rows="5" spellcheck="false">{{"alg":"HS256","typ":"JWT"}}</textarea>
+    </div>
+    <div class="tool-widget__field" style="grid-column:1/-1">
+      <label class="tool-widget__label" for="jwt-payload" data-i18n="calc.jwtPayload">{langText(es, 'calc.jwtPayload')}</label>
+      <textarea id="jwt-payload" class="tool-widget__textarea" data-field="payload" rows="8" spellcheck="false">{{"sub":"1234567890","name":"John Doe","iat":1516239022}}</textarea>
+    </div>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="jwt-algo" data-i18n="calc.jwtAlgorithm">{langText(es, 'calc.jwtAlgorithm')}</label>
+        <select id="jwt-algo" class="tool-widget__select" data-field="algo">
+          {ALGOS.map(a => <option value={a}>{a}</option>)}
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="jwt-secret" data-i18n="calc.jwtSecret">{langText(es, 'calc.jwtSecret')}</label>
+        <input id="jwt-secret" class="tool-widget__input" type="text" data-field="secret" value="secret-key" placeholder="Secret key for HS* / Private key for RS*/ES*" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.generate">{langText(es, 'calc.generate')}</button>
+      <button type="button" class="btn btn--ghost" data-decode data-i18n="calc.jwtDecode">{langText(es, 'calc.jwtDecode')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.jwtError">{langText(es, 'calc.jwtError')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.jwtError">{langText('en', 'calc.jwtError')}</span>
+    </p>
+    <div class="tool-widget__field" style="grid-column:1/-1; margin-top:0;">
+      <label class="tool-widget__label" data-i18n="calc.jwtResult">{langText(es, 'calc.jwtResult')}</label>
+      <textarea class="tool-widget__textarea tool-widget__result-output" readonly data-output rows="4" spellcheck="false"></textarea>
+    </div>
+    <div class="tool-widget__actions" style="margin-top:0.75rem;">
+      <button type="button" class="btn btn--ghost" data-copy data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+    </div>
+    <div class="tool-widget__details" data-decoded hidden>
+      <h4 data-i18n="calc.jwtDecoded">{langText(es, 'calc.jwtDecoded')}</h4>
+      <div class="tool-widget__field" style="grid-column:1/-1; margin-top:0;">
+        <label class="tool-widget__label" data-i18n="calc.jwtDecodedHeader">{langText(es, 'calc.jwtDecodedHeader')}</label>
+        <textarea class="tool-widget__textarea" readonly data-decoded-header rows="4" spellcheck="false"></textarea>
+      </div>
+      <div class="tool-widget__field" style="grid-column:1/-1;">
+        <label class="tool-widget__label" data-i18n="calc.jwtDecodedPayload">{langText(es, 'calc.jwtDecodedPayload')}</label>
+        <textarea class="tool-widget__textarea" readonly data-decoded-payload rows="6" spellcheck="false"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+  import { escapeHtml } from '../../lib/format.js';
+
+  const root = document.querySelector('[data-widget="jwt"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const decodedDiv = root.querySelector('[data-decoded]');
+    const output = root.querySelector('[data-output]');
+    const decodedHeader = root.querySelector('[data-decoded-header]');
+    const decodedPayload = root.querySelector('[data-decoded-payload]');
+    const fields = {
+      header: root.querySelector('[data-field="header"]'),
+      payload: root.querySelector('[data-field="payload"]'),
+      algo: root.querySelector('[data-field="algo"]'),
+      secret: root.querySelector('[data-field="secret"]'),
+    };
+
+    function base64url(input) {
+      return btoa(String.fromCharCode(...new Uint8Array(input)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+    }
+
+    function base64urlDecode(str) {
+      str = str.replace(/-/g, '+').replace(/_/g, '/');
+      const pad = str.length % 4;
+      if (pad) str += '='.repeat(4 - pad);
+      const binary = atob(str);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+
+    async function signHS256(data, secret) {
+      const key = await crypto.subtle.importKey(
+        'raw',
+        new TextEncoder().encode(secret),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign']
+      );
+      return await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
+    }
+
+    async function signHS384(data, secret) {
+      const key = await crypto.subtle.importKey(
+        'raw',
+        new TextEncoder().encode(secret),
+        { name: 'HMAC', hash: 'SHA-384' },
+        false,
+        ['sign']
+      );
+      return await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
+    }
+
+    async function signHS512(data, secret) {
+      const key = await crypto.subtle.importKey(
+        'raw',
+        new TextEncoder().encode(secret),
+        { name: 'HMAC', hash: 'SHA-512' },
+        false,
+        ['sign']
+      );
+      return await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
+    }
+
+    async function generateJWT() {
+      const header = JSON.parse(fields.header.value);
+      const payload = JSON.parse(fields.payload.value);
+      const algo = fields.algo.value;
+      const secret = fields.secret.value;
+
+      header.alg = algo;
+
+      const encodedHeader = base64url(new TextEncoder().encode(JSON.stringify(header)));
+      const encodedPayload = base64url(new TextEncoder().encode(JSON.stringify(payload)));
+      const signingInput = encodedHeader + '.' + encodedPayload;
+
+      let signature;
+      if (algo === 'HS256') signature = await signHS256(signingInput, secret);
+      else if (algo === 'HS384') signature = await signHS384(signingInput, secret);
+      else if (algo === 'HS512') signature = await signHS512(signingInput, secret);
+      else throw new Error('Solo algoritmos HS* soportados en esta demo');
+
+      const encodedSig = base64url(signature);
+      return signingInput + '.' + encodedSig;
+    }
+
+    function decodeJWT(token) {
+      const parts = token.split('.');
+      if (parts.length !== 3) throw new Error('JWT inválido');
+      const header = JSON.parse(new TextDecoder().decode(base64urlDecode(parts[0])));
+      const payload = JSON.parse(new TextDecoder().decode(base64urlDecode(parts[1])));
+      return { header, payload };
+    }
+
+    async function compute() {
+      try {
+        error.hidden = true;
+        decodedDiv.hidden = true;
+        const token = await generateJWT();
+        output.value = token;
+        applyLang(currentLang());
+        result.hidden = false;
+      } catch (e) {
+        error.hidden = false;
+        result.hidden = true;
+      }
+    }
+
+    async function doDecode() {
+      try {
+        const token = output.value || prompt('Pega el JWT a decodificar:');
+        if (!token) return;
+        const { header, payload } = decodeJWT(token);
+        decodedHeader.value = JSON.stringify(header, null, 2);
+        decodedPayload.value = JSON.stringify(payload, null, 2);
+        decodedDiv.hidden = false;
+      } catch (e) {
+        error.textContent = 'Error: ' + e.message;
+        error.hidden = false;
+      }
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    root.querySelector('[data-decode]')?.addEventListener('click', doDecode);
+    root.querySelector('[data-copy]')?.addEventListener('click', () => {
+      navigator.clipboard.writeText(output.value);
+      const btn = root.querySelector('[data-copy]');
+      const original = btn.textContent;
+      btn.textContent = '✓ Copiado';
+      setTimeout(() => btn.textContent = original, 1500);
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.header.value = '{"alg":"HS256","typ":"JWT"}';
+      fields.payload.value = '{"sub":"1234567890","name":"John Doe","iat":1516239022}';
+      fields.algo.value = 'HS256';
+      fields.secret.value = 'secret-key';
+      output.value = '';
+      decodedHeader.value = '';
+      decodedPayload.value = '';
+      result.hidden = true;
+      decodedDiv.hidden = true;
+      error.hidden = true;
+    });
+
+    compute();
+  }
+</script>

@@ -1,0 +1,92 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="interes-simple">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="si-capital" data-i18n="calc.siPrincipal">{langText(es, 'calc.siPrincipal')}</label>
+        <input id="si-capital" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="10.000" data-field="capital" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="si-interes" data-i18n="calc.siRate">{langText(es, 'calc.siRate')}</label>
+        <input id="si-interes" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="4,5" data-field="interes" />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="si-periodo" data-i18n="calc.siYears">{langText(es, 'calc.siYears')}</label>
+        <input id="si-periodo" class="tool-widget__input" type="number" min="0" inputmode="decimal" value="5" data-field="anos" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.siInvalid">{langText(es, 'calc.siInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.siInvalid">{langText('en', 'calc.siInvalid')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.siInterest">{langText(es, 'calc.siInterest')}</span>
+        <strong class="result-stat__value" data-val="interes">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.siFinal">{langText(es, 'calc.siFinal')}</span>
+        <strong class="result-stat__value" data-val="final">—</strong>
+      </div>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.siNote">{langText(es, 'calc.siNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.siNote">{langText('en', 'calc.siNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { parseDecimal, formatEur } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="interes-simple"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      capital: root.querySelector('[data-field="capital"]'),
+      interes: root.querySelector('[data-field="interes"]'),
+      anos: root.querySelector('[data-field="anos"]'),
+    };
+    const val = {
+      interes: root.querySelector('[data-val="interes"]'),
+      final: root.querySelector('[data-val="final"]'),
+    };
+
+    function compute() {
+      const P = parseDecimal(fields.capital.value);
+      const r = parseDecimal(fields.interes.value);
+      const years = parseDecimal(fields.anos.value);
+      if (P <= 0 || years < 0 || isNaN(r)) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const interest = P * (r / 100) * years;
+      const final = P + interest;
+      val.interes.textContent = formatEur(interest);
+      val.final.textContent = formatEur(final);
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    for (const f of Object.values(fields)) f.addEventListener('input', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.capital.value = '10.000';
+      fields.interes.value = '4,5';
+      fields.anos.value = '5';
+      compute();
+    });
+    compute();
+  }
+</script>

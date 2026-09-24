@@ -1,0 +1,168 @@
+---
+import { langText } from '../../lib/i18n';
+import { UNIT_GROUPS } from '../../data/units.js';
+const es = 'es';
+const defaultGroup = 'longitud';
+---
+<div class="tool-widget" data-widget="unidades">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="un-cat" data-i18n="calc.category">{langText(es, 'calc.category')}</label>
+        <select id="un-cat" class="tool-widget__select" data-field="categoria">
+          {UNIT_GROUPS.map((g) => (
+            <option value={g.id} selected={g.id === defaultGroup} data-i18n={`calc.${g.id}`}>
+              {langText(es, `calc.${g.id}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="un-valor" data-i18n="calc.value">{langText(es, 'calc.value')}</label>
+        <div class="tool-widget__control">
+          <input id="un-valor" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="1" data-field="valor" />
+          <span class="tool-widget__adorn tool-widget__adorn--right" data-val="simboloDesde">m</span>
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="un-desde" data-i18n="calc.from">{langText(es, 'calc.from')}</label>
+        <select id="un-desde" class="tool-widget__select" data-field="desde">
+          {UNIT_GROUPS.map((g) =>
+            g.units.map((u) => (
+              <option value={u.id} data-group={g.id} data-i18n={`calc.units.${g.id}.${u.id}`}>
+                {langText(es, `calc.units.${g.id}.${u.id}`)}
+              </option>
+            ))
+          )}
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="un-hasta" data-i18n="calc.to">{langText(es, 'calc.to')}</label>
+        <select id="un-hasta" class="tool-widget__select" data-field="hasta">
+          {UNIT_GROUPS.map((g) =>
+            g.units.map((u) => (
+              <option value={u.id} data-group={g.id} data-i18n={`calc.units.${g.id}.${u.id}`}>
+                {langText(es, `calc.units.${g.id}.${u.id}`)}
+              </option>
+            ))
+          )}
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-swap data-i18n="calc.swap">{langText(es, 'calc.swap')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalidValue">
+      <span data-lang-region="es">{langText(es, 'calc.invalidValue')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalidValue')}</span>
+    </p>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-val="operacion">1 m</span>
+      <strong class="tool-widget__conversion-value" data-val="resultado">= 0,001 km</strong>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.unitHint">{langText(es, 'calc.unitHint')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.unitHint">{langText('en', 'calc.unitHint')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { UNIT_GROUPS, convert } from '../../data/units.js';
+  import { parseDecimal, formatSmart } from '../../lib/format.js';
+  import { applyLang, textOf, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="unidades"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      categoria: root.querySelector('[data-field="categoria"]'),
+      valor: root.querySelector('[data-field="valor"]'),
+      desde: root.querySelector('[data-field="desde"]'),
+      hasta: root.querySelector('[data-field="hasta"]'),
+    };
+    const val = {
+      operacion: root.querySelector('[data-val="operacion"]'),
+      resultado: root.querySelector('[data-val="resultado"]'),
+      simboloDesde: root.querySelector('[data-val="simboloDesde"]'),
+    };
+
+    function groupFor(sel) {
+      return UNIT_GROUPS.find((g) => g.id === sel.value) || UNIT_GROUPS[0];
+    }
+    function unitFor(groupId, unitId) {
+      return UNIT_GROUPS.find((g) => g.id === groupId)?.units.find((u) => u.id === unitId);
+    }
+
+    function filterOptions(sel, groupId) {
+      for (const opt of sel.options) opt.hidden = opt.dataset.group !== groupId;
+    }
+
+    function syncCategory() {
+      const group = groupFor(fields.categoria);
+      filterOptions(fields.desde, group.id);
+      filterOptions(fields.hasta, group.id);
+      if (fields.desde.options[0] && fields.desde.options[0].hidden) {
+        for (const opt of fields.desde.options) { if (!opt.hidden) { fields.desde.selectedIndex = opt.index; break; } }
+      }
+      if (fields.hasta.options[0] && fields.hasta.options[0].hidden) {
+        for (const opt of fields.hasta.options) { if (!opt.hidden) { fields.hasta.selectedIndex = opt.index; break; } }
+      }
+      val.simboloDesde.textContent = unitFor(group.id, fields.desde.value)?.symbol ?? '';
+      compute();
+    }
+
+    function compute() {
+      const group = groupFor(fields.categoria);
+      const valor = parseDecimal(fields.valor.value);
+      const desde = unitFor(group.id, fields.desde.value);
+      const hasta = unitFor(group.id, fields.hasta.value);
+      if (valor <= 0 || !desde || !hasta) { error.hidden = false; result.hidden = true; return; }
+      const isTemp = group.special === 'temperature';
+      const res = convert(valor, desde, hasta, isTemp);
+      if (!Number.isFinite(res)) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      const lang = currentLang();
+      const unitName = (id) => textOf(lang, 'calc.units.' + group.id + '.' + id) || id;
+      val.operacion.textContent = formatSmart(valor) + ' ' + desde.symbol;
+      val.resultado.textContent = '= ' + formatSmart(res) + ' ' + hasta.symbol + ' (' + unitName(hasta.id) + ')';
+      applyLang(lang);
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.categoria.addEventListener('change', syncCategory);
+    fields.desde.addEventListener('change', () => {
+      val.simboloDesde.textContent = unitFor(groupFor(fields.categoria).id, fields.desde.value)?.symbol ?? '';
+      compute();
+    });
+    fields.hasta.addEventListener('change', compute);
+    fields.valor.addEventListener('input', compute);
+    root.querySelector('[data-swap]')?.addEventListener('click', () => {
+      const t = fields.desde.value;
+      fields.desde.value = fields.hasta.value;
+      fields.hasta.value = t;
+      val.simboloDesde.textContent = unitFor(groupFor(fields.categoria).id, fields.desde.value)?.symbol ?? '';
+      compute();
+    });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.categoria.value = fields.categoria.defaultValue;
+      fields.valor.value = fields.valor.defaultValue;
+      syncCategory();
+      result.hidden = true; error.hidden = true;
+    });
+    init();
+    function init() {
+      syncCategory();
+      result.hidden = true;
+      compute();
+    }
+  }
+</script>

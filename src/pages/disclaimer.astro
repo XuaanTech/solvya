@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import { langText } from '../lib/i18n';
+const es = 'es';
+---
+<BaseLayout title={langText(es, 'disclaimer.title')} description={langText(es, 'disclaimer.text')}>
+  <div class="page-simple container">
+    <Breadcrumbs items={[{ label: langText(es, 'disclaimer.title') }]} />
+
+    <h1 class="page-title" data-i18n="disclaimer.title">{langText(es, 'disclaimer.title')}</h1>
+
+    <div class="prose">
+      <p class="lead">
+        <span data-lang-region="es">{langText(es, 'disclaimer.text')}</span>
+        <span data-lang-region="en" hidden>{langText('en', 'disclaimer.text')}</span>
+      </p>
+
+      <h2>Identificación del responsable</h2>
+      <p>
+        Solvya es un proyecto personal y sin ánimo de lucro. En la medida en que este sitio no se
+        presta a título oneroso ni constituye una actividad profesional, la obligación de publicar
+        la identificación del responsable prevista en la Ley 34/2002 (LSSI-CE) no le resulta de
+        aplicación.
+      </p>
+      <p>
+        Si en el futuro esta web adquiere una finalidad comercial (por ejemplo, mediante publicidad
+        activa), esta sección se actualizará publicando la identificación completa del responsable
+        antes de activar dicha actividad.
+      </p>
+      <p>
+        Medio de contacto: <a href="mailto:xuaninformatica@gmail.com">xuaninformatica@gmail.com</a>
+      </p>
+
+      <h2>1. Uso informativo</h2>
+      <p>
+        Las calculadoras, conversores y generadores de este sitio están diseñados para fines
+        informativos y educativos. Los resultados que obtengas son estimaciones que no deben
+        interpretarse como asesoramiento profesional de ningún tipo (sanitario, financiero, legal o técnico).
+      </p>
+
+      <h2>2. Sin garantía de exactitud</h2>
+      <p>
+        Nos esforzamos por que los cálculos sean correctos, pero no garantizamos la exactitud,
+        integridad ni actualidad de los resultados. Las tasas de cambio, las fórmulas y los estándares
+        pueden cambiar sin previo aviso.
+      </p>
+
+      <h2>3. Responsabilidad</h2>
+      <p>
+        {SITE.name} no se responsabiliza de las decisiones que tomes basándote en los resultados
+        de estas herramientas. Consulta siempre con un profesional cualificado antes de actuar.
+      </p>
+
+      <h2>4. Contenido de los artículos</h2>
+      <p>
+        Los artículos del blog tienen un carácter divulgativo y no sustituyen el consejo de un
+        profesional. Si bien revisamos la información antes de publicarla, pueden existir errores
+        u omisiones.
+      </p>
+
+      <h2>5. Enlaces externos</h2>
+      <p>
+        Este sitio puede contener enlaces a sitios de terceros. No tenemos control sobre su contenido
+        ni asumimos responsabilidad por las prácticas de privacidad de esos sitios.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,137 @@
+/* ── Design Tokens ───────────────────────────────────────────── */
+:root {
+  --primary: #059669;
+  --primary-light: #10b981;
+  --primary-dark: #047857;
+  --accent: #0d9488;
+
+  --bg: #ffffff;
+  --bg-alt: #f9fafb;
+  --bg-card: #ffffff;
+  --border: #e5e7eb;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --text-inverse: #ffffff;
+
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+
+  --header-h: 64px;
+  --max-w: 1200px;
+
+  /* Category colors */
+  --color-salud: #dc2626;
+  --color-salud-light: #fef2f2;
+  --color-conversores: #063062;
+  --color-conversores-light: #e8eef6;
+  --color-generadores: #7c3aed;
+  --color-generadores-light: #f5f3ff;
+}
+
+/* ── Dark mode ──────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f172a;
+    --bg-alt: #1e293b;
+    --bg-card: #1e293b;
+    --border: #334155;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-inverse: #0f172a;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+    --shadow: 0 1px 3px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.3);
+    --shadow-md: 0 4px 6px rgba(0,0,0,.4), 0 2px 4px rgba(0,0,0,.3);
+
+    --color-salud: #f87171;
+    --color-salud-light: #3b0d1a;
+    --color-conversores: #5b8abf;
+    --color-conversores-light: #0a1a30;
+    --color-generadores: #a78bfa;
+    --color-generadores-light: #1e1340;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-alt: #1e293b;
+  --bg-card: #1e293b;
+  --border: #334155;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+}
+img, svg { max-width: 100%; height: auto; display: block; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { cursor: pointer; font: inherit; }
+input, textarea, button { font: inherit; }
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.container { width: 100%; max-width: var(--max-w); margin-inline: auto; padding-inline: 1rem; }
+main { padding-block: 2rem; }
+
+/* ── Sections ───────────────────────────────────────────────── */
+.section { padding-block: 2.5rem; }
+.section__title { font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+.section__sub { color: var(--text-muted); margin-bottom: 1.5rem; }
+.section__more { text-align: center; margin-top: 1.5rem; }
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1.25rem; border-radius: var(--radius);
+  font-weight: 600; text-decoration: none; transition: .15s;
+}
+.btn--primary {
+  background: var(--primary); color: var(--text-inverse);
+}
+.btn--primary:hover { background: var(--primary-dark); text-decoration: none; }
+.btn--ghost {
+  background: transparent; color: var(--primary); border: 1px solid var(--border);
+}
+.btn--ghost:hover { background: var(--bg-alt); text-decoration: none; }
+.btn--sm { padding: 0.4rem 0.875rem; font-size: 0.875rem; }
+.btn--block { width: 100%; }
+
+/* ── Tags ───────────────────────────────────────────────────── */
+.tag {
+  display: inline-block; padding: 0.15rem 0.6rem;
+  border-radius: 999px; font-size: 0.75rem; font-weight: 500;
+  background: var(--bg-alt); color: var(--text-muted); border: 1px solid var(--border);
+}
+
+/* ── Page titles ────────────────────────────────────────────── */
+.page-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.2; }
+.page-title--article { font-size: 2.25rem; }
+.page-title--tool { font-size: 1.875rem; }
+
+/* ── Prose (article body) ───────────────────────────────────── */
+.prose { max-width: 72ch; }
+.prose h2 { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+.prose h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.prose p { margin-bottom: 1rem; }
+.prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.prose li { margin-bottom: 0.35rem; }
+.prose table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.9rem; }
+.prose th, .prose td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+.prose th { background: var(--bg-alt); font-weight: 600; }
+.prose code { background: var(--bg-alt); padding: 0.15rem 0.35rem; border-radius: 3px; font-size: 0.875em; }
+.prose blockquote { border-left: 3px solid var(--primary); padding: 0.75rem 1rem; margin-bottom: 1rem; color: var(--text-muted); font-style: italic; }
+.prose strong { font-weight: 700; }
+.prose em { font-style: italic; }
+.prose img { border-radius: var(--radius); margin-bottom: 1rem; }
+.lead { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 1.5rem; }

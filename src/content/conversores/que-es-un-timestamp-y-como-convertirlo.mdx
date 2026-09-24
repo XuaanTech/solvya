@@ -1,0 +1,109 @@
+---
+title: "Qué es un timestamp y cómo convertirlo a fecha y hora"
+titleEn: "What is a Timestamp and How to Convert it to Date and Time"
+description: "Aprende qué es un timestamp Unix, la diferencia entre segundos y milisegundos, dónde lo usan las bases de datos y APIs, y cómo convertirlo a fecha legible fácilmente."
+descriptionEn: "Learn what a Unix timestamp is, the difference between seconds and milliseconds, where databases and APIs use it, and how to convert it to a readable date easily."
+category: conversores
+categoryName: Conversores
+tags: [timestamp, unix time, epoch, convertir timestamp, fecha unix, apis, segundos, milisegundos]
+date: 2026-09-14
+author: "Equipo Solvya"
+tool: timestamp
+faqs:
+  - q:
+      es: "¿Qué es un timestamp Unix?"
+      en: "What is a Unix timestamp?"
+    a:
+      es: "Es el número de segundos transcurridos desde el 1 de enero de 1970 a las 00:00:00 UTC; a esa fecha se la llama época Unix o epoch."
+      en: "It is the number of seconds elapsed since January 1, 1970 at 00:00:00 UTC; that date is called the Unix epoch."
+  - q:
+      es: "¿Cómo sé si un timestamp está en segundos o milisegundos?"
+      en: "How can I tell if a timestamp is in seconds or milliseconds?"
+    a:
+      es: "Un timestamp en segundos tiene 10 dígitos y uno en milisegundos tiene 13; si lo conviertes y la fecha sale en el futuro lejano, prueba a dividirlo entre 1000."
+      en: "A timestamp in seconds has 10 digits and one in milliseconds has 13; if converting gives a date far in the future, try dividing by 1,000."
+  - q:
+      es: "¿Por qué JavaScript usa milisegundos para Date.now()?"
+      en: "Why does JavaScript use milliseconds for Date.now()?"
+    a:
+      es: "Para ofrecer más precisión en navegadores y animaciones: Date.now() devuelve los milisegundos transcurridos desde la época Unix y necesita precisión de milisegundos."
+      en: "To provide higher precision in browsers and animations: Date.now() returns the milliseconds elapsed since the Unix epoch and needs millisecond precision."
+steps:
+  - title:
+      es: "Detecta el formato del timestamp"
+      en: "Detect the timestamp format"
+    text:
+      es: "Comprueba si tu valor tiene 10 dígitos (segundos) o 13 (milisegundos) antes de convertirlo, porque el resultado cambia por completo."
+      en: "Check whether your value has 10 digits (seconds) or 13 (milliseconds) before converting, because the result changes completely."
+  - title:
+      es: "Convierte a fecha legible"
+      en: "Convert to a readable date"
+    text:
+      es: "Pega el timestamp en el conversor y selecciona la dirección adecuada (timestamp → fecha) para ver día, mes, año, hora y zona horaria al instante."
+      en: "Paste the timestamp in the converter and choose the right direction (timestamp → date) to see the day, month, year, time and timezone instantly."
+  - title:
+      es: "Convierte una fecha a timestamp"
+      en: "Convert a date to a timestamp"
+    text:
+      es: "Introduce cualquier fecha y hora para obtener su timestamp, útil cuando necesitas enviar fechas a una base de datos o API en formato numérico."
+      en: "Enter any date and time to get its timestamp, handy when you need to send dates to a database or API in numeric form."
+---
+## ¿Qué significa 1694678400?
+
+A primera vista es un número sin sentido. Pero para una computadora significa **15 de septiembre de 2023, 00:00:00 UTC**. Y para otra cifra parecida, la interpretación puede cambiar totalmente según esté en segundos o en milisegundos. Bajo esos dígitos se esconde el mecanismo que hace que bases de datos, APIs y navegadores entiendan el tiempo.
+
+## ¿Qué es un timestamp?
+
+Un **timestamp Unix** (también llamado Unix time o epoch) es el número de **segundos transcurridos desde el 1 de enero de 1970, 00:00:00 UTC**. Esa fecha inicial —la «época Unix» o epoch— es el punto de partida universal que eligieron los creadores de Unix en los años 70.
+
+Las computadoras usan este sistema porque es eficiente: no hay que almacenar formatos como «lunes, 14 de septiembre de 2026» o manejar nombres de meses en distintos idiomas. Un solo entero sirve para almacenar, comparar y ordenar cualquier instante.
+
+> **Dato curioso**: el timestamp del momento en que la misión Apolo 11 alunizó (20 de julio de 1969) sería negativo, porque ocurrió antes de la época Unix.
+
+## Segundos vs milisegundos
+
+No todos los timestamps significan lo mismo: hay dos variantes comunes y confundirlas da un resultado completamente erróneo.
+
+| Formato | Dígitos | Ejemplo | Escala |
+| ------- | ------- | ------- | ------ |
+| Segundos | 10 | `1694678400` | Clásica, usada por PHP, Python, bases SQL, APIs |
+| Milisegundos | 13 | `1694678400000` | Moderna, usada por JavaScript, Java, algunos servicios web |
+
+Para distinguirlos, basta con contar dígitos: **10 dígitos = segundos**, **13 dígitos = milisegundos**. Y si tu herramienta te devuelve una fecha en el año 58.000, seguramente pasaste milisegundos a una entrada que esperaba segundos: divide entre 1.000 y vuelve a intentar.
+
+> **Consejo**: si tu timestamp parece demasiado grande, prueba a dividirlo entre 1.000. Si parece demasiado pequeño y la fecha sale en 1970, multiplícalo por 1.000.
+
+## Tabla de timestamps de referencia
+
+Aquí tienes fechas conocidas y sus timestamps en segundos para que practiques:
+
+| Fecha (00:00:00 UTC) | Timestamp (segundos) |
+| -------------------- | -------------------- |
+| 01/01/2000 | 946684800 |
+| 01/01/2010 | 1262304000 |
+| 01/01/2020 | 1577836800 |
+| 01/01/2024 | 1704067200 |
+| 14/09/2026 | 1789344000 |
+
+Para pasar cualquiera de esos valores a milisegundos, añade tres ceros al final: por ejemplo, `1789344000000`.
+
+> **Advertencia**: los valores anteriores se calculan a medianoche UTC. Si usas una zona horaria local (por ejemplo España, UTC+2 en verano), el timestamp numérico será el mismo pero la hora legible se desplazará dos horas.
+
+## ¿Dónde se usa?
+
+El timestamp aparece en más lugares de los que se ve:
+
+- **Bases de datos**: columnas `created_at`, `updated_at` y registros de eventos en formato entero.
+- **APIs (JSON)**: las respuestas de servicios web suelen incluir fechas como timestamps para evitar ambigüedades de formato.
+- **Logs del servidor**: cada línea lleva un timestamp para depurar con precisión cronológica.
+- **Cookies y JWT**: el campo `exp` (expiry) determina cuándo caduca una sesión.
+- **Control de versiones (git)**: cada *commit* guarda su fecha exacta como timestamp.
+- **JavaScript**: `Date.now()` devuelve el número de **milisegundos** desde la época, úsalo así en el navegador.
+
+> **Consejo para desarrolladores**: en JavaScript recuerda que `Date.now()` devuelve milisegundos; si tu API espera segundos, divide entre 1.000 y redondea.
+
+## Conclusión
+
+Un timestamp es solo un número, pero encierra la fecha y hora exactas de cualquier evento desde 1970. Entender la diferencia entre segundos y milisegundos, reconocer el formato a partir de los dígitos y saber dónde se usa es clave para depurar APIs, leer logs y construir aplicaciones web.
+
+[Convierte un timestamp ahora](/herramienta/timestamp/).

@@ -1,0 +1,135 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="roman">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="roman-decimal" data-i18n="calc.romanDecimal">{langText(es, 'calc.romanDecimal')}</label>
+        <div class="tool-widget__control">
+          <input id="roman-decimal" class="tool-widget__input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" value="1987" data-field="decimal" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="roman-numeral" data-i18n="calc.romanNumeral">{langText(es, 'calc.romanNumeral')}</label>
+        <div class="tool-widget__control">
+          <input id="roman-numeral" class="tool-widget__input" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" value="MCMLXXXVII" data-field="numeral" />
+        </div>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.romanInvalid">
+      <span data-lang-region="es">{langText(es, 'calc.romanInvalid')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.romanInvalid')}</span>
+    </p>
+    <div class="tool-widget__conversion">
+      <span class="tool-widget__conversion-eq" data-i18n="calc.romanExample">{langText(es, 'calc.romanExample')}</span>
+      <strong class="tool-widget__conversion-value" data-val="linea">1987 → MCMLXXXVII</strong>
+    </div>
+    <details class="tool-widget__details">
+      <summary class="tool-widget__details-summary" data-i18n="calc.romanBreakdown">{langText(es, 'calc.romanBreakdown')}</summary>
+      <div class="tool-widget__table-wrap">
+        <table class="tool-widget__table">
+          <thead>
+            <tr>
+              <th><span data-lang-region="es">Símbolo</span><span data-lang-region="en" hidden>Symbol</span></th>
+              <th><span data-lang-region="es">Valor</span><span data-lang-region="en" hidden>Value</span></th>
+            </tr>
+          </thead>
+          <tbody data-val="desglose"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</div>
+
+<script>
+  import { toRoman, fromRoman, romanBreakdown } from '../../lib/roman.js';
+  import { formatSmart } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="roman"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      decimal: root.querySelector('[data-field="decimal"]'),
+      numeral: root.querySelector('[data-field="numeral"]'),
+    };
+    const val = { linea: root.querySelector('[data-val="linea"]') };
+    const body = root.querySelector('[data-val="desglose"]');
+    let lastEdit = 'decimal';
+
+    function renderBreakdown(parts) {
+      body.innerHTML = '';
+      for (const p of parts) {
+        const tr = document.createElement('tr');
+        const tdSym = document.createElement('td');
+        tdSym.textContent = p.symbol;
+        const tdVal = document.createElement('td');
+        tdVal.textContent = formatSmart(p.value, 0);
+        tr.append(tdSym, tdVal);
+        body.appendChild(tr);
+      }
+    }
+
+    function setError(key) {
+      error.dataset.i18n = key;
+      applyLang(currentLang());
+      error.hidden = false;
+      result.hidden = true;
+    }
+
+    function compute() {
+      const lang = currentLang();
+      const decRaw = fields.decimal.value.trim();
+      const isDecInt = /^\d+$/.test(decRaw);
+      if (isDecInt) {
+        const n = parseInt(decRaw, 10);
+        const roman = toRoman(n);
+        if (roman) {
+          error.hidden = true;
+          lastEdit = 'decimal';
+          fields.numeral.value = roman;
+          val.linea.textContent = formatSmart(n, 0) + ' → ' + roman;
+          renderBreakdown(romanBreakdown(n));
+          applyLang(lang);
+          result.hidden = false;
+          return;
+        }
+      }
+      const romRaw = fields.numeral.value.trim();
+      const dec = fromRoman(romRaw);
+      if (dec !== null) {
+        error.hidden = true;
+        lastEdit = 'roman';
+        fields.decimal.value = String(dec);
+        val.linea.textContent = romRaw.toUpperCase() + ' → ' + formatSmart(dec, 0);
+        renderBreakdown(romanBreakdown(dec));
+        applyLang(lang);
+        result.hidden = false;
+        return;
+      }
+      setError(lastEdit === 'decimal' ? 'calc.romanInvalid' : 'calc.romanInvalidNumeral');
+    }
+
+    fields.decimal.addEventListener('input', () => { if (!/^\d*$/.test(fields.decimal.value)) fields.decimal.value = fields.decimal.value.replace(/\D/g, ''); lastEdit = 'decimal'; compute(); });
+    fields.numeral.addEventListener('input', () => { fields.numeral.value = fields.numeral.value.toUpperCase().replace(/[^IVXLCDM]/g, ''); lastEdit = 'roman'; compute(); });
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.decimal.value = '1987';
+      fields.numeral.value = 'MCMLXXXVII';
+      lastEdit = 'decimal';
+      compute();
+    });
+    compute();
+  }
+</script>

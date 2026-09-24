@@ -1,0 +1,121 @@
+---
+title: "Cómo Generar Números Aleatorios Seguros y Verdaderos"
+titleEn: "How to Generate Secure and True Random Numbers"
+description: "Aprende a generar números aleatorios seguros con Web Crypto API. Descubre la diferencia entre aleatoriedad pseudo y criptográfica y cómo usarla en sorteos y más."
+descriptionEn: "Learn how to generate secure random numbers with the Web Crypto API. Discover the difference between pseudo and cryptographic randomness and how to use it."
+category: generadores
+categoryName: Generadores
+tags: [numeros aleatorios, generador aleatorio, sorteo, rifa, numero al azar, random number generator, azar, criptografia]
+date: 2026-09-14
+author: "Equipo Solvya"
+tool: numeros-aleatorios
+faqs:
+  - q:
+      es: "¿Cuál es la diferencia entre Math.random y Web Crypto API?"
+      en: "What is the difference between Math.random and the Web Crypto API?"
+    a:
+      es: "**Math.random** genera números **pseudoaleatorios** que siguen un patrón predecible con suficiente análisis. **Web Crypto API** usa **entropía criptográfica** del sistema operativo para crear números verdaderamente impredecibles, adecuados para seguridad y sorteos oficiales."
+      en: "**Math.random** generates **pseudo-random** numbers that follow a predictable pattern with enough analysis. The **Web Crypto API** uses **cryptographic entropy** from the operating system to create truly unpredictable numbers, suitable for security and official raffles."
+  - q:
+      es: "¿Es seguro usar el generador de números aleatorios para contraseñas?"
+      en: "Is it safe to use the random number generator for passwords?"
+    a:
+      es: "Sí, siempre que uses la **Web Crypto API** como base. Los generadores criptográficos son aptos para crear **tokens de seguridad**, **contraseñas temporales** y **valores de sesión** que requieren impredecibilidad real."
+      en: "Yes, as long as you use the **Web Crypto API** as the foundation. Cryptographic generators are suitable for creating **security tokens**, **temporary passwords**, and **session values** that require real unpredictability."
+  - q:
+      es: "¿Puedo generar números aleatorios sin repetición?"
+      en: "Can I generate random numbers without repetition?"
+    a:
+      es: "Sí, el modo **sin repetición** garantiza que cada número generado sea único dentro del rango. Es ideal para **sorteos**, **rifas** y **muestreo estadístico** donde no se permite duplicar resultados."
+      en: "Yes, the **no-repeat mode** ensures each generated number is unique within the range. It is ideal for **raffles**, **draws**, and **statistical sampling** where duplicate results are not allowed."
+steps:
+  - title:
+      es: "Define el rango de números"
+      en: "Define the number range"
+    text:
+      es: "Establece el valor mínimo y máximo del intervalo. Por ejemplo, para un sorteo entre 1 y 100, configura el mínimo en **1** y el máximo en **100**. El generador creará números dentro de este rango."
+      en: "Set the minimum and maximum values of the range. For example, for a raffle between 1 and 100, set the minimum to **1** and the maximum to **100**. The generator will create numbers within this range."
+  - title:
+      es: "Elige el modo de generación"
+      en: "Choose the generation mode"
+    text:
+      es: "Selecciona entre **con repetición** (el mismo número puede salir más de una vez) o **sin repetición** (cada número es único). Para sorteos y rifas, elige sin repetición. Para simulaciones y dados, con repetición."
+      en: "Choose between **with repetition** (the same number can appear more than once) or **without repetition** (each number is unique). For raffles and draws, choose no repeat. For simulations and dice rolls, choose with repetition."
+  - title:
+      es: "Genera y verifica el resultado"
+      en: "Generate and verify the result"
+    text:
+      es: "Haz clic en generar y el algoritmo criptográfico producirá tu número. Puedes generar tantos números como necesites y verificar que cumplen con el rango y el modo seleccionados."
+      en: "Click generate and the cryptographic algorithm will produce your number. You can generate as many numbers as you need and verify they meet the range and mode you selected."
+---
+
+Cuando organizas un sorteo, diseñas un juego o realizas un muestreo científico, necesitas números que sean **verdaderamente impredecibles**. No basta con elegir al azar de memoria: la confianza en el resultado depende de que el método de generación sea sólido. Un mal generador puede arruinar un sorteo, comprometer una contraseña o invalidar un experimento estadístico.
+
+La buena noticia es que tu navegador ya tiene todo lo necesario para crear números aleatorios de alta calidad. Sin instalar software adicional, sin registrar cuentas, sin comprometer tu privacidad.
+
+## ¿Qué es un número verdaderamente aleatorio?
+
+No todos los números "aleatorios" son iguena. Existen dos grandes categorías que debes conocer:
+
+- **Pseudoaleatorios (PRNG)**: Algoritmos deterministas que producen secuencias que *parecen* aleatorias. Parten de una semilla y, si conoces esa semilla, puedes predecir toda la secuencia. En JavaScript, la función `Math.random()` cae en esta categoría. Es suficiente para un juego casual, pero no para aplicaciones que requieren seguridad o impredecibilidad real.
+
+- **Criptográficos (CSPRNG)**: Generadores que obtienen **entropía del sistema operativo** —ruido de硬件, timestamps de alta resolución, eventos de red— y la transforman en números impredecibles. Aunque intentes analizar patrones, no encontrarás ninguno. Son adecuados para **sorteos oficiales**, **tokens de seguridad** y **muestreo científico**.
+
+> **Consejo clave**: Si el resultado tiene consecuencias reales —un premio, una contraseña, un dato de investigación— siempre usa un generador criptográfico.
+
+## ¿Cómo funciona la Web Crypto API?
+
+La **Web Crypto API** es un estándar del navegador, disponible en todos los navegadores modernos (Chrome, Firefox, Safari, Edge). Su función principal es proporcionar operaciones criptográficas seguras, y una de sus herramientas más útiles es `crypto.getRandomValues()`.
+
+Cómo funciona internamente:
+
+1. El navegador recopila **entropía** del sistema operativo: movimientos del ratón, timestamps de procesos, interrupciones de hardware, datos de red.
+2. Esta entropía se alimenta a un **generador de números pseudoaleatorios criptográficamente seguro** (CSPRNG).
+3. `crypto.getRandomValues()` extrae números de ese generador y los devuelve en el tipo de dato que solicites (enteros, flotantes, etc.).
+
+Lo más importante: **todo ocurre en tu navegador**. Los datos nunca se envían a un servidor, lo que garantiza tu **privacidad** completa. No hay registro, no hay rastro, no hay dependencia externa.
+
+> La Web Crypto API es el mismo motor que usan los bancos y las empresas de seguridad para generar claves y tokens.
+
+## ¿Para qué sirve un generador de números aleatorios?
+
+Las aplicaciones son más variadas de lo que parece:
+
+- **Sorteos y rifas**: Seleccionar ganadores de forma justa y transparente, sin posibilidad de manipulación.
+- **Muestreo científico**: Elegir participantes o muestras al azar de una población para estudios estadísticos.
+- **Juegos y entretenimiento**: Dados virtuales, cartas aleatorias, eventos aleatorios en videojuegos.
+- **Tokens de seguridad**: Generar códigos temporales para autenticación, contraseñas efímeras y valores de sesión.
+- **Pruebas A/B**: Asignar usuarios a variantes de un experimento de forma equilibrada.
+- **Simulaciones estadísticas**: Monte Carlo, modelado de riesgos, análisis de sensibilidad.
+
+## Sin repetir vs con repetición
+
+Estos dos modos determinan cómo se comporta el generador:
+
+| Característica | Sin repetición | Con repetición |
+|---|---|---|
+| **Unicidad** | Cada número es único | Un número puede salir varias veces |
+| **Límite** | Máximo = rango completo | Sin límite por número |
+| **Uso típico** | Sorteos, rifas, muestreo | Dados, simulaciones, juegos |
+| **Ejemplo** | Elegir 5 ganadores de 100 | Lanzar un dado 10 veces |
+
+**Cuándo usar sin repetición**: Cuando necesitas que cada resultado sea distinto. Si sacas 5 números de un bombo de 100, no quieres que el mismo número gane dos veces.
+
+**Cuándo usar con repetición**: Cuando cada evento es independiente. Un dado no "recuerda" el lanzamiento anterior: cada tirada tiene las mismas posibilidades.
+
+## Tabla de aplicaciones
+
+| Aplicación | Modo recomendado | ¿Por qué? |
+|---|---|---|
+| Sorteo / rifa | Sin repetición | Cada participante debe tener una oportunidad única |
+| Lanzamiento de dado | Con repetición | Cada tirada es un evento independiente |
+| Token 2FA | Sin repetición | El código no debe repetirse en un período corto |
+| Muestreo aleatorio | Depende | Sin repetición si no quieres duplicados en la muestra |
+| Assignación A/B | Con repetición | Cada usuario se asigna independientemente |
+| Contraseña temporal | Sin repetición | Cada carácter o bloque debe ser único |
+
+## Conclusión
+
+Generar números aleatorios de calidad ya no requiere herramientas externas ni conocimientos especializados. Tu navegador integra la **Web Crypto API**, un estándar de seguridad que garantiza impredecibilidad real. Ya sea para un sorteo entre amigos, una investigación estadística o la creación de tokens seguros, confiar en un generador criptográfico es la decisión correcta.
+
+[Genera números aleatorios seguros](/herramienta/numeros-aleatorios/).

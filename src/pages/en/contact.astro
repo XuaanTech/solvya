@@ -1,0 +1,35 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../data/site';
+import { langText } from '../../lib/i18n';
+const es = 'en';
+---
+<BaseLayout title={langText(es, 'contact.title')} description={langText(es, 'contact.note')} lang="en">
+  <div class="page-simple container">
+    <Breadcrumbs lang="en" items={[{ label: langText(es, 'contact.title') }]} />
+
+    <h1 class="page-title">{langText(es, 'contact.title')}</h1>
+    <p class="lead">{langText(es, 'contact.note')}</p>
+
+    <form class="contact-form" action={`mailto:${SITE.email}`} method="post" enctype="text/plain">
+      <div class="contact-form__field">
+        <label class="tool-widget__label" for="c-name">{langText(es, 'contact.name')}</label>
+        <input id="c-name" class="tool-widget__input" type="text" name="Name" required />
+      </div>
+      <div class="contact-form__field">
+        <label class="tool-widget__label" for="c-email">{langText(es, 'contact.email')}</label>
+        <input id="c-email" class="tool-widget__input" type="email" name="Email" required />
+      </div>
+      <div class="contact-form__field">
+        <label class="tool-widget__label" for="c-msg">{langText(es, 'contact.message')}</label>
+        <textarea id="c-msg" class="tool-widget__input tool-widget__input--textarea" name="Message" rows="6" required></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary">{langText(es, 'contact.send')}</button>
+      <p class="contact-form__note">
+        The email will open with your message ready to send. We do not store any data on this site.
+        See our <a href="/en/privacy-policy/">privacy policy</a> to learn how we handle your data.
+      </p>
+    </form>
+  </div>
+</BaseLayout>

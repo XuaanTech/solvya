@@ -1,0 +1,30 @@
+---
+import { langBase, pick } from '../lib/utils';
+
+interface Props {
+  tool: {
+    slug: string;
+    icon?: string;
+    name: { es: string; en: string };
+    shortDescription: { es: string; en: string };
+    category: string;
+  };
+  lang?: string;
+}
+const { tool, lang = 'es' } = Astro.props;
+const { slug, icon = '🧰', category } = tool;
+const base = langBase(lang);
+---
+<article class="tool-card">
+  <a href={`${base}/herramienta/${slug}/`} class="tool-card__link" data-astro-prefetch="hover">
+    <span class="tool-card__icon" aria-hidden="true">{icon}</span>
+    <div class="tool-card__body">
+      <h3 class="tool-card__title">{pick(tool.name, lang)}</h3>
+      <p class="tool-card__desc">{pick(tool.shortDescription, lang)}</p>
+      <span class="tool-card__footer">
+        <span class="tool-card__category">{category}</span>
+        <span class="tool-card__arrow" aria-hidden="true">→</span>
+      </span>
+    </div>
+  </a>
+</article>

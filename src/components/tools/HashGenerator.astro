@@ -1,0 +1,114 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="hash">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="hash-texto" data-i18n="calc.hashText">{langText(es, 'calc.hashText')}</label>
+      <textarea id="hash-texto" class="tool-widget__textarea" rows="3" spellcheck="false" data-field="texto" data-i18n-placeholder="calc.hashPlaceholder">Hola mundo</textarea>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.generate">{langText(es, 'calc.generate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalidHash">
+      <span data-lang-region="es">{langText(es, 'calc.invalidHash')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalidHash')}</span>
+    </p>
+    <div class="tool-widget__coderow">
+      <span class="tool-widget__coderow-label">SHA-256</span>
+      <code class="tool-widget__coderow-code" data-val="sha">—</code>
+      <button type="button" class="btn btn--ghost btn--sm" data-copy="sha" data-i18n="calc.copySha256">{langText(es, 'calc.copySha256')}</button>
+      <span class="tool-widget__copied" data-copied="sha" hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+    </div>
+    <div class="tool-widget__coderow">
+      <span class="tool-widget__coderow-label">MD5</span>
+      <code class="tool-widget__coderow-code" data-val="md5">—</code>
+      <button type="button" class="btn btn--ghost btn--sm" data-copy="md5" data-i18n="calc.copyMd5">{langText(es, 'calc.copyMd5')}</button>
+      <span class="tool-widget__copied" data-copied="md5" hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { md5 } from '../../lib/md5.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="hash"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const texto = root.querySelector('[data-field="texto"]');
+    const val = {
+      sha: root.querySelector('[data-val="sha"]'),
+      md5: root.querySelector('[data-val="md5"]'),
+    };
+    let runId = 0;
+
+    function bytesToHex(buf) {
+      return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function compute() {
+      const id = ++runId;
+      const content = texto.value;
+      if (!content) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+
+      const bytes = new TextEncoder().encode(content);
+      let sha;
+      try {
+        const digest = await crypto.subtle.digest('SHA-256', bytes);
+        sha = bytesToHex(digest);
+      } catch {
+        error.hidden = false;
+        result.hidden = true;
+        return;
+      }
+      if (id !== runId) return; // descarta resultados obsoletos
+
+      val.sha.textContent = sha;
+      val.md5.textContent = md5(content);
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    function copyText(text) {
+      const cb = navigator.clipboard && navigator.clipboard.writeText
+        ? navigator.clipboard.writeText(text).catch(() => fallbackCopy(text))
+        : fallbackCopy(text);
+      return cb.catch(() => {});
+    }
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch { /* noop */ }
+      ta.remove();
+      return Promise.resolve();
+    }
+
+    root.querySelectorAll('[data-copy]').forEach((btn) => btn.addEventListener('click', () => {
+      const key = btn.dataset.copy;
+      copyText(val[key].textContent).then(() => {
+        const fb = root.querySelector('[data-copied="' + key + '"]');
+        if (fb) { fb.hidden = false; setTimeout(() => { fb.hidden = true; }, 1600); }
+      });
+    }));
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    texto.addEventListener('input', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      texto.value = texto.defaultValue;
+      compute();
+    });
+    compute();
+  }
+</script>

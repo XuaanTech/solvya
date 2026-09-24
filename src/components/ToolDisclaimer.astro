@@ -1,0 +1,14 @@
+---
+import { langText } from '../lib/i18n';
+
+interface Props {
+  /** health | finance | security | general — el tipo de aviso que se muestra. */
+  type?: 'health' | 'finance' | 'security' | 'general';
+  lang?: string;
+}
+const { type = 'general', lang = 'es' } = Astro.props;
+const key = `toolDisclaimer.${type}`;
+---
+<p class="tool-disclaimer" role="note" data-i18n={key}>
+  {langText(lang, key)}
+</p>

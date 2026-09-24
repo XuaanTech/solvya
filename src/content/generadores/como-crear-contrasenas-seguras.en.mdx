@@ -1,0 +1,81 @@
+---
+lang: en
+title: "How to Create Strong Passwords and Remember Them"
+description: "Learn to create strong passwords, use password managers, enable 2FA and avoid the most common security mistakes."
+category: generadores
+date: 2026-09-12
+---
+
+A **strong password** is the first barrier between your digital life and attackers. Yet most real passwords are short, predictable or reused. Here is the practical guide to creating and managing truly secure passwords.
+
+## The golden rule: length > complexity
+
+For years people were told to "mix uppercase, numbers and symbols". Current research shows that **length is the deciding factor**:
+
+- 8 characters (lowercase only): ~38 bits of entropy → **crackable in hours**
+- 12 characters (mixed): ~72 bits → **days/weeks**
+- 16+ characters (mixed): >100 bits → **infeasible by brute force**
+
+> **Minimum recommended: 16 characters**. If you can use 20–24, even better.
+
+## Method 1: Random word passphrase (Diceware)
+
+Combine 4–5 **completely random** dictionary words, separated by dashes or spaces:
+
+> `correct-horse-battery-staple-dove`
+
+With 5 words from a list of 7,776 (6 dice of 6 sides): **64 bits** of entropy. Longer = more secure.
+
+**Advantage:** easy to remember and type.
+**Drawback:** only works if the site accepts long phrases without a length limit.
+
+## Method 2: Full random string
+
+Use a cryptographically secure generator (like ours) that includes:
+
+- Uppercase (A–Z)
+- Lowercase (a–z)
+- Numbers (0–9)
+- Symbols (!@#$%^&*)
+
+A 16-character string with the full set (94 symbols) → **~105 bits of entropy**.
+
+## What you should NOT do
+
+| ❌ Avoid | Why |
+|----------|-----|
+| `123456`, `password`, `qwerty` | In the most used breach lists |
+| Your name, date, pet | Social engineering and OSINT |
+| `P@ssw0rd123` | Predictable patterns (leet speak) |
+| The same password on multiple sites | One breach exposes everything |
+
+## The real problem: reuse
+
+Even if your password is perfect, **if you reuse it and a site suffers a breach, all your accounts are at risk**.
+
+**The solution:** a **password manager** (Bitwarden, 1Password, KeePass, etc.). It generates, stores and autofills unique passwords for each service. You only remember **one master password** (strong and long).
+
+## Two-factor authentication (2FA)
+
+Even the best password can leak (phishing, keylogger, breach). **2FA** adds a second proof:
+
+1. **TOTP apps** (Google Authenticator, Authy, Bitwarden): a 6-digit code that changes every 30 s. **Recommended.**
+2. **Hardware keys** (YubiKey): physical, phishing-immune.
+3. **SMS/email**: better than nothing, but vulnerable to SIM-swapping.
+
+Enable it on email, banking, social networks and your password manager.
+
+## Our practical recommendation
+
+1. Start using a **password manager** today.
+2. Generate **16–24 random characters** for each account.
+3. Enable **2FA (TOTP)** on everything important.
+4. Store your master password and 2FA recovery codes somewhere safe (paper, safe).
+
+## Secure password generator
+
+Our [password generator](/herramienta/contrasenas/) creates keys **locally in your browser** using the Web Crypto API: nothing leaves your device, there is no server that could see them. Choose length and character types and get a strong password instantly.
+
+## Conclusion
+
+Your account security depends on three habits: **length, uniqueness and 2FA**. The password manager does the heavy lifting; you just choose a good master password and enable the second factor. Start today: a breach takes seconds, prevention takes minutes.

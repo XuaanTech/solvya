@@ -1,0 +1,250 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+const LOAN_TYPES = ['french', 'german', 'american'];
+const LOAN_TYPE_LABELS = {
+  french: { es: 'Sistema Francés (cuota fija)', en: 'French System (fixed payment)' },
+  german: { es: 'Sistema Alemán (amortización fija)', en: 'German System (fixed principal)' },
+  american: { es: 'Sistema Americano (solo intereses)', en: 'American System (interest only)' }
+};
+---
+<div class="tool-widget" data-widget="loan">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ln-capital" data-i18n="calc.loanCapital">{langText(es, 'calc.loanCapital')}</label>
+        <input id="ln-capital" class="tool-widget__input" type="number" step="0.01" min="0" value="150000" data-field="capital" required />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ln-tasa" data-i18n="calc.loanRate">{langText(es, 'calc.loanRate')}</label>
+        <input id="ln-tasa" class="tool-widget__input" type="number" step="0.01" min="0" max="100" value="3.5" data-field="tasa" required />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ln-plazo" data-i18n="calc.loanTerm">{langText(es, 'calc.loanTerm')}</label>
+        <input id="ln-plazo" class="tool-widget__input" type="number" step="1" min="1" max="50" value="30" data-field="plazo" required />
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="ln-tipo" data-i18n="calc.loanType">{langText(es, 'calc.loanType')}</label>
+        <select id="ln-tipo" class="tool-widget__select" data-field="tipo">
+          {LOAN_TYPES.map(t => (
+            <option value={t} data-i18n={`calc.loanType${t.charAt(0).toUpperCase() + t.slice(1)}`}>
+              {langText(es, `calc.loanType${t.charAt(0).toUpperCase() + t.slice(1)}`)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="tool-widget__field" style="grid-column:1/-1">
+        <label class="tool-widget__label" for="ln-inicio" data-i18n="calc.loanStartDate">{langText(es, 'calc.loanStartDate')}</label>
+        <input id="ln-inicio" class="tool-widget__input" type="date" data-field="inicio" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.loanError">{langText(es, 'calc.loanError')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.loanError">{langText('en', 'calc.loanError')}</span>
+    </p>
+    <div class="tool-widget__result-stats tool-widget__result-stats--grid">
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.loanMonthlyPayment">{langText(es, 'calc.loanMonthlyPayment')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="cuota">—</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.loanTotalInterest">{langText(es, 'calc.loanTotalInterest')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="interesTotal">—</strong>
+      </div>
+      <div class="tool-widget__result-stat">
+        <span class="tool-widget__result-stat-label" data-i18n="calc.loanTotalPaid">{langText(es, 'calc.loanTotalPaid')}</span>
+        <strong class="tool-widget__result-stat-value" data-val="totalPagado">—</strong>
+      </div>
+    </div>
+    <div class="tool-widget__details" data-schedule hidden>
+      <h4 data-i18n="calc.loanSchedule">{langText(es, 'calc.loanSchedule')}</h4>
+      <div class="tool-widget__table-wrapper">
+        <table class="tool-widget__table">
+          <thead>
+            <tr>
+              <th data-i18n="calc.loanPeriod">{langText(es, 'calc.loanPeriod')}</th>
+              <th data-i18n="calc.loanDate">{langText(es, 'calc.loanDate')}</th>
+              <th data-i18n="calc.loanPayment">{langText(es, 'calc.loanPayment')}</th>
+              <th data-i18n="calc.loanPrincipal">{langText(es, 'calc.loanPrincipal')}</th>
+              <th data-i18n="calc.loanInterest">{langText(es, 'calc.loanInterest')}</th>
+              <th data-i18n="calc.loanBalance">{langText(es, 'calc.loanBalance')}</th>
+            </tr>
+          </thead>
+          <tbody data-schedule-body></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { formatEur, formatDateFull, parseDecimal } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="loan"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const scheduleDiv = root.querySelector('[data-schedule]');
+    const scheduleBody = root.querySelector('[data-schedule-body]');
+    const fields = {
+      capital: root.querySelector('[data-field="capital"]'),
+      tasa: root.querySelector('[data-field="tasa"]'),
+      plazo: root.querySelector('[data-field="plazo"]'),
+      tipo: root.querySelector('[data-field="tipo"]'),
+      inicio: root.querySelector('[data-field="inicio"]'),
+    };
+    const val = {
+      cuota: root.querySelector('[data-val="cuota"]'),
+      interesTotal: root.querySelector('[data-val="interesTotal"]'),
+      totalPagado: root.querySelector('[data-val="totalPagado"]'),
+    };
+
+    function computeFrench(capital, rate, periods) {
+      const r = rate / 100 / 12;
+      if (r === 0) return capital / periods;
+      return capital * r / (1 - Math.pow(1 + r, -periods));
+    }
+
+    function computeGerman(capital, rate, periods) {
+      const principal = capital / periods;
+      const r = rate / 100 / 12;
+      return principal + capital * r;
+    }
+
+    function computeAmerican(capital, rate) {
+      return capital * (rate / 100 / 12);
+    }
+
+    function generateSchedule(capital, rate, years, type, startDate) {
+      const periods = years * 12;
+      const r = rate / 100 / 12;
+      let balance = capital;
+      let totalInterest = 0;
+      const rows = [];
+
+      const date = startDate ? new Date(startDate + 'T00:00:00') : new Date();
+      date.setDate(1);
+
+      if (type === 'french') {
+        const payment = computeFrench(capital, rate, periods);
+        for (let i = 1; i <= periods; i++) {
+          const interest = balance * r;
+          const principal = payment - interest;
+          balance -= principal;
+          totalInterest += interest;
+          const d = new Date(date);
+          d.setMonth(date.getMonth() + i);
+          rows.push({
+            period: i,
+            date: formatDateFull(d),
+            payment: payment,
+            principal: principal,
+            interest: interest,
+            balance: Math.max(0, balance)
+          });
+        }
+        return { rows, monthlyPayment: payment, totalInterest, totalPaid: capital + totalInterest };
+      } else if (type === 'german') {
+        const principal = capital / periods;
+        for (let i = 1; i <= periods; i++) {
+          const interest = balance * r;
+          const payment = principal + interest;
+          balance -= principal;
+          totalInterest += interest;
+          const d = new Date(date);
+          d.setMonth(date.getMonth() + i);
+          rows.push({
+            period: i,
+            date: formatDateFull(d),
+            payment: payment,
+            principal: principal,
+            interest: interest,
+            balance: Math.max(0, balance)
+          });
+        }
+        const firstPayment = principal + capital * r;
+        return { rows, monthlyPayment: firstPayment, totalInterest, totalPaid: capital + totalInterest };
+      } else {
+        const payment = computeAmerican(capital, rate);
+        for (let i = 1; i <= periods; i++) {
+          const interest = capital * r;
+          const d = new Date(date);
+          d.setMonth(date.getMonth() + i);
+          rows.push({
+            period: i,
+            date: formatDateFull(d),
+            payment: payment,
+            principal: 0,
+            interest: interest,
+            balance: capital
+          });
+          totalInterest += interest;
+        }
+        return { rows, monthlyPayment: payment, totalInterest, totalPaid: capital + totalInterest };
+      }
+    }
+
+    function renderSchedule(schedule) {
+      scheduleBody.innerHTML = schedule.rows.map(row => `
+        <tr>
+          <td>${row.period}</td>
+          <td>${row.date}</td>
+          <td>${formatEur(row.payment)}</td>
+          <td>${formatEur(row.principal)}</td>
+          <td>${formatEur(row.interest)}</td>
+          <td>${formatEur(row.balance)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function compute() {
+      const capital = parseDecimal(fields.capital.value);
+      const tasa = parseDecimal(fields.tasa.value);
+      const plazo = parseInt(fields.plazo.value, 10);
+      const tipo = fields.tipo.value;
+      const inicio = fields.inicio.value;
+
+      if (!capital || !tasa || !plazo) {
+        result.hidden = true;
+        return;
+      }
+
+      error.hidden = true;
+      const schedule = generateSchedule(capital, tasa, plazo, tipo, inicio);
+
+      val.cuota.textContent = formatEur(schedule.monthlyPayment);
+      val.interesTotal.textContent = formatEur(schedule.totalInterest);
+      val.totalPagado.textContent = formatEur(schedule.totalPaid);
+
+      renderSchedule(schedule);
+      scheduleDiv.hidden = false;
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    ['capital', 'tasa', 'plazo', 'tipo'].forEach(f => fields[f]?.addEventListener('input', compute));
+    fields.inicio?.addEventListener('change', compute);
+
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      fields.capital.value = '150000';
+      fields.tasa.value = '3.5';
+      fields.plazo.value = '30';
+      fields.tipo.value = 'french';
+      fields.inicio.value = '';
+      compute();
+    });
+
+    fields.tipo.value = 'french';
+    compute();
+  }
+</script>

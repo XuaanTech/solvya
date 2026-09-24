@@ -1,0 +1,137 @@
+---
+lang: en
+title: "Inflation Calculator: Money Value Over Time"
+description: "Calculate how inflation reduces purchasing power. Modes: future, past, cumulative. INE, ECB, BLS, ONS rates. Free."
+category: "finanzas"
+date: "2026-09-14"
+author: "Equipo Solvya"
+---
+
+<article>
+
+## What is inflation and why it matters
+
+**Inflation** is the sustained and widespread increase in prices of goods and services in an economy over a period of time. Its direct effect: **money loses purchasing power**.
+
+> **Simple example**: If inflation is 3% annually, something that costs €100 today will cost ~€103 in a year. Your €100 "are worth" less.
+
+This calculator helps you **quantify that loss** (or gain, if looking at the past) in three different scenarios.
+
+---
+
+## Three calculation modes: what question do they answer?
+
+| Mode | Question answered | Formula | Typical Use Case |
+|------|-------------------|---------|------------------|
+| **Forward** | "How much will X cost in N years?" | `FV = PV × (1 + i)^n` | Retirement planning, future budgets, future pricing |
+| **Backward** | "How much was X worth N years ago in today's money?" | `PV = FV / (1 + i)^n` | Compare historical salaries, inheritances, old prices |
+| **Cumulative** | "What's the total % increase over N years?" | `% = [(1 + i)^n - 1] × 100` | Macro analysis, compare periods, general index |
+
+Where:
+- `FV` = Future Value / Final
+- `PV` = Present Value / Initial
+- `i` = Annual inflation rate (decimal: 3% → 0.03)
+- `n` = Number of years
+
+---
+
+## The magic of compound interest (applied to prices)
+
+Inflation **compounds** means each year's increase is calculated on the **already inflated** price from the previous year, not the original.
+
+```
+Year 0:  1,000.00 €
+Year 1:  1,000 × 1.03 = 1,030.00 €  (+30.00)
+Year 2:  1,030 × 1.03 = 1,060.90 €  (+30.90)  ← increase on 1,030, not 1,000
+Year 3:  1,060.90 × 1.03 = 1,092.73 € (+31.83)
+Year 4:  1,092.73 × 1.03 = 1,125.51 € (+32.78)
+Year 5:  1,125.51 × 1.03 = 1,159.27 € (+33.76)
+                    ↑
+            Total 5 years: +15.93% (not 15% linear)
+```
+
+> **Rule of 72** (approximation): `Years to double prices ≈ 72 / annual inflation %`. With 3% → ~24 years. With 6% → ~12 years.
+
+---
+
+## Preset rates: approximate official sources
+
+| Preset | Institute | Approx. Rate | What it measures |
+|--------|-----------|--------------|------------------|
+| **Spain (INE)** | Instituto Nacional de Estadística | ~3.2% | General CPI (recent annual average) |
+| **Eurozone (ECB)** | European Central Bank | ~2.8% | HICP (Harmonised Index of Consumer Prices) |
+| **USA (BLS)** | Bureau of Labor Statistics | ~3.1% | CPI-U (Consumer Price Index for All Urban Consumers) |
+| **UK (ONS)** | Office for National Statistics | ~4.0% | CPIH (includes housing costs) |
+
+> **Important**: These are **approximate recent annual averages** for quick calculations. For real financial decisions, use **monthly historical series** from each institute (available on their websites) and apply month by month.
+
+---
+
+## Year-by-year breakdown: what you see in the table
+
+| Column | Meaning |
+|--------|---------|
+| **Year** | Fiscal year / calendar year |
+| **Value** | Amount adjusted at end of that year |
+| **Year change** | How much it went up/down in euros that specific year |
+| **Cumulative %** | Total increase/decrease from initial year to that year |
+
+In **backward mode**, the table goes from final year to initial (descending) and "year change" is negative (what you "save" by going to the past).
+
+---
+
+## Big Mac comparison: tangible purchasing power
+
+The **Big Mac Index** (The Economist, 1986) compares Big Mac prices across countries to estimate **purchasing power parity (PPP)**.
+
+This calculator uses a **reference Big Mac ~€5.50** to give you a tangible intuition:
+
+> "With €1,000 in 2010 you could buy ~182 Big Macs. In 2024 that equals ~130 Big Macs."
+
+**Not an official index**, but helps visualize: *how many burgers (or bread, milk, rent) do you lose to inflation?*
+
+---
+
+## Practical examples
+
+### 1. Retirement: how much will I need in 20 years?
+- Current estimated spending: €2,500/month
+- Average inflation: 2.5% (ECB target)
+- **Result**: 2,500 × (1.025)^20 = **€4,101/month**
+- You need ~64% more nominal to maintain lifestyle.
+
+### 2. Historical salary: what was my 2005 salary worth today?
+- 2005 salary: €1,800/month
+- Spain avg inflation 2005-2024: ~2.8%
+- **Backward mode**: 1,800 / (1.028)^19 = **€1,088 of 2005 = €1,800 of 2024**
+- Your real purchasing power only increased if your current salary > €1,800 adjusted.
+
+### 3. Cash under mattress: silent loss
+- €10,000 saved 10 years with no interest
+- Inflation 3% average
+- **Real value today**: 10,000 / (1.03)^10 = **€7,441**
+- You've **lost €2,559 purchasing power** without moving the money.
+
+---
+
+## Limitations and nuances
+
+| Limitation | What it implies |
+|------------|-----------------|
+| **Constant rate** | Tool uses an average; real inflation varies monthly |
+| **General CPI** | Your personal inflation depends on your consumption basket (rent, childcare, fuel...) |
+| **Substitution** | When a good's price rises, people buy alternatives → CPI may overestimate |
+| **Quality** | Products improve (phones, cars) → part of price increase isn't "pure inflation" |
+| **Official vs perceived** | Official stats have methodology; citizen perception is usually higher |
+
+> For serious financial planning: **use real monthly series**, consider your personal basket and consult a financial advisor.
+
+---
+
+## Try the calculator now
+
+Calculate inflation's impact on your money. 3 modes, 4 official presets, yearly breakdown and Big Mac comparison. Free, no sign-up.
+
+[Calculate inflation impact](/herramienta/inflation-calculator/) on your purchasing power.
+
+</article>

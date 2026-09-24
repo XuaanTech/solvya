@@ -1,0 +1,81 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="caracteres">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="cc-texto" data-i18n="calc.ccText">{langText(es, 'calc.ccText')}</label>
+      <textarea id="cc-texto" class="tool-widget__textarea" rows="4" data-i18n-placeholder="calc.ccPlaceholder" data-field="texto"
+        placeholder="Escribe o pega aquí tu texto…"></textarea>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result>
+    <div class="result-stats result-stats--grid">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ccChars">{langText(es, 'calc.ccChars')}</span>
+        <strong class="result-stat__value" data-val="chars">0</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ccNoSpaces">{langText(es, 'calc.ccNoSpaces')}</span>
+        <strong class="result-stat__value" data-val="noSpaces">0</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ccWords">{langText(es, 'calc.ccWords')}</span>
+        <strong class="result-stat__value" data-val="words">0</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ccLetters">{langText(es, 'calc.ccLetters')}</span>
+        <strong class="result-stat__value" data-val="letters">0</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ccDigits">{langText(es, 'calc.ccDigits')}</span>
+        <strong class="result-stat__value" data-val="digits">0</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ccPunct">{langText(es, 'calc.ccPunct')}</span>
+        <strong class="result-stat__value" data-val="punct">0</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ccLines">{langText(es, 'calc.ccLines')}</span>
+        <strong class="result-stat__value" data-val="lines">0</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="caracteres"]');
+  if (root) {
+    const textarea = root.querySelector('[data-field="texto"]');
+    const val = {};
+    for (const k of ['chars', 'noSpaces', 'words', 'letters', 'digits', 'punct', 'lines']) {
+      val[k] = root.querySelector(`[data-val="${k}"]`);
+    }
+
+    function compute() {
+      const text = textarea.value;
+      const chars = text.length;
+      const noSpaces = text.replace(/\s/g, '').length;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const letters = (text.match(/\p{L}/gu) || []).length;
+      const digits = (text.match(/\p{N}/gu) || []).length;
+      const punct = chars - letters - digits;
+      const lines = text ? text.split(/\n/).length : 0;
+      val.chars.textContent = chars;
+      val.noSpaces.textContent = noSpaces;
+      val.words.textContent = words;
+      val.letters.textContent = letters;
+      val.digits.textContent = digits;
+      val.punct.textContent = punct;
+      val.lines.textContent = lines;
+      applyLang(currentLang());
+    }
+
+    textarea.addEventListener('input', compute);
+    compute();
+  }
+</script>

@@ -1,0 +1,157 @@
+---
+title: "Calculadora de Préstamo y Amortización: Cuota, Tabla y Total"
+titleEn: "Loan and Amortization Calculator: Payment, Schedule and Total"
+description: "Calcula la cuota mensual, la tabla de amortización completa y el total a pagar de cualquier préstamo. Sistemas francés, alemán y americano explicados con ejemplos."
+descriptionEn: "Calculate the monthly payment, full amortization schedule and total payable of any loan. French, German and American systems explained with examples."
+category: "finanzas"
+categoryName: "Finanzas"
+tags: ["prestamo", "amortizacion", "cuota mensual", "sistema frances", "sistema aleman", "hipoteca", "loan calculator"]
+date: "2026-09-14"
+author: "Equipo Solvya"
+tool: "prestamo-amortizacion"
+faqs:
+  - q:
+      es: "¿Qué sistema de amortización es el más usado?"
+      en: "Which amortization system is most used?"
+    a:
+      es: "En España y gran parte de Europa el sistema francés (cuota fija) es el estándar para hipotecas y préstamos personales."
+      en: "In Spain and much of Europe the French system (fixed payment) is the standard for mortgages and personal loans."
+  - q:
+      es: "¿Cuál es la diferencia entre sistema francés y alemán?"
+      en: "What is the difference between French and German systems?"
+    a:
+      es: "Francés: cuota constante, más intereses al principio. Alemán: amortización de capital constante, cuota decreciente (empieza más alta)."
+      en: "French: constant payment, more interest at start. German: constant principal repayment, decreasing payment (starts higher)."
+  - q:
+      es: "¿El sistema americano amortiza capital?"
+      en: "Does the American system amortize principal?"
+    a:
+      es: "No. Solo pagas intereses durante el plazo y devuelves el capital al final en una sola vez. Es raro en préstamos personales."
+      en: "No. You only pay interest during the term and repay the principal at the end in a lump sum. Rare in personal loans."
+steps:
+  - title:
+      es: "Introduce los datos del préstamo"
+      en: "Enter loan details"
+    text:
+      es: "Rellena el capital (importe prestado), el tipo de interés anual y el plazo en años. Opcionalmente indica la fecha de inicio para que la tabla muestre meses reales."
+      en: "Fill in the principal (amount borrowed), annual interest rate and term in years. Optionally set the start date so the schedule shows real months."
+  - title:
+      es: "Elige el sistema de amortización"
+      en: "Choose the amortization system"
+    text:
+      es: "Selecciona entre Francés (cuota fija, el habitual en hipotecas), Alemán (capital constante, cuota bajando) o Americano (solo intereses, capital al final)."
+      en: "Select between French (fixed payment, standard for mortgages), German (constant principal, decreasing payment) or American (interest-only, principal at the end)."
+  - title:
+      es: "Obtén la cuota y la tabla completa"
+      en: "Get the payment and full schedule"
+    text:
+      es: "La herramienta muestra al instante la cuota mensual (o primera cuota en sistema alemán), los intereses totales, el total pagado y una tabla mes a mes con desglose de capital, intereses y saldo pendiente."
+      en: "The tool instantly shows the monthly payment (or first payment in German system), total interest, total paid and a month-by-month table with principal, interest and outstanding balance breakdown."
+---
+
+<article>
+
+## ¿Qué es una calculadora de préstamo y amortización?
+
+Una **calculadora de préstamo** te permite saber, antes de firmar, cuánto pagarás cada mes, cuánto de ese pago son intereses y cuánto reduce realmente tu deuda. Además genera la **tabla de amortización**: el desglose mes a mes de capital amortizado, intereses pagados y saldo vivo.
+
+Esta herramienta cubre los **tres sistemas principales** usados en banca y finanzas:
+
+| Sistema | Cuota | Amortización de capital | Intereses | Uso típico |
+|---------|-------|------------------------|-----------|------------|
+| **Francés** | Constante | Crece cada mes | Decrece cada mes | Hipotecas, préstamos personales, coche (España, Europa, LatAm) |
+| **Alemán** | Decreciente | Constante | Decrece cada mes | Préstamos a empresas, algunos países nórdicos |
+| **Americano** | Solo intereses (constante) | Cero hasta el final | Constante | Préstamos puente, bonos, operaciones corporativas |
+
+---
+
+## ¿Cómo funciona cada sistema?
+
+### Sistema Francés (cuota fija) — El estándar
+
+Es el más extendido en hipotecas y préstamos al consumo en España. La **cuota mensual no cambia** durante todo el préstamo, pero su composición sí:
+
+- **Al principio**: la mayor parte de la cuota son **intereses**, y poco capital.
+- **Al final**: la mayor parte es **capital**, y casi no pagas intereses.
+
+La fórmula de la cuota mensual:
+
+`Cuota = (C × i) / (1 - (1 + i)^(-n))`
+
+Donde:
+- $C$ = Capital inicial
+- $i$ = Tipo de interés mensual (anual / 12)
+- $n$ = Número total de cuotas (años × 12)
+
+> **Ejemplo**: 150.000 € al 3,5 % a 30 años → Cuota 673,57 €. Total pagado: 242.485 €. Intereses: 92.485 €.
+
+### Sistema Alemán (amortización de capital constante)
+
+Aquí **amortizas la misma cantidad de capital cada mes**. La cuota **empieza más alta y baja progresivamente** porque los intereses se calculan sobre un saldo que decrece linealmente.
+
+- Cuota mes 1 = (Capital / n) + (Capital × i)
+- Cuota mes n = (Capital / n) + ((Capital / n) × i)
+
+> **Ventaja**: Pagas menos intereses totales que en el sistema francés.
+> **Inconveniente**: La cuota inicial es más alta, lo que reduce la capacidad de endeudamiento.
+
+### Sistema Americano (solo intereses)
+
+Solo pagas intereses durante la vida del préstamo. Al vencimiento, **devuelves todo el capital de golpe**.
+
+- Cuota mensual = Capital × i (constante)
+- Al final: pago final = Capital + última cuota de intereses
+
+> **Uso real**: Préstamos puente, financiación de promotores, bonos corporativos. **No es habitual en hipotecas residenciales**.
+
+---
+
+## ¿Qué datos necesitas para calcular?
+
+| Dato | Descripción | Ejemplo |
+|------|-------------|---------|
+| **Capital** | Importe total prestado | 150.000 € |
+| **Interés anual (TAE o TIN)** | Tipo fijo o variable (usamos fijo para la simulación) | 3,5 % |
+| **Plazo** | Años de duración del préstamo | 30 años |
+| **Sistema** | Francés, Alemán o Americano | Francés |
+| **Fecha de inicio** (opcional) | Para ver meses reales en la tabla | 01/2025 |
+
+---
+
+## Qué te devuelve la calculadora
+
+1. **Cuota mensual** (o primera cuota en sistema alemán)
+2. **Total de intereses** pagados en todo el préstamo
+3. **Total pagado** (capital + intereses)
+4. **Tabla de amortización completa** con columnas:
+   - Periodo (mes)
+   - Fecha
+   - Cuota
+   - Capital amortizado
+   - Intereses
+   - Saldo pendiente
+
+Puedes **descargar o copiar** la tabla para tus cálculos, comparar ofertas bancarias o planificar amortizaciones anticipadas.
+
+---
+
+## Amortización anticipada: ¿merece la pena?
+
+Si recibes una herencia, una paga extra o ahorras, puedes **amortizar capital por adelantado**. Dos opciones:
+
+| Opción | Qué cambia | Cuándo conviene |
+|--------|------------|-----------------|
+| **Reducir cuota** | Misma fecha de fin, cuota más baja | Si quieres aliviar tu mensualidad |
+| **Acortar plazo** | Misma cuota, terminas antes | **Ahorras más intereses** (recomendado si puedes) |
+
+> **Consejo**: Pregunta a tu banco la comisión por amortización anticipada (en España, máximo 0,5 % los primeros 5 años y 0,25 % después en hipoteca variable; 2 % / 1,5 % en fija).
+
+---
+
+## Prueba la calculadora ahora
+
+Introduce tus datos y obtén al instante la cuota, la tabla de amortización y el coste total de tu préstamo. Gratis, sin registro y 100 % en tu navegador.
+
+[Calcula tu préstamo y amortización](/herramienta/prestamo-amortizacion/) y obtén tu tabla completa al instante.
+
+</article>

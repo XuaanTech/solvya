@@ -1,0 +1,83 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+---
+<div class="tool-widget" data-widget="numeros-letras">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__field">
+      <label class="tool-widget__label" for="nl-numero" data-i18n="calc.nlNumber">{langText(es, 'calc.nlNumber')}</label>
+      <div class="tool-widget__control">
+        <input id="nl-numero" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off"
+          value="1234,5" data-field="numero" data-i18n-placeholder="calc.nlPlaceholder" />
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.convert">{langText(es, 'calc.convert')}</button>
+      <button type="button" class="btn btn--ghost" data-copy data-i18n="calc.copy">{langText(es, 'calc.copy')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+      <span class="tool-widget__copied" data-copied hidden data-i18n="calc.copied">{langText(es, 'calc.copied')}</span>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden>
+      <span data-lang-region="es" data-i18n="calc.nlInvalid">{langText(es, 'calc.nlInvalid')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.nlInvalid">{langText('en', 'calc.nlInvalid')}</span>
+    </p>
+    <p class="tool-widget__label-static" data-i18n="calc.nlResult">{langText(es, 'calc.nlResult')}</p>
+    <textarea class="tool-widget__textarea" data-resultado rows="3" readonly></textarea>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.nlNote">{langText(es, 'calc.nlNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.nlNote">{langText('en', 'calc.nlNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { numberToWords } from '../../lib/numeriletras.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="numeros-letras"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const input = root.querySelector('[data-field="numero"]');
+    const output = root.querySelector('[data-resultado]');
+
+    function compute() {
+      const lang = currentLang() === 'en' ? 'en' : 'es';
+      const words = numberToWords(input.value, lang);
+      if (words === null) {
+        error.hidden = false;
+        result.hidden = true;
+        return;
+      }
+      error.hidden = true;
+      output.value = words;
+      applyLang(lang);
+      result.hidden = false;
+    }
+
+    function copyAll() {
+      if (!output.value) return;
+      const done = () => {
+        const fb = root.querySelector('[data-copied]');
+        if (fb) { fb.hidden = false; setTimeout(() => { fb.hidden = true; }, 1600); }
+      };
+      const write = navigator.clipboard && navigator.clipboard.writeText
+        ? navigator.clipboard.writeText(output.value).then(done).catch(() => done())
+        : done();
+      return write;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    input.addEventListener('input', compute);
+    root.querySelector('[data-copy]')?.addEventListener('click', copyAll);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      input.value = '1234,5';
+      compute();
+    });
+    compute();
+  }
+</script>

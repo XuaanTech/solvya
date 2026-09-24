@@ -1,0 +1,115 @@
+---
+import { langText } from '../../lib/i18n';
+const es = 'es';
+const RATES = [
+  { id: '21', label: 'General · 21 %' },
+  { id: '10', label: 'Reducido · 10 %' },
+  { id: '4',  label: 'Superreducido · 4 %' },
+];
+---
+<div class="tool-widget" data-widget="iva">
+  <form class="tool-widget__form" data-calc-form novalidate>
+    <div class="tool-widget__grid tool-widget__grid--2">
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="iva-op" data-i18n="calc.operation">{langText(es, 'calc.operation')}</label>
+        <select id="iva-op" class="tool-widget__select" data-field="opcion">
+          <option value="add" selected data-i18n="calc.addIva">{langText(es, 'calc.addIva')}</option>
+          <option value="remove" data-i18n="calc.removeIva">{langText(es, 'calc.removeIva')}</option>
+        </select>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="iva-amount" data-i18n="calc.amount">{langText(es, 'calc.amount')}</label>
+        <div class="tool-widget__control">
+          <span class="tool-widget__adorn tool-widget__adorn--left">€</span>
+          <input id="iva-amount" class="tool-widget__input" type="text" inputmode="decimal" autocomplete="off" value="100" data-field="importe" />
+        </div>
+      </div>
+      <div class="tool-widget__field">
+        <label class="tool-widget__label" for="iva-rate" data-i18n="calc.ivaRate">{langText(es, 'calc.ivaRate')}</label>
+        <select id="iva-rate" class="tool-widget__select" data-field="tasa">
+          {RATES.map((r) => (
+            <option value={r.id} selected={r.id === '21'}>{r.label}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+    <div class="tool-widget__actions">
+      <button type="submit" class="btn btn--primary" data-i18n="calc.calculate">{langText(es, 'calc.calculate')}</button>
+      <button type="button" class="btn btn--ghost" data-reset data-i18n="calc.reset">{langText(es, 'calc.reset')}</button>
+    </div>
+  </form>
+
+  <div class="tool-widget__result" data-result hidden>
+    <p class="tool-widget__error" data-error hidden data-i18n="calc.invalidIva">
+      <span data-lang-region="es">{langText(es, 'calc.invalidIva')}</span>
+      <span data-lang-region="en" hidden>{langText('en', 'calc.invalidIva')}</span>
+    </p>
+    <div class="result-stats">
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.base">{langText(es, 'calc.base')}</span>
+        <strong class="result-stat__value" data-val="base">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.ivaAmount">{langText(es, 'calc.ivaAmount')}</span>
+        <strong class="result-stat__value" data-val="iva">—</strong>
+      </div>
+      <div class="result-stat">
+        <span class="result-stat__label" data-i18n="calc.grossAmount">{langText(es, 'calc.grossAmount')}</span>
+        <strong class="result-stat__value" data-val="total">—</strong>
+      </div>
+    </div>
+    <p class="tool-widget__note">
+      <span data-lang-region="es" data-i18n="calc.ivaNote">{langText(es, 'calc.ivaNote')}</span>
+      <span data-lang-region="en" hidden data-i18n="calc.ivaNote">{langText('en', 'calc.ivaNote')}</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  import { ivaDesdeBase, ivaDesdeTotal } from '../../lib/finance.js';
+  import { parseDecimal, formatEur } from '../../lib/format.js';
+  import { applyLang, currentLang } from '../../i18n.js';
+
+  const root = document.querySelector('[data-widget="iva"]');
+  if (root) {
+    const form = root.querySelector('[data-calc-form]');
+    const result = root.querySelector('[data-result]');
+    const error = root.querySelector('[data-error]');
+    const fields = {
+      opcion: root.querySelector('[data-field="opcion"]'),
+      importe: root.querySelector('[data-field="importe"]'),
+      tasa: root.querySelector('[data-field="tasa"]'),
+    };
+    const val = {
+      base: root.querySelector('[data-val="base"]'),
+      iva: root.querySelector('[data-val="iva"]'),
+      total: root.querySelector('[data-val="total"]'),
+    };
+
+    function compute() {
+      const importe = parseDecimal(fields.importe.value);
+      const tasa = parseDecimal(fields.tasa.value);
+      if (!Number.isFinite(importe) || importe <= 0) { error.hidden = false; result.hidden = true; return; }
+      const res = fields.opcion.value === 'add'
+        ? ivaDesdeBase(importe, tasa)
+        : ivaDesdeTotal(importe, tasa);
+      if (!res) { error.hidden = false; result.hidden = true; return; }
+      error.hidden = true;
+      val.base.textContent = formatEur(res.base);
+      val.iva.textContent = formatEur(res.iva);
+      val.total.textContent = formatEur(res.total);
+      applyLang(currentLang());
+      result.hidden = false;
+    }
+
+    form?.addEventListener('submit', (e) => { e.preventDefault(); compute(); });
+    fields.opcion.addEventListener('change', compute);
+    fields.importe.addEventListener('input', compute);
+    fields.tasa.addEventListener('change', compute);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      for (const f of Object.values(fields)) f.value = f.defaultValue;
+      result.hidden = true; error.hidden = true;
+    });
+    compute();
+  }
+</script>
